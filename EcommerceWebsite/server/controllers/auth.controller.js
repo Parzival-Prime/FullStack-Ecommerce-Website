@@ -32,7 +32,7 @@ export const registerController = async (req, res) => {
             return res.status(400).send({
                 success: false,
                 message: 'All fields are required'
-                
+
             })
         }
 
@@ -146,7 +146,23 @@ export const logoutController = async (req, res) => {
 
 
 export const changePasswordController = async (req, res) => {
+    try {
+        const { password } = req.body
+        const res = await User.findByIdAndUpdate(req.user._id, { $set: { password: password } }, { new: true }).select('-password -refreshToken')
 
+        return res.status(200).sned({
+            success: true,
+            message: 'Password Changed Successfully',
+            user: res
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).send({
+            success: false,
+            message: 'Some error occured in changePassword Controller',
+            error
+        })
+    }
 }
 
 
@@ -157,13 +173,37 @@ export const userProfileController = async (req, res) => {
 
         return res.status(200).send({
             success: true,
-            message: 'User data fetched Successfully'
+            message: 'User data fetched Successfully',
+            user
         })
     } catch (error) {
         console.log(error)
         return res.status(400).send({
             success: false,
             message: 'Some Error occuered in user Profile Controller'
+        })
+    }
+}
+
+
+
+export const updateUserController = async (req, res) => {
+    try {
+        const { name, email, phone, address } = req.body
+        const { user } = req.user
+
+        const updatedUser = await User.findByIdAndUpdate(user._id, { email, name, phone, address }, { new: true }).select('-password -refreshToken')
+        return res.status(200).send({
+            success: true,
+            message: 'User Updated Successfully',
+            user: updatedUser
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).sned({
+            success: false,
+            message: 'Some Error occuered in user Update Controller',
+            error
         })
     }
 }
