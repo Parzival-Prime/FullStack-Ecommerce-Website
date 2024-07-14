@@ -1,14 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/header.css";
 import MenuIcon from "@mui/icons-material/Menu";
-import { IconButton } from "@mui/material";
+import { IconButton, Box } from "@mui/material";
 import FlexCenter from "./FlexCenter";
 import SearchIcon from "@mui/icons-material/Search";
 
 function Header() {
   const navRef = useRef();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const toggleNav = () => {
     navRef.current.classList.toggle("column-nav-list-show");
@@ -19,9 +19,10 @@ function Header() {
       <nav className="navbar">
         <div className="toolbar">
           <FlexCenter
-            sx={{ fontSize: "1.5rem", fontFamily: "Playwrite BE VLG" }}
+            sx={{ fontSize: ".9rem", fontFamily: "Playwrite BE VLG" }}
           >
-            Ecommerce
+            <Box variant="span" sx={{display: 'flex', alignSelf: 'start'}}>Wispering</Box>
+            <Box variant="span" sx={{display: 'flex', alignSelf: 'end'}}>Willow</Box>
           </FlexCenter>
 
           {/* row list */}
@@ -44,20 +45,16 @@ function Header() {
           </ul> */}
 
           {/* column-list */}
-          <FlexCenter sx={{gap: '1.5rem'}} >
-            <IconButton
-            onClick={()=>navigate('/search')}
-            >
-              <SearchIcon sx={{color: "white", fontSize:'2rem'}} 
-              />
+          <FlexCenter sx={{ gap: "1.5rem" }}>
+            <IconButton onClick={() => navigate("/search")}>
+              <SearchIcon sx={{ color: "white", fontSize: "2rem" }} />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={toggleNav}>
               <MenuIcon
                 sx={{
                   color: "white",
                   fontSize: "2rem",
                 }}
-                onClick={toggleNav}
               />
             </IconButton>
           </FlexCenter>
@@ -75,18 +72,15 @@ function Header() {
               <NavLink to="/your-account" onClick={toggleNav}>
                 <li className="item item5">Your Account</li>
               </NavLink>
-                { false 
-                ? (
-                  <NavLink to="/logout" onClick={toggleNav}>
-                    <li className="item item2">Logout</li>
-                  </NavLink>
-                  )
-                : (
-                  <NavLink to="/login" onClick={toggleNav}>
-                    <li className="item item2">LogIn</li>
-                  </NavLink>
-                )
-                }
+              {false ? (
+                <NavLink to="/logout" onClick={toggleNav}>
+                  <li className="item item2">Logout</li>
+                </NavLink>
+              ) : (
+                <NavLink to="/login" onClick={toggleNav}>
+                  <li className="item item2">LogIn</li>
+                </NavLink>
+              )}
             </ul>
           </div>
         </div>

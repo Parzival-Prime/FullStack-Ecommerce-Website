@@ -1,27 +1,28 @@
 .navbar {
     display: flex;
     padding: 10px;
-    background-color:var(--mainColor);
+    background-color:var(--darkColor);
     color: var(--textColor);
-
+    
     .toolbar {
-        width: 94vw;
-        position: relative;
+        width: 25rem;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         font-size: 1.2rem;
+        position: relative;
+        
 
 
         .column-nav-list {
-            background-color: var(--mainColor);
+            background-color: var(--darkColor);
             font-family: var(--mainFont);
             padding: 5px;
-            position: absolute;
+            position: fixed;
             top: 57px;
-            right: -40px;
-            width: 69%;
-            height: 47vh;
+            right: -1rem;
+            width: 13rem;
+            height: 52vh;
             border-radius: 0 9px;
             transform: translateX(50vh);
             transition: transform .3s ease;
