@@ -1,0 +1,21 @@
+.container {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    font-family: var(--mainFont);
+
+    .forgot {
+        text-align: end;
+        margin: 1rem;
+    }
+
+
+
+    .line {
+        border: 1px solid;
+        height: 2px;
+        width: 7rem;
+    }
+
+}

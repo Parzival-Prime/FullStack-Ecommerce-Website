@@ -1,12 +1,14 @@
 import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/header.css";
 import MenuIcon from "@mui/icons-material/Menu";
 import { IconButton } from "@mui/material";
 import FlexCenter from "./FlexCenter";
+import SearchIcon from "@mui/icons-material/Search";
 
 function Header() {
   const navRef = useRef();
+  const navigate = useNavigate()
 
   const toggleNav = () => {
     navRef.current.classList.toggle("column-nav-list-show");
@@ -16,7 +18,11 @@ function Header() {
     <>
       <nav className="navbar">
         <div className="toolbar">
-          <FlexCenter sx={{fontSize: '1.5rem', fontFamily: "Playwrite BE VLG", }}>Ecommerce</FlexCenter>
+          <FlexCenter
+            sx={{ fontSize: "1.5rem", fontFamily: "Playwrite BE VLG" }}
+          >
+            Ecommerce
+          </FlexCenter>
 
           {/* row list */}
           {/* <ul className="row-nav-list">
@@ -38,32 +44,49 @@ function Header() {
           </ul> */}
 
           {/* column-list */}
-          <IconButton>
-            <MenuIcon sx={{
-              color: "white",
-              fontSize: '2rem'
-            }}
-            onClick={toggleNav}
-            />
-          </IconButton>
+          <FlexCenter sx={{gap: '1.5rem'}} >
+            <IconButton
+            onClick={()=>navigate('/search')}
+            >
+              <SearchIcon sx={{color: "white", fontSize:'2rem'}} 
+              />
+            </IconButton>
+            <IconButton>
+              <MenuIcon
+                sx={{
+                  color: "white",
+                  fontSize: "2rem",
+                }}
+                onClick={toggleNav}
+              />
+            </IconButton>
+          </FlexCenter>
           <div className="column-nav-list" ref={navRef}>
             <ul>
-              <Link to="/" onClick={toggleNav}>
+              <NavLink to="/" onClick={toggleNav}>
                 <li className="item item1">Home</li>
-              </Link>
-              <Link to="/all-products" onClick={toggleNav}>
+              </NavLink>
+              <NavLink to="/all-products" onClick={toggleNav}>
                 <li className="item item3">All Products</li>
-              </Link>
-              <Link to="/cart" onClick={toggleNav}>
+              </NavLink>
+              <NavLink to="/cart" onClick={toggleNav}>
                 <li className="item item4">Cart</li>
-              </Link>
-              <Link to="/your-account" onClick={toggleNav}>
+              </NavLink>
+              <NavLink to="/your-account" onClick={toggleNav}>
                 <li className="item item5">Your Account</li>
-              </Link>
-              
-              <Link to="/logout" onClick={toggleNav}>
-                <li className="item item2">Logout</li>
-              </Link>
+              </NavLink>
+                { false 
+                ? (
+                  <NavLink to="/logout" onClick={toggleNav}>
+                    <li className="item item2">Logout</li>
+                  </NavLink>
+                  )
+                : (
+                  <NavLink to="/login" onClick={toggleNav}>
+                    <li className="item item2">LogIn</li>
+                  </NavLink>
+                )
+                }
             </ul>
           </div>
         </div>
