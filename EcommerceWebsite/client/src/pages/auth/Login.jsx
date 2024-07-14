@@ -21,6 +21,8 @@ function Login() {
     );
     if (data.success) {
       navigate("/");
+      setEmail('')
+      setPassword('')
     }
   };
 
@@ -37,12 +39,14 @@ function Login() {
         <FormControl sx={{ gap: "1rem" }} onSubmit={handleSubmit}>
           <TextField
             label="Email"
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
             variant="outlined"
             required={true}
           />
           <TextField
             label="Password"
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             variant="outlined"
             required={true}

@@ -9,6 +9,7 @@ import PageNotFound from "./pages/PageNotFound";
 import Policy from "./pages/Policy";
 import Cart from "./pages/Cart";
 import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
 
 function App() {
   return (
@@ -22,7 +23,8 @@ function App() {
             <Route path="/policy" element={<Policy />} />
             <Route path="/cart" element={<Cart />} />
           </Route>
-            <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

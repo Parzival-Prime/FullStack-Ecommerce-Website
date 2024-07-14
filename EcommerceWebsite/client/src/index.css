@@ -8,10 +8,21 @@
 
 
 :root{
-    --mainColor: #2b2b2b;
+    --darkColor: #111111;
     --textColor: #ffff;
+    --subTextColor: #9b9b9b;
+    --greenCream: rgb(139, 220, 175);
+    --blueCream: rgb(139, 220, 211);
+    --greenDarkCream: rgb(64, 193, 123);
+    --blueDarkCream:rgb(64, 193, 176) ;
     --titleFont: "Playwrite BE VLG", cursive;
     --mainFont: "Poppins", sans-serif;
     --logoFontWeight: 400;
     --mainFontWeight: 300;
+
+    --linearGradient1: linear-gradient(34deg, rgba(0,25,117,1) 0%, rgba(3,144,87,1) 84%) ;
+}
+
+html{
+    font-family: var(--mainFont);
 }
