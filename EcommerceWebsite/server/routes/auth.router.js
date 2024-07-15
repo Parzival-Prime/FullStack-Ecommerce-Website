@@ -14,12 +14,7 @@ const router = express.Router()
 
 
 
-router.route('/register').post(upload.fields([
-    {
-        name: 'profileImage',
-        maxCount: 1
-    }
-]), registerController)
+router.route('/register').post(upload.single('file'), registerController)
 
 router.route('/login').post(loginController)
 

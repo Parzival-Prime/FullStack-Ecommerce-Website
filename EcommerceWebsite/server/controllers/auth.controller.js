@@ -25,14 +25,13 @@ const generateAccessAndRefreshToken = async (userId) => {
 export const registerController = async (req, res) => {
     try {
         const { name, email, password, phone, address, answer } = req.body
-
+        
         if (
             !name || !email || !password || !phone || !address || !answer
         ) {
             return res.status(400).send({
                 success: false,
                 message: 'All fields are required'
-
             })
         }
 
@@ -40,9 +39,10 @@ export const registerController = async (req, res) => {
 
         if (existingUser) return res.status(404).send({ success: false, message: 'User with this email already exists' })
 
-        const ImageLocalPath = req.files?.profileImage[0]?.path || 'public/default/defaultProfile.png'
+        const ImageLocalPath = req.file?.path 
 
         const profileImage = await uploadOnCloudinary(ImageLocalPath)
+
 
         const user = await User.create({ name, email, password, phone, address, answer, profileImage: profileImage?.url })
 

@@ -60,7 +60,7 @@ function Header() {
           </FlexCenter>
           <div className="column-nav-list" ref={navRef}>
             <ul>
-              <NavLink to="/about" onClick={toggleNav}>
+              <NavLink to="/" onClick={toggleNav}>
                 <li className="item item1">Home</li>
               </NavLink>
               <NavLink to="/all-products" onClick={toggleNav}>
