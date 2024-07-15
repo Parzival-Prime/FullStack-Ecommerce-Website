@@ -15,6 +15,7 @@
 
 
         .column-nav-list {
+            z-index: 1;
             background-color: var(--darkColor);
             font-family: var(--mainFont);
             padding: 5px;

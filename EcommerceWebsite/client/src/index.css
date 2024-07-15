@@ -21,7 +21,7 @@
     --mainFontWeight: 300;
     --max-width: 1200px;
     --min-width: 320px;
-    --max-height: 1000px;
+    --max-height: 1200px;
     --min-height: 400px;
 
     --linearGradient1: linear-gradient(34deg, rgba(0, 25, 117, 1) 0%, rgba(3, 144, 87, 1) 84%);
@@ -33,7 +33,6 @@ body {
     min-width: var(--min-width);
     max-height: var(--max-height);
     min-height: var(--min-height);
-    margin: 0 auto;
-    /* Center the body content */
-    overflow: hidden;
+    /* margin: 0 auto; */
+    overflow: auto;
 }
