@@ -11,6 +11,8 @@ import Policy from "./pages/Policy";
 import Cart from "./pages/Cart";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import CreateCategory from './pages/admin/CreateCategory'
+import CreateProduct from './pages/admin/CreateProduct'
 
 function App() {
   return (
@@ -19,7 +21,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="" element={<Layout />}>
-            <Route path="/" element={<Register />} />
+            <Route path="/" element={<CreateProduct />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/policy" element={<Policy />} />
