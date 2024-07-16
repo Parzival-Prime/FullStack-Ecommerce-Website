@@ -3,8 +3,11 @@ import { uploadOnCloudinary } from '../utils/cloudinary.js'
 
 const options = {
     httpOnly: true,
-    secure: true
+    secure: true,
+    path: "/",
+    sameSite: 'none'
 }
+
 
 const generateAccessAndRefreshToken = async (userId) => {
     try {
@@ -25,7 +28,7 @@ const generateAccessAndRefreshToken = async (userId) => {
 export const registerController = async (req, res) => {
     try {
         const { name, email, password, phone, address, answer } = req.body
-        
+
         if (
             !name || !email || !password || !phone || !address || !answer
         ) {
@@ -39,7 +42,7 @@ export const registerController = async (req, res) => {
 
         if (existingUser) return res.status(404).send({ success: false, message: 'User with this email already exists' })
 
-        const ImageLocalPath = req.file?.path 
+        const ImageLocalPath = req.file?.path
 
         const profileImage = await uploadOnCloudinary(ImageLocalPath)
 
@@ -77,8 +80,6 @@ export const loginController = async (req, res) => {
         }
 
         const user = await User.findOne({ email })
-        console.log(password)
-        console.log('user: ', user)
 
         if (!user) {
             return res.status(404).send({
@@ -97,20 +98,22 @@ export const loginController = async (req, res) => {
         }
 
         const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id)
-        console.log('accessToken: ', accessToken)
-        console.log('refreshToken: ', refreshToken)
+        // console.log('accessToken: ', accessToken)
+        // console.log('refreshToken: ', refreshToken)
 
         const loggedInUser = await User.findById(user._id).select('-password -refreshToken')
-        console.log(loggedInUser)
+        // console.log(loggedInUser)
 
         return res
             .status(200)
-            .cookie('accessToken', accessToken, options)
-            .cookie('refreshToken', refreshToken, options)
-            .send({
+            .cookie("accessToken", accessToken, options)
+            .cookie("refreshToken", refreshToken, options)
+            .json({
                 success: true,
                 message: 'User LoggedIn Successfully',
-                user: loggedInUser
+                user: loggedInUser,
+                accessToken: accessToken,
+                refreshToken: refreshToken
             })
 
     } catch (error) {

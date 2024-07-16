@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import FlexCenter from "../../components/FlexCenter";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import "../../styles/login.css";
+
+axios.defaults.withCredentials = true;
 
 function Login() {
   const navigate = useNavigate();
@@ -17,12 +20,15 @@ function Login() {
     e.preventDefault();
     const { data } = await axios.post(
       `http://localhost:3090/api/v1/auth/login`,
-      { email, password }
+      { email, password },
+      { withCredentials: true }
     );
-    if (data.success) {
-      navigate("/");
-      setEmail('')
-      setPassword('')
+    if (data?.success) {
+      toast.success("Logged In Successfully");
+      console.log(data);
+      // navigate("/");
+      setEmail("");
+      setPassword("");
     }
   };
 
