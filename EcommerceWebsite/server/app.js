@@ -26,6 +26,7 @@ app.use(express.static("public"))
 app.use(morgan('dev'))
 app.use(cookieParser())
 
+
 //routes
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/product', productRoute)

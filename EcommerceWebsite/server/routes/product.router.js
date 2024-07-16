@@ -1,10 +1,16 @@
 import express from 'express'
-import { verifyJWT } from '../middlewares/auth.middleware.js'
-import { getAllProductsController } from '../controllers/product.controller.js'
+import { verifyJWT, isAdmin } from '../middlewares/auth.middleware.js'
+import { createProductController } from '../controllers/product.controller.js'
+import { upload } from '../middlewares/multer.middleware.js'
 
 const router = express.Router()
 
-router.route('/get-products').get(getAllProductsController)
+
+// ============ Secured Routes ============ //
+router.route('/create-product').post(verifyJWT, isAdmin, upload.single('file'), createProductController)
+
+
+// router.route('/get-products').get(getAllProductsController)
 
 
 export default router
