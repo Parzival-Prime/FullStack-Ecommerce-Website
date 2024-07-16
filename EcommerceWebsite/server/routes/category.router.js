@@ -1,10 +1,10 @@
 import express from 'express'
 import { verifyJWT } from '../middlewares/auth.middleware.js'
-import { getAllProductsController } from '../controllers/product.controller.js'
+import { getAllCategoriesController } from '../controllers/category.Controller.js'
 
 const router = express.Router()
 
-router.route('/get-products').get(getAllProductsController)
+router.route('/get-categories').get(getAllCategoriesController)
 
 
 export default router
