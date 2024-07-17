@@ -7,83 +7,11 @@ import {
   Button,
   FormControl,
   InputLabel,
-  OutlinedInput,
+  OutlinedInput
 } from "@mui/material";
 import AddCategory from "./AddCategory";
 
-const dummy = [
-  {
-    id: 1,
-    name: "Electronics",
-  },
-  {
-    id: 2,
-    name: "Electronics",
-  },
-  {
-    id: 3,
-    name: "Electronics",
-  },
-  {
-    id: 4,
-    name: "Electronics",
-  },
-  {
-    id: 5,
-    name: "Electronics",
-  },
-  {
-    id: 7,
-    name: "Electronics",
-  },
-  {
-    id: 8,
-    name: "Electronics",
-  },
-  {
-    id: 9,
-    name: "Electronics",
-  },
-  {
-    id: 10,
-    name: "Electronics",
-  },
-  {
-    id: 11,
-    name: "Electronics",
-  },
-  {
-    id: 12,
-    name: "Electronics",
-  },
-  {
-    id: 13,
-    name: "Electronics",
-  },
-  {
-    id: 14,
-    name: "Electronics",
-  },
-  {
-    id: 15,
-    name: "Electronics",
-  },
-];
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  disablePortal: open,
-  disableEnforceFocus: open,
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-function CreateCategory({ categories, category, setCategory }) {
+function CreateCategory({ categories, setCategory }) {
   const [open, setOpen] = useState(false);
 
   const handleChange = (e) => {
@@ -107,16 +35,13 @@ function CreateCategory({ categories, category, setCategory }) {
             labelId="select"
             id="select-id"
             required
-            onChange={(e) => setCategory(e.target.value)}
-            disablePortal={open} // Disable portal when dialog is open
-            disableEnforceFocus={open} // Disable enforce focus when dialog is open
+            onChange={handleChange}
             MenuProps={{
-              disablePortal: open,
-              disableEnforceFocus: open,
               PaperProps: {
                 style: {
                   maxHeight: 200,
                   width: 250,
+                  top: 0
                 },
               },
             }}
@@ -140,18 +65,31 @@ function CreateCategory({ categories, category, setCategory }) {
                 Add
               </Button>
 
-              <AddCategory open={Boolean(open)} handleClose={handleClose} />
             </MenuItem>
-            {dummy.map((object) => (
-              <MenuItem key={object.id} value={object.id}>
-                {object.name}
+            {categories.map((category) => (
+              <MenuItem key={category._id} value={category._id}>
+                {category.name}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
       </Box>
+      <AddCategory open={Boolean(open)} handleClose={handleClose} />
     </>
   );
 }
 
 export default CreateCategory;
+
+
+
+
+
+// .css-zw3mfo-MuiModal-root-MuiDialog-root {
+//   position: fixed;
+//   z-index: 1300;
+//   right: 0;
+//   bottom: 0;
+//   top: -278px;
+//   left: 0;
+// }

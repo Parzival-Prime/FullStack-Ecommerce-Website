@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import toast from "react-hot-toast";
 import {
   Box,
@@ -8,10 +7,10 @@ import {
   TextField,
   InputAdornment,
   Button,
-  MenuItem,
 } from "@mui/material";
 import ImageUploadPreview from "../../components/ImageUploadPreview";
 import CreateCategory from '../../components/CreateCategory'
+import { axiosInstance } from "../../App";
 
 function CreateProduct() {
   const [uploadedImage, setUploadedImage] = useState(null);
@@ -24,8 +23,8 @@ function CreateProduct() {
 
   const getAllCategories = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/get-categories");
-      setCategories(data);
+      const { data } = await axiosInstance.get("/api/v1/category/get-categories");
+      setCategories(data?.categories);
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong in getAllCategories");
@@ -48,7 +47,7 @@ function CreateProduct() {
       formData.append("category", category);
       formData.append("quantity", quantity);
 
-      const { data } = await axios.post(
+      const { data } = await axiosInstance.post(
         "/api/v1/product/create-product",
         formData
       );

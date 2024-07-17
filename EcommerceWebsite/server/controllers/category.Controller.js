@@ -39,7 +39,13 @@ export const createCategoryController = async (req, res) => {
 
 export const getAllCategoriesController = async (req, res) => {
     try {
+        const categories = await CategoryModel.find({}).sort({ createdAt: -1 })
 
+        return res.status(200).json({
+            success: true,
+            message: 'All categories fetched successfully',
+            categories
+        })
     } catch (error) {
         console.log(error)
         return res.status(400).json({

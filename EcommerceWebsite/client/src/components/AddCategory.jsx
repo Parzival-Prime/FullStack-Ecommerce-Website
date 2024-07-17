@@ -5,22 +5,23 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Button
+  Button,
 } from "@mui/material";
-import axios from "axios";
 import toast from "react-hot-toast";
+import { axiosInstance } from "../App";
 
 export default function AddCategory({ open, handleClose }) {
   const [name, setName] = useState("");
 
-  const setClose=()=>{
+  const setClose = () => {
     handleClose();
-  }
+  };
 
   const handleCreate = async (e) => {
     e.preventDefault();
+    console.log(name);
     try {
-      const { data } = await axios.post("/api/v1/category/create-category", {
+      const { data } = await axiosInstance.post("/api/v1/category/create-category", {
         name,
       });
 
@@ -32,14 +33,23 @@ export default function AddCategory({ open, handleClose }) {
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong in Add Category");
+      setClose()
     }
   };
   return (
     <>
-      <Dialog open={open} onClose={setClose}>
+      <Dialog
+        open={open}
+        onClose={setClose}
+        sx={{
+          '& .MuiDialog-root': {
+            top: '-278px'
+          },
+        }}>
         <DialogTitle>Create New Category</DialogTitle>
         <DialogContent>
           <TextField
+            sx={{ marginTop: "15px" }}
             required
             id="name"
             name="name"
@@ -49,7 +59,7 @@ export default function AddCategory({ open, handleClose }) {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={()=>setClose()}>Cancel</Button>
+          <Button onClick={() => setClose()}>Cancel</Button>
           <Button onClick={handleCreate}>Create</Button>
         </DialogActions>
       </Dialog>
