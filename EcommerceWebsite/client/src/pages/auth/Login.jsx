@@ -7,6 +7,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import "../../styles/login.css";
+import { axiosInstance } from "../../App";
 
 axios.defaults.withCredentials = true;
 
@@ -18,8 +19,8 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { data } = await axios.post(
-      `http://localhost:3090/api/v1/auth/login`,
+    const { data } = await axiosInstance.post(
+      `/api/v1/auth/login`,
       { email, password },
       { withCredentials: true }
     );

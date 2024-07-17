@@ -6,6 +6,7 @@ import { styled } from "@mui/material/styles";
 import toast from "react-hot-toast";
 import { Box, FormControl, Typography, Button, TextField } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { axiosInstance } from "../../App";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -64,8 +65,8 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     toast.success("Form Submitted");
-    const { data } = await axios.post(
-      `http://localhost:3090/api/v1/auth/register`,
+    const { data } = await axiosInstance.post(
+      `/api/v1/auth/register`,
       readyFormData,
       {
         headers: {
