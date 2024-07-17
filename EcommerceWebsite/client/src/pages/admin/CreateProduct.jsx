@@ -8,8 +8,10 @@ import {
   TextField,
   InputAdornment,
   Button,
+  MenuItem,
 } from "@mui/material";
 import ImageUploadPreview from "../../components/ImageUploadPreview";
+import CreateCategory from '../../components/CreateCategory'
 
 function CreateProduct() {
   const [uploadedImage, setUploadedImage] = useState(null);
@@ -71,7 +73,9 @@ function CreateProduct() {
   }, []);
 
   return (
-    <Box sx={{ height: "90vh", backgroundColor: "limegreen", padding: "15px" }}>
+    <Box
+      sx={{ height: "100vh", background: "var(--linearGradient1)", padding: "15px" }}
+    >
       <Typography
         variant="h1"
         sx={{
@@ -104,28 +108,13 @@ function CreateProduct() {
               variant="outlined"
               label="Name of Product"
               required
-              focused
               value={name}
               onChange={(e) => setName(e.target.value)}
               sx={{
                 color: "var(--darkColor)",
               }}
             />
-            <TextField
-              variant="outlined"
-              select
-              label="Select Category"
-              onChange={(e) => setCategory(e.target.value)}
-              required
-              focused
-              color="grey"
-            >
-              {categories?.map((category) => (
-                <MenuItem key={category._id} value={category._id}>
-                  {category.name}
-                </MenuItem>
-              ))}
-            </TextField>
+            <CreateCategory categories={categories} setCategory={setCategory}/>
             <TextField
               label="Price"
               value={price}
@@ -139,7 +128,6 @@ function CreateProduct() {
             <TextField
               label="Quantity"
               required
-              focused
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
             />
@@ -147,7 +135,6 @@ function CreateProduct() {
               label="Description"
               multiline
               maxRows={4}
-              focused
               required
               value={description}
               onChange={(e) => setDescription(e.target.value)}

@@ -55,8 +55,8 @@ const ImageUploadPreview = ({  onImageChange }) => {
             src={preview}
             alt="Image Preview"
             style={{
-              maxWidth: "9rem",
-              maxHeight: "13rem",
+              maxWidth: "6rem",
+              maxHeight: "10rem",
               borderRadius: "8px",
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             }}

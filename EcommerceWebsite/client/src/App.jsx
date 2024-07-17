@@ -11,7 +11,6 @@ import Policy from "./pages/Policy";
 import Cart from "./pages/Cart";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
-import CreateCategory from './pages/admin/CreateCategory'
 import CreateProduct from './pages/admin/CreateProduct'
 
 function App() {
