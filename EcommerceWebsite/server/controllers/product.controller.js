@@ -5,7 +5,8 @@ import { uploadOnCloudinary } from '../utils/cloudinary.js'
 
 export const createProductController = async (req, res) => {
     try {
-        console.log(req.body)
+        // console.log('\n\n\n req:  ',req)
+        console.log('\n\n\n req.body:  ',req.body)
         const { name, description, price, category, quantity, rating } = req.body
 
         if ([name, description, price, category, quantity, rating].some((item) => (item?.trim() == "" ? true : false))) {
@@ -13,7 +14,7 @@ export const createProductController = async (req, res) => {
         }
 
         const ImageLocalPath = req.file?.path
-        console.log(ImageLocalPath)
+        console.log('ImageLocalPath : ',ImageLocalPath)
 
         const image = await uploadOnCloudinary(ImageLocalPath)
 

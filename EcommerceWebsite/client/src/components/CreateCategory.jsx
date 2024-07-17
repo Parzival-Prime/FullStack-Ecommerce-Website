@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import AddCategory from "./AddCategory";
 
-function CreateCategory({ categories, setCategory }) {
+function CreateCategory({ categories, category, setCategory }) {
   const [open, setOpen] = useState(false);
 
   const handleChange = (e) => {
@@ -35,6 +35,7 @@ function CreateCategory({ categories, setCategory }) {
             labelId="select"
             id="select-id"
             required
+            value={category}
             onChange={handleChange}
             MenuProps={{
               PaperProps: {

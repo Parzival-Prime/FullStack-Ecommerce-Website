@@ -12,6 +12,7 @@ import ImageUploadPreview from "../../components/ImageUploadPreview";
 import CreateCategory from '../../components/CreateCategory'
 import { axiosInstance } from "../../App";
 
+
 function CreateProduct() {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [name, setName] = useState("");
@@ -47,9 +48,21 @@ function CreateProduct() {
       formData.append("category", category);
       formData.append("quantity", quantity);
 
+      const jsonObject = {};
+      formData.forEach((value, key) => {
+        jsonObject[key] = value;
+      });
+
+      console.log('FormData: ', jsonObject);
+
       const { data } = await axiosInstance.post(
         "/api/v1/product/create-product",
-        formData
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
       );
 
       if (data?.success) {
@@ -113,7 +126,7 @@ function CreateProduct() {
                 color: "var(--darkColor)",
               }}
             />
-            <CreateCategory categories={categories} setCategory={setCategory}/>
+            <CreateCategory categories={categories} category={category} setCategory={setCategory} />
             <TextField
               label="Price"
               value={price}

@@ -8,6 +8,7 @@ const ImageUploadPreview = ({  onImageChange }) => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    console.log('File in Component', file)
     if (file) {
       setImage(file);
       const reader = new FileReader();
