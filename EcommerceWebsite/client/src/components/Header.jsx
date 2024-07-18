@@ -25,43 +25,14 @@ function Header() {
     navRef.current.classList.toggle("column-nav-list-show");
   };
 
-  const toggleNavMenu = ()=>{
+  const toggleNavMenu = () => {
     handleBackdropToggle()
     toggleNav()
   }
 
-
-  {
-    // const handleBackdropToggle = (prop) => {
-    //   setOpen(prev => !prev)
-    //   console.log(`BackDrop is ${!open ? 'Open' : 'Closed'}`)
-    // }
-
-
-    // const handleClose = () => {
-    //   setOpen(false)
-    // }
-
-    // const handleOpen = () => {
-    //   setOpen(true)
-    // }
-
-    // const handleBackdropToggle = (prop) => {
-    //   setOpen(prev => !prev)
-    //   console.log(`BackDrop is ${!open ? 'Open' : 'Closed'}`)
-    // }
-
-    // const addtoggleNav = () => {
-    //   navRef.current.classList.add("column-nav-list-show");
-    //   console.log(`toggleNav is ${!open ? 'Open' : 'Closed'}`)
-    //   // handleBackdropToggle()
-    // };
-
-    // const removetoggleNav = () => {
-    //   navRef.current.classList.add("column-nav-list-show");
-    //   console.log(`toggleNav is ${!open ? 'Open' : 'Closed'}`)
-    //   // handleBackdropToggle()
-    // };
+  const handleNavLinkClick = (e) => {
+    e.stopPropagation()
+    toggleNavMenu()
   }
 
   function checkIsLoggedInState() {
@@ -73,7 +44,7 @@ function Header() {
 
   useEffect(() => {
     checkIsLoggedInState()
-  }, [])
+  }, [dispatch])
 
   return (
     <>
@@ -129,28 +100,40 @@ function Header() {
         onClick={toggleNavMenu}
       >
         <div className="column-nav-list" ref={navRef}>
-          <ul>
-            <NavLink to="/" onClick={toggleNavMenu}>
-              <li className="item item1">Home</li>
+          <ul className="navigation-list">
+            <NavLink to="/" className="nav-item" onClick={handleNavLinkClick}>
+              <li className="nav-li" >
+                Home
+              </li>
             </NavLink>
-            <NavLink to="/products" onClick={toggleNavMenu}>
-              <li className="item item3">All Products</li>
+            <NavLink onClick={handleNavLinkClick} to="/products" className="nav-item" >
+              <li className="nav-li">
+                All Products
+              </li>
             </NavLink>
-            <NavLink to="/cart" onClick={toggleNavMenu}>
-              <li className="item item4">Cart</li>
+            <NavLink to="/cart" className="nav-item" onClick={handleNavLinkClick}>
+              <li className="nav-li">
+                Cart
+
+              </li>
             </NavLink>
-            <NavLink to="/your-account" onClick={toggleNavMenu}>
-              <li className="item item5">Your Account</li>
+            <NavLink to="/your-account" className="nav-item" onClick={handleNavLinkClick}>
+              <li className="nav-li">
+                Your Account
+              </li>
             </NavLink>
             {isLoggedIn ? (
-              <span onClick={toggleNavMenu}>
-                <li className="item item2">
+              <span className="nav-item" onClick={handleNavLinkClick}>
+                <li className="nav-li">
                   <Logout />
                 </li>
               </span>
             ) : (
-              <NavLink to="/login" onClick={toggleNavMenu}>
-                <li className="item item2">LogIn</li>
+              <NavLink to="/login" className="nav-item" onClick={handleNavLinkClick}>
+                <li className="nav-li">
+                  LogIn
+
+                </li>
               </NavLink>
             )}
           </ul>
