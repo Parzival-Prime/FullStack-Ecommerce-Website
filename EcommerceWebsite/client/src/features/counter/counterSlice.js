@@ -4,7 +4,7 @@ export const counterSlice = createSlice({
     name: 'counter',
     initialState: {
         showPreview: true,
-        isLoggedIn: false
+        isLoggedIn: false,
     },
     reducers: {
         setShowPreviewFalse: (state) => {
@@ -21,12 +21,17 @@ export const counterSlice = createSlice({
 
         setIsLoggedInFalse: (state) => {
             state.isLoggedIn = false
-        }
+        },
     }
 })
 
 
 
-export const { setShowPreviewFalse, setShowPreviewTrue, setIsLoggedInFalse, setIsLoggedInTrue } = counterSlice.actions
+export const {
+    setShowPreviewFalse,
+    setShowPreviewTrue,
+    setIsLoggedInFalse,
+    setIsLoggedInTrue,
+} = counterSlice.actions
 
 export default counterSlice.reducer

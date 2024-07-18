@@ -13,6 +13,7 @@ import Cart from "./pages/Cart";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import CreateProduct from './pages/admin/CreateProduct'
+import Products from "./pages/Products";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3090",
@@ -21,7 +22,6 @@ const axiosInstance = axios.create({
 
 axiosInstance.defaults.headers.common["Content-Type"] = "application/json";
 axiosInstance.defaults.headers.common["Accept"] = "application/json";
-// axiosInstance.defaults.headers.common["withCredentials"] = true;
 
 export { axiosInstance };
 
@@ -32,13 +32,14 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="" element={<Layout />}>
-            <Route path="/" element={<Register />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/policy" element={<Policy />} />
+            <Route path="/createProduct" element={<CreateProduct />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
-            {/* <Route path="/logout" element={<Logout />} /> */}
+            <Route path="/products" element={<Products />} />
             <Route path="/register" element={<Register />} />
           </Route>
           <Route path="/*" element={<PageNotFound />} />
