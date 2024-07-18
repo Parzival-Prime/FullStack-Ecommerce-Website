@@ -11,9 +11,14 @@ import {
 import ImageUploadPreview from "../../components/ImageUploadPreview";
 import CreateCategory from '../../components/CreateCategory'
 import { axiosInstance } from "../../App";
+import { setShowPreviewFalse, setShowPreviewTrue } from "../../features/counter/counterSlice.js";
+import { useDispatch } from "react-redux";
 
 
 function CreateProduct() {
+
+  const dispatch = useDispatch()
+
   const [uploadedImage, setUploadedImage] = useState(null);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -21,7 +26,6 @@ function CreateProduct() {
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState("");
   const [categories, setCategories] = useState([]);
-  const [showPreview, setShowPreview] = useState(true)
 
   const getAllCategories = async () => {
     try {
@@ -34,7 +38,7 @@ function CreateProduct() {
   };
 
   const handleImageChange = (imageData) => {
-    // console.log(imageData);
+    dispatch(setShowPreviewTrue())
     setUploadedImage(imageData);
   };
 
@@ -54,7 +58,6 @@ function CreateProduct() {
         jsonObject[key] = value;
       });
 
-      // console.log('FormData: ', jsonObject);
 
       const { data } = await axiosInstance.post(
         "/api/v1/product/create-product",
@@ -74,7 +77,7 @@ function CreateProduct() {
         setCategory("");
         setQuantity("");
         setUploadedImage(null);
-        setShowPreview(false)
+        dispatch(setShowPreviewFalse())
       }
     } catch (error) {
       console.log(error);
@@ -153,7 +156,7 @@ function CreateProduct() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-            <ImageUploadPreview onImageChange={handleImageChange} success={showPreview} />
+            <ImageUploadPreview onImageChange={handleImageChange} />
             <Button type="submit" variant="contained">
               Submit
             </Button>

@@ -8,10 +8,13 @@ import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import "../../styles/login.css";
 import { axiosInstance } from "../../App";
+import { useDispatch } from "react-redux";
+import { setIsLoggedInTrue } from '../../features/counter/counterSlice.js'
 
 axios.defaults.withCredentials = true;
 
 function Login() {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -21,13 +24,14 @@ function Login() {
     e.preventDefault();
     const { data } = await axiosInstance.post(
       `/api/v1/auth/login`,
-      { email, password },
-      { withCredentials: true }
+      { email, password }
     );
     if (data?.success) {
       toast.success("Logged In Successfully");
       console.log(data);
       // navigate("/");
+      localStorage.setItem('user', JSON.stringify(data?.user))
+      dispatch(setIsLoggedInTrue())
       setEmail("");
       setPassword("");
     }

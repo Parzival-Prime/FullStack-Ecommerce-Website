@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { useSelector } from "react-redux";
 
-const ImageUploadPreview = ({  onImageChange, success }) => {
-  const [image, setImage] = useState(null);
+const ImageUploadPreview = ({  onImageChange }) => {
+
+  const showPreview = useSelector((state)=>state.counter.showPreview)
+
   const [preview, setPreview] = useState("");
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    // console.log('File in Component', file)
     if (file) {
-      setImage(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result);
@@ -49,9 +50,8 @@ const ImageUploadPreview = ({  onImageChange, success }) => {
         style={{ display: "none" }}
         onChange={handleImageChange}
       />
-      {(preview && success) ? (
+      {showPreview && preview ? (
         <Box sx={{ mt: 2, textAlign: "center" }}>
-          {/* <Typography variant="h6">Image Preview</Typography> */}
           <img
             src={preview}
             alt="Image Preview"

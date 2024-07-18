@@ -98,11 +98,8 @@ export const loginController = async (req, res) => {
         }
 
         const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id)
-        // console.log('accessToken: ', accessToken)
-        // console.log('refreshToken: ', refreshToken)
 
         const loggedInUser = await User.findById(user._id).select('-password -refreshToken')
-        // console.log(loggedInUser)
 
         return res
             .status(200)

@@ -1,18 +1,34 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/header.css";
 import MenuIcon from "@mui/icons-material/Menu";
 import { IconButton, Box } from "@mui/material";
 import FlexCenter from "./FlexCenter";
 import SearchIcon from "@mui/icons-material/Search";
+import Logout from "../pages/auth/Logout";
+import { useSelector, useDispatch } from "react-redux";
+import { setIsLoggedInTrue } from "../features/counter/counterSlice";
 
 function Header() {
+  let isLoggedIn = useSelector((state) => state.counter.isLoggedIn)
+  const dispatch = useDispatch()
   const navRef = useRef();
   const navigate = useNavigate();
+
+  function checkIsLoggedInState(){
+    const user = localStorage.getItem('user')
+    if(user){
+      dispatch(setIsLoggedInTrue())
+    }
+  }
 
   const toggleNav = () => {
     navRef.current.classList.toggle("column-nav-list-show");
   };
+
+  useEffect(()=>{
+    checkIsLoggedInState()
+  }, [])
 
   return (
     <>
@@ -21,8 +37,8 @@ function Header() {
           <FlexCenter
             sx={{ fontSize: ".9rem", fontFamily: "Playwrite BE VLG" }}
           >
-            <Box variant="span" sx={{display: 'flex', alignSelf: 'start'}}>Wispering</Box>
-            <Box variant="span" sx={{display: 'flex', alignSelf: 'end'}}>Willow</Box>
+            <Box variant="span" sx={{ display: 'flex', alignSelf: 'start' }}>Wispering</Box>
+            <Box variant="span" sx={{ display: 'flex', alignSelf: 'end' }}>Willow</Box>
           </FlexCenter>
 
           {/* row list */}
@@ -72,10 +88,12 @@ function Header() {
               <NavLink to="/your-account" onClick={toggleNav}>
                 <li className="item item5">Your Account</li>
               </NavLink>
-              {false ? (
-                <NavLink to="/logout" onClick={toggleNav}>
-                  <li className="item item2">Logout</li>
-                </NavLink>
+              {isLoggedIn ? (
+                <span onClick={toggleNav}>
+                  <li className="item item2">
+                    <Logout />
+                  </li>
+                </span>
               ) : (
                 <NavLink to="/login" onClick={toggleNav}>
                   <li className="item item2">LogIn</li>

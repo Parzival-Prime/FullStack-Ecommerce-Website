@@ -21,6 +21,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.defaults.headers.common["Content-Type"] = "application/json";
 axiosInstance.defaults.headers.common["Accept"] = "application/json";
+// axiosInstance.defaults.headers.common["withCredentials"] = true;
 
 export { axiosInstance };
 
@@ -31,14 +32,15 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="" element={<Layout />}>
-            <Route path="/" element={<CreateProduct />} />
+            <Route path="/" element={<Register />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/policy" element={<Policy />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/login" element={<Login />} />
+            {/* <Route path="/logout" element={<Logout />} /> */}
+            <Route path="/register" element={<Register />} />
           </Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
           <Route path="/*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

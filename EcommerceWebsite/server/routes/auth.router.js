@@ -21,7 +21,7 @@ router.route('/login').post(loginController)
 
 
 // ========= Secured Routes ========== //
-router.route('/logout').post(verifyJWT, logoutController)
+router.route('/logout').get(verifyJWT, logoutController)
 
 // Profile Routes
 router.route('/change-password').patch(verifyJWT, changePasswordController)
