@@ -21,6 +21,7 @@ function CreateProduct() {
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState("");
   const [categories, setCategories] = useState([]);
+  const [showPreview, setShowPreview] = useState(true)
 
   const getAllCategories = async () => {
     try {
@@ -33,7 +34,7 @@ function CreateProduct() {
   };
 
   const handleImageChange = (imageData) => {
-    console.log(imageData);
+    // console.log(imageData);
     setUploadedImage(imageData);
   };
 
@@ -53,7 +54,7 @@ function CreateProduct() {
         jsonObject[key] = value;
       });
 
-      console.log('FormData: ', jsonObject);
+      // console.log('FormData: ', jsonObject);
 
       const { data } = await axiosInstance.post(
         "/api/v1/product/create-product",
@@ -73,6 +74,7 @@ function CreateProduct() {
         setCategory("");
         setQuantity("");
         setUploadedImage(null);
+        setShowPreview(false)
       }
     } catch (error) {
       console.log(error);
@@ -151,7 +153,7 @@ function CreateProduct() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-            <ImageUploadPreview onImageChange={handleImageChange} />
+            <ImageUploadPreview onImageChange={handleImageChange} success={showPreview} />
             <Button type="submit" variant="contained">
               Submit
             </Button>

@@ -19,7 +19,7 @@ export default function AddCategory({ open, handleClose }) {
 
   const handleCreate = async (e) => {
     e.preventDefault();
-    console.log(name);
+    // console.log(name);
     try {
       const { data } = await axiosInstance.post("/api/v1/category/create-category", {
         name,

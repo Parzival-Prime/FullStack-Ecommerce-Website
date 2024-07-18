@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-const ImageUploadPreview = ({  onImageChange }) => {
+const ImageUploadPreview = ({  onImageChange, success }) => {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState("");
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    console.log('File in Component', file)
+    // console.log('File in Component', file)
     if (file) {
       setImage(file);
       const reader = new FileReader();
@@ -49,7 +49,7 @@ const ImageUploadPreview = ({  onImageChange }) => {
         style={{ display: "none" }}
         onChange={handleImageChange}
       />
-      {preview ? (
+      {(preview && success) ? (
         <Box sx={{ mt: 2, textAlign: "center" }}>
           {/* <Typography variant="h6">Image Preview</Typography> */}
           <img

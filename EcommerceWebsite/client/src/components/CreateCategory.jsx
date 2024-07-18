@@ -84,13 +84,3 @@ export default CreateCategory;
 
 
 
-
-
-// .css-zw3mfo-MuiModal-root-MuiDialog-root {
-//   position: fixed;
-//   z-index: 1300;
-//   right: 0;
-//   bottom: 0;
-//   top: -278px;
-//   left: 0;
-// }
