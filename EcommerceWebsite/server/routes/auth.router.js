@@ -5,7 +5,8 @@ import {
     logoutController,
     changePasswordController,
     userProfileController,
-    updateUserController
+    updateUserController,
+    addToCartController
 } from '../controllers/auth.controller.js'
 import { verifyJWT } from '../middlewares/auth.middleware.js'
 import { upload } from '../middlewares/multer.middleware.js'
@@ -22,6 +23,8 @@ router.route('/login').post(loginController)
 
 // ========= Secured Routes ========== //
 router.route('/logout').get(verifyJWT, logoutController)
+
+router.route('/add-to-cart').post(verifyJWT, addToCartController)
 
 // Profile Routes
 router.route('/change-password').patch(verifyJWT, changePasswordController)

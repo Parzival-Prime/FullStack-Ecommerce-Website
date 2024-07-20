@@ -54,3 +54,4 @@ export const getAllProductsController = async (req, res) => {
         })
     }
 }
+

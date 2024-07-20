@@ -207,3 +207,36 @@ export const updateUserController = async (req, res) => {
         })
     }
 }
+
+
+
+
+export const addToCartController = async (req, res) => {
+    try {
+        const { productId, quantity } = req.body
+        const user = req.user
+
+        if (!productId || !quantity) return res.status(404).send({ success: false, message: 'Product not found' })
+
+        const result = await User.updateOne(
+            { _id: user._id },
+            { $push: { cart: { productId, quantity } } }
+        )
+
+
+        if (!result) return res.status(500).send({ success: false, message: 'Something went wrong' })
+
+        return res.status(200).send({
+            success: true,
+            message: 'Item added to cart successfully',
+            result
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(400).send({
+            success: false,
+            message: 'Something went wrong in addToCart Controller'
+        })
+    }
+}
