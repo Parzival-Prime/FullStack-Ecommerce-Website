@@ -258,8 +258,8 @@ function Products() {
                                         image={product.image}
                                         alt="Product Image"
                                     />
-                                    <CardContent sx={{ height: 140 }}>
-                                        <Typography gutterBottom variant="h5" sx={{ fontSize: '1.05rem', fontWeight: "500" }}>
+                                    <CardContent sx={{ height: 140, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                                        <Typography gutterBottom variant="h5" sx={{ fontSize: '1rem', fontWeight: '500'}}>
                                             {product.name}
                                         </Typography>
                                         <Typography variant="body2" color="text.secondary">
@@ -268,6 +268,9 @@ function Products() {
                                     </CardContent>
                                 </CardActionArea>
                                 <CardActions sx={{ display: 'flex', justifyContent: 'end', position: 'sticky', bottom: '0' }}>
+                                        <Typography sx={{marginRight: '.5rem'}}>
+                                            ${product.price}
+                                        </Typography>
                                     <IconButton sx={{
                                         backgroundColor: 'greenyellow'
                                     }} value={product._id} >
