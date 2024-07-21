@@ -1,5 +1,6 @@
 import { User } from '../models/user.model.js'
 import { uploadOnCloudinary } from '../utils/cloudinary.js'
+import mongoose from 'mongoose'
 
 const options = {
     httpOnly: true,
@@ -215,22 +216,42 @@ export const addToCartController = async (req, res) => {
     try {
         const { productId, quantity } = req.body
         const user = req.user
+        console.log(req.body)
+        if (!productId) return res.status(404).send({ success: false, message: 'ProductId not found' })
 
-        if (!productId || !quantity) return res.status(404).send({ success: false, message: 'Product not found' })
+        
+        if (quantity === null) {
+            try {
+                const newId = new mongoose.Types.ObjectId()
+                const result = await User.findOneAndUpdate({ _id: user._id }, { $push: { cart: {productId, quantity: 1, _id: newId} } }, { new: true })
 
-        const result = await User.updateOne(
-            { _id: user._id },
-            { $push: { cart: { productId, quantity } } }
-        )
+                return res.status(200).send({
+                    success: true,
+                    message: 'Item added to cart successfully',
+                    result
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        }
 
+        else if (quantity !== null) {
+            try {
+                const result = await User.findOneAndUpdate(
+                    { _id: user._id, "cart.productId": productId },
+                    { $set: { "cart.$.quantity": quantity } }, { new: true }
+                )
 
-        if (!result) return res.status(500).send({ success: false, message: 'Something went wrong' })
-
-        return res.status(200).send({
-            success: true,
-            message: 'Item added to cart successfully',
-            result
-        })
+                console.log(result)
+                return res.status(200).send({
+                    success: true,
+                    message: 'Item added to cart successfully',
+                    result
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        }
 
     } catch (error) {
         console.log(error)

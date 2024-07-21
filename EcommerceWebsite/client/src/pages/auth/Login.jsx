@@ -29,9 +29,10 @@ function Login() {
     if (data?.success) {
       toast.success("Logged In Successfully");
       console.log(data);
-      // navigate("/");
+      navigate("/");
       localStorage.setItem('user', JSON.stringify(data?.user))
       dispatch(setIsLoggedInTrue())
+      toast.success('User LoggedIn successfully!')
       setEmail("");
       setPassword("");
     }

@@ -1,0 +1,127 @@
+.cart-container {
+    height: 90svh;
+    padding: 5px;
+    background-color: var(--greybgc);
+}
+
+.cart-title {
+    font-size: 3rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.cart-list-section {
+    margin-top: 8px;
+}
+
+.cart-list-container {
+    margin-top: 6px;
+    height: 40rem;
+}
+
+.cart-list-item {
+    position: relative;
+    height: 18rem;
+    background-color: var(--bluegrey);
+    display: flex;
+    gap: 15px;
+    border-radius: 18px;
+    padding-top: 35px;
+    padding-left: 10px;
+}
+
+.cart-list-item-checkbox {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+}
+
+.cart-item-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-item-image {
+    height: 9.3rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+}
+
+.cart-quantity-box {
+    align-self: center;
+    padding: 0;
+    width: fit-content;
+    height: 2.3rem;
+    border: 1px solid rgb(165, 165, 165) !important;
+    border-radius: 12px !important;
+}
+
+.cart-quantity-decrement {
+    background-color: rgba(200, 219, 216, 0.897) !important;
+    width: 2.5rem;
+    border: none;
+    border-radius: 11px 0 0 11px !important;
+    color: black !important;
+}
+
+.cart-quantity-value {
+    background-color: rgb(243, 243, 243) !important;
+    color: black !important;
+    border: none;
+    border-left: 1px solid rgb(165, 165, 165) !important;
+    border-right: 1px solid rgb(165, 165, 165) !important;
+    width: 3rem;
+    font-size: 1.1rem !important;
+}
+
+.cart-quantity-increment {
+    background-color: rgba(200, 219, 216, 0.897) !important;
+    width: 2.5rem;
+    border: none;
+    border-radius: 0 11px 11px 0 !important;
+    color: black !important;
+}
+
+.cart-item-right {
+    padding-right: 3px;
+}
+
+.cart-item-title {
+    font-size: 1.2rem !important;
+    font-weight: 500 !important;
+}
+
+.cart-item-price {
+    font-size: 1.3rem !important;
+    font-weight: 500 !important;
+}
+
+.cart-item-quantity-check {
+    color: green !important;
+}
+
+.cart-item-replacement {
+    font-size: .9rem !important;
+    color: rgb(1, 90, 75);
+}
+
+.cart-item-right-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.cart-button-delete {
+    margin-right: 3.2rem;
+    margin-top: .4rem;
+    width: 4.5rem;
+    height: 1.8rem;
+    border: 1px solid rgb(151, 180, 174);
+    border-radius: 15px;
+    background-color: rgba(222, 245, 241, 0.897);
+    transform: box-shadow .2s ;
+}
+
+.cart-button-delete:hover{
+    box-shadow: -3px -4px 4px rgba(240, 250, 248, 0.986),
+                 2px 3px 3px rgba(140, 180, 168, 0.575);
+}

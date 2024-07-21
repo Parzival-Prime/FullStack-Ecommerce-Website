@@ -10,11 +10,13 @@
 :root {
     --darkColor: #111111;
     --textColor: #ffff;
+    --greybgc: rgba(245, 245, 245, 0.87);
     --subTextColor: #9b9b9b;
-    --greenCream: rgb(139, 220, 175);
+    --greenCream: rgb(162, 252, 203);
     --blueCream: rgb(139, 220, 211);
-    --greenDarkCream: rgb(64, 193, 123);
+    --greenDarkCream: rgb(122, 240, 175);
     --blueDarkCream: rgb(64, 193, 176);
+    --bluegrey: rgba(220, 238, 235, 0.897);
     --titleFont: "Playwrite BE VLG", cursive;
     --mainFont: "Poppins", sans-serif;
     --logoFontWeight: 400;

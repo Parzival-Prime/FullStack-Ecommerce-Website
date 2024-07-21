@@ -26,6 +26,7 @@ router.route('/logout').get(verifyJWT, logoutController)
 
 router.route('/add-to-cart').post(verifyJWT, addToCartController)
 
+
 // Profile Routes
 router.route('/change-password').patch(verifyJWT, changePasswordController)
 

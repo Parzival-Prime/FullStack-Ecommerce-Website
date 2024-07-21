@@ -38,7 +38,6 @@ export const createProductController = async (req, res) => {
 
 export const getAllProductsController = async (req, res) => {
     try {
-        console.log('I am here inside container')
         const products = await ProductModel.find({})
 
         return res.status(200).json({
@@ -55,3 +54,15 @@ export const getAllProductsController = async (req, res) => {
     }
 }
 
+
+export const getCartItems = async(req, res)=>{
+    try {
+        console.log(req.body)
+    } catch (error) {
+     console.log(error)
+     return res.send(400).send({
+        success: false,
+        message: 'Something went wrong in getCartItems Controller'
+     })   
+    }
+}
