@@ -5,13 +5,13 @@ import { getAllCategoriesController, createCategoryController } from '../control
 const router = express.Router()
 
 
+router.route('/get-categories').get(getAllCategoriesController)
+
+
 // ========== Secured Routes ========== //
 
 router.route('/create-category').post(verifyJWT, isAdmin, createCategoryController)
 
-
-
-router.route('/get-categories').get(getAllCategoriesController)
 
 
 export default router

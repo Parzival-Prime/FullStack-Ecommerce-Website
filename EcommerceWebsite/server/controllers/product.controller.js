@@ -55,14 +55,27 @@ export const getAllProductsController = async (req, res) => {
 }
 
 
-export const getCartItems = async(req, res)=>{
+export const getCartItems = async (req, res) => {
     try {
-        console.log(req.body)
+        const productIds = req.body
+
+        if (productIds.length === 0) return res.status(404).send({ success: false, message: 'No Id found in req.body' })
+
+        const fetchedProducts = await ProductModel.find({ _id: { $in: productIds } })
+
+        if(!fetchedProducts || fetchedProducts.length === 0) return res.status(500).send({success: false, message: 'Something went wrong in fetching Products'})
+        
+        return res.status(200).send({
+            success: true,
+            message: 'All Products fetched Successfully',
+            fetchedProducts
+        })
+
     } catch (error) {
-     console.log(error)
-     return res.send(400).send({
-        success: false,
-        message: 'Something went wrong in getCartItems Controller'
-     })   
+        console.log(error)
+        return res.send(400).send({
+            success: false,
+            message: 'Something went wrong in getCartItems Controller'
+        })
     }
 }

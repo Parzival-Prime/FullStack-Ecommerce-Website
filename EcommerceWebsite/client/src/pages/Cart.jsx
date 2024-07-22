@@ -8,21 +8,107 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 const data = {
-  "products": [
-    {
-      "_id": "6698172f0a9a95ee22c8c977",
-      "name": "Herbal Shampoo",
-      "slug": "herbal-shampoo",
-      "description": "A nourishing shampoo with natural herbal extracts to strengthen and revitalize hair.",
-      "price": 15.99,
-      "category": "6697aeb41985a49661a6612f",
-      "image": "http://res.cloudinary.com/dro8qbk8j/image/upload/v1721243439/l8qqrbdw0j76coa3evby.avif",
-      "quantity": 120,
-      "rating": 0,
-      "createdAt": "2024-07-17T19:10:39.737Z",
-      "updatedAt": "2024-07-17T19:10:39.737Z",
-      "__v": 0
-    },
+  "success": true,
+  "message": "All Products fetched Successfully",
+  "fetchedProducts": [
+      {
+          "_id": "6698172f0a9a95ee22c8c977",
+          "name": "Herbal Shampoo",
+          "slug": "herbal-shampoo",
+          "description": "A nourishing shampoo with natural herbal extracts to strengthen and revitalize hair.",
+          "price": 15.99,
+          "category": "6697aeb41985a49661a6612f",
+          "image": "http://res.cloudinary.com/dro8qbk8j/image/upload/v1721243439/l8qqrbdw0j76coa3evby.avif",
+          "quantity": 120,
+          "rating": 0,
+          "createdAt": "2024-07-17T19:10:39.737Z",
+          "updatedAt": "2024-07-17T19:10:39.737Z",
+          "__v": 0
+      },
+      {
+          "_id": "6698ae34f7adb10563f682c4",
+          "name": "Silky Smooth Conditioner",
+          "slug": "silky-smooth-conditioner",
+          "description": "A conditioner that provides silky smooth texture and shine to your hair.",
+          "price": 12.99,
+          "category": "6697b6b1fa345a7e838684ea",
+          "image": "http://res.cloudinary.com/dro8qbk8j/image/upload/v1721282100/gmddlbjxwxu6kilatwum.avif",
+          "quantity": 80,
+          "rating": 0,
+          "createdAt": "2024-07-18T05:55:00.059Z",
+          "updatedAt": "2024-07-18T05:55:00.059Z",
+          "__v": 0
+      },
+      {
+          "_id": "6698b251f7adb10563f682cf",
+          "name": "Argon Oil Hair Serum",
+          "slug": "argon-oil-hair-serum",
+          "description": "A premium hair serum enriched with Argan oil for deep nourishment and shine.",
+          "price": 25.99,
+          "category": "6697b6c4fa345a7e838684f0",
+          "image": "http://res.cloudinary.com/dro8qbk8j/image/upload/v1721283154/hm8mpccbmakts0x1fx70.avif",
+          "quantity": 50,
+          "rating": 0,
+          "createdAt": "2024-07-18T06:12:33.538Z",
+          "updatedAt": "2024-07-18T06:12:33.538Z",
+          "__v": 0
+      },
+      {
+          "_id": "6698b336f7adb10563f682d4",
+          "name": "Volumizing Mousse",
+          "slug": "volumizing-mousse",
+          "description": "A lightweight mousse that adds volume and lift to your hair without weighing it down.",
+          "price": 18.99,
+          "category": "6697b7b6fa345a7e83868502",
+          "image": "http://res.cloudinary.com/dro8qbk8j/image/upload/v1721283382/cmcwuqtaojj57jtq5z28.avif",
+          "quantity": 90,
+          "rating": 0,
+          "createdAt": "2024-07-18T06:16:22.265Z",
+          "updatedAt": "2024-07-18T06:16:22.265Z",
+          "__v": 0
+      },
+      {
+          "_id": "6698b4d1f7adb10563f682dd",
+          "name": "Anti-Dandruff Shampoo",
+          "slug": "anti-dandruff-shampoo",
+          "description": "A powerful anti-dandruff shampoo that helps eliminate flakes and soothe the scalp.",
+          "price": 14.99,
+          "category": "6697aeb41985a49661a6612f",
+          "image": "http://res.cloudinary.com/dro8qbk8j/image/upload/v1721283794/tnyvsjbgfebf5gunrymn.avif",
+          "quantity": 110,
+          "rating": 0,
+          "createdAt": "2024-07-18T06:23:13.869Z",
+          "updatedAt": "2024-07-18T06:23:13.869Z",
+          "__v": 0
+      },
+      {
+          "_id": "6698c027f7adb10563f682f1",
+          "name": "Leave-In Conditioner",
+          "slug": "leave-in-conditioner",
+          "description": "A leave-in conditioner that provides all-day moisture and protection for your hair.",
+          "price": 13.99,
+          "category": "6697b6b1fa345a7e838684ea",
+          "image": "http://res.cloudinary.com/dro8qbk8j/image/upload/v1721286696/wkemzsgd0j4zn4fp0hlp.avif",
+          "quantity": 70,
+          "rating": 0,
+          "createdAt": "2024-07-18T07:11:35.845Z",
+          "updatedAt": "2024-07-18T07:11:35.845Z",
+          "__v": 0
+      },
+      {
+          "_id": "6698c310f7adb10563f68303",
+          "name": "Green Tea Cleanser",
+          "slug": "green-tea-cleanser",
+          "description": "A gentle green tea cleanser that removes impurities and refreshes the skin.",
+          "price": 11.75,
+          "category": "6697b839fa345a7e83868510",
+          "image": "http://res.cloudinary.com/dro8qbk8j/image/upload/v1721287441/f5ialjqzkvdsvljw0h0q.jpg",
+          "quantity": 130,
+          "rating": 0,
+          "createdAt": "2024-07-18T07:24:00.617Z",
+          "updatedAt": "2024-07-18T07:24:00.617Z",
+          "__v": 0
+      }
   ]
 }
 
@@ -32,22 +118,25 @@ function Cart() {
   const [productIds, setProductIds] = useState([])
   const [products, setProducts] = useState([])
 
-  const getCartItemsfromLocalStorage = async()=>{
+  const getCartItemsfromLocalStorage = ()=>{
     try {
       const user = JSON.parse(localStorage.getItem('user'))
-      await user.cart.forEach((product)=>{setProductIds([...productIds, product.productId])})
+      setCartItems(user.cart)
+      const Ids = user.cart.map(product => product.productId) 
+      setProductIds(Ids)
     } catch (error) {
       console.log(error)
       toast.error('something went wrong while getting cart Items from LocalStorage')
     }
   }
 
-  const getCartItems = async()=>{
+  const getCartItemsfromDB = async(productIds)=>{
+    getCartItemsfromLocalStorage()
     try {
-      const { data } = await axiosInstance.post('/api/v1/product/get-cart-items', cartItems)
+      const { data } = await axiosInstance.post('/api/v1/product/get-cart-items', productIds)
       if(data.success){
         console.log('products fetched successfully!')
-        setProducts(data)
+        setProducts(data.fetchedProducts)
       }
     } catch (error) {
       console.log(error)
@@ -55,9 +144,14 @@ function Cart() {
     }
   }
 
-  useEffect(() => {
+  useEffect(()=>{
     getCartItemsfromLocalStorage()
-    
+  }, [])
+
+  useEffect(() => {
+    if(productIds.length > 0) {
+      getCartItemsfromDB(productIds)
+    }
   }, [])
 
 
@@ -71,8 +165,8 @@ function Cart() {
         <div className="cart-list-section">
           <h5 className='cart-list-title'>My Cart List</h5>
 
-          <div className="cart-list-container">
-            {cartItems.map((product) => (
+          <div className="cart-list-container"> 
+            {data.fetchedProducts.map((product) => (
               <div className="cart-list-item" key={product._id}>
                 <Checkbox className='cart-list-item-checkbox' color="success" />
                 <div className="cart-item-left">

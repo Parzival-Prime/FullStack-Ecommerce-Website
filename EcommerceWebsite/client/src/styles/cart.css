@@ -1,5 +1,5 @@
 .cart-container {
-    height: 90svh;
+    max-height: fit-content;
     padding: 5px;
     background-color: var(--greybgc);
 }
@@ -16,7 +16,7 @@
 
 .cart-list-container {
     margin-top: 6px;
-    height: 40rem;
+    height: inherit;
 }
 
 .cart-list-item {
@@ -28,6 +28,7 @@
     border-radius: 18px;
     padding-top: 35px;
     padding-left: 10px;
+    margin: 20px 5px;
 }
 
 .cart-list-item-checkbox {
@@ -39,6 +40,8 @@
 .cart-item-left {
     display: flex;
     flex-direction: column;
+    width: 9rem;
+    height: auto;
 }
 
 .cart-item-image {
