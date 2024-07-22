@@ -6,7 +6,8 @@ import {
     changePasswordController,
     userProfileController,
     updateUserController,
-    addToCartController
+    addToCartController,
+    updateCartController
 } from '../controllers/auth.controller.js'
 import { verifyJWT } from '../middlewares/auth.middleware.js'
 import { upload } from '../middlewares/multer.middleware.js'
@@ -25,6 +26,8 @@ router.route('/login').post(loginController)
 router.route('/logout').get(verifyJWT, logoutController)
 
 router.route('/add-to-cart').post(verifyJWT, addToCartController)
+
+router.route('/update-cart').post(verifyJWT, updateCartController)
 
 
 // Profile Routes

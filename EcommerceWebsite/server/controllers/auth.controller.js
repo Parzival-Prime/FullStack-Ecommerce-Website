@@ -219,11 +219,11 @@ export const addToCartController = async (req, res) => {
         console.log(req.body)
         if (!productId) return res.status(404).send({ success: false, message: 'ProductId not found' })
 
-        
+
         if (quantity === null) {
             try {
                 const newId = new mongoose.Types.ObjectId()
-                const result = await User.findOneAndUpdate({ _id: user._id }, { $push: { cart: {productId, quantity: 1, _id: newId} } }, { new: true })
+                const result = await User.findOneAndUpdate({ _id: user._id }, { $push: { cart: { productId, quantity: 1, _id: newId } } }, { new: true })
 
                 return res.status(200).send({
                     success: true,
@@ -258,6 +258,29 @@ export const addToCartController = async (req, res) => {
         return res.status(400).send({
             success: false,
             message: 'Something went wrong in addToCart Controller'
+        })
+    }
+}
+
+
+
+export const updateCartController = async (req, res) => {
+    try {
+        const cart = req.body
+
+        if (!cart) return res.status(404).send({ success: false, message: 'Cart is found Empty' })
+
+        await User.findByIdAndUpdate(req.user._id, { $set: { cart: cart } }, { new: true })
+
+        return res.status(200).send({
+            success: true,
+            message: 'User Cart Updated Successfully!'
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(404).send({
+            success: false,
+            message: 'Something went wrong in updateCart Controller'
         })
     }
 }
