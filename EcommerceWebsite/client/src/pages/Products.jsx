@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { axiosInstance } from '../App'
+import { useNavigate } from 'react-router';
 import toast from 'react-hot-toast'
 import {
-    Button,
     CardActionArea,
     CardActions,
     CardMedia,
@@ -210,6 +210,7 @@ import Skeleton from '@mui/material/Skeleton';
 
 
 function Products() {
+    const navigate = useNavigate()
     const [products, setProducts] = useState([])
 
     const getAllProducts = async () => {
@@ -252,6 +253,17 @@ function Products() {
         }
     }
 
+    const openProductPage = async (e) => {
+        e.stopPropagation()
+        const productid = e.currentTarget.getAttribute('productid')
+
+        const { data } = await axiosInstance.post(`/api/v1/product/get-product/${productid}`)
+        if (data?.success) {
+            toast.success('Product Fetched Successfully')
+            navigate('/product', { state: data.productDetails })
+        }
+    }
+
     useEffect(() => {
         getAllProducts()
     }, [])
@@ -264,9 +276,8 @@ function Products() {
                     {products.map((product) => (
                         <Grid xs={2} sm={4} md={4}
                             key={product?._id}
-                            value={product?._id}
                         >
-                            {product ? (<Card sx={{ maxWidth: 345, height: 330, position: 'relative' }} value={product._id}>
+                            {product ? (<Card sx={{ maxWidth: 345, height: 330, position: 'relative' }} productid={product._id} onClick={openProductPage}>
                                 <CardActionArea>
                                     <CardMedia
                                         component="img"

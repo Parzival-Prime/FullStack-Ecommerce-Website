@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router';
 import '../styles/cart.css'
 import toast from 'react-hot-toast'
 import { axiosInstance } from '../App';
@@ -113,6 +114,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 // }
 
 function Cart() {
+  const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [cartItems, setCartItems] = useState([])
   const [products, setProducts] = useState([])
@@ -139,10 +141,10 @@ function Cart() {
 
   const updateCart = async (ucart) => {
     try {
-      console.log('in Update: ', ucart)
       await axiosInstance.post('/api/v1/auth/update-cart', ucart)
 
     } catch (error) {
+      toast.error('Something went wrong in updating cart')
       console.log('Error in UpdateCart: ', error)
     }
   }
@@ -151,7 +153,7 @@ function Cart() {
     e.stopPropagation()
     const currentProductId = e.target.value
     const updatedCart = cartItems.filter((product) => (product.productId !== currentProductId))
-    const updatedProductsState = products.filter((product)=>(product._id !== currentProductId))
+    const updatedProductsState = products.filter((product) => (product._id !== currentProductId))
     setCartItems(updatedCart)
     setProducts(updatedProductsState)
     updateCart(updatedCart)
@@ -182,6 +184,16 @@ function Cart() {
     updateCart(updatedCart)
   }
 
+  const openProductPage = async (e) => {
+    e.stopPropagation()
+    const productid = e.currentTarget.getAttribute('productid')
+
+    const { data } = await axiosInstance.post(`/api/v1/product/get-product/${productid}`)
+    if (data?.success) {
+      toast.success('Product Fetched Successfully')
+      navigate('/product', { state: data.productDetails })
+    }
+  }
 
   useEffect(() => {
     getCartItemsfromDB()
@@ -201,14 +213,24 @@ function Cart() {
             <div className="cart-list-container">
               {!isLoading ? (
                 products.map((product) => (
-                  <div className="cart-list-item" key={product._id}>
+                  <div className="cart-list-item" key={product._id} productid={product._id} onClick={openProductPage}>
                     <Checkbox className='cart-list-item-checkbox' color="success" />
                     <div className="cart-item-left">
                       <img src={product.image} alt="Product Image" className='cart-item-image' />
                       <ButtonGroup className="cart-quantity-box" variant="contained" aria-label="Basic button group">
-                        {displayQuantity(product._id) > 1 ? (<button className="cart-quantity-decrement" value={product._id} onClick={decrementProductQuantity}><RemoveIcon /></button>) : (<button className="cart-quantity-decrement" value={product._id} onClick={deleteItemFromCart} ><DeleteOutlineIcon /></button>)}
+                        {displayQuantity(product._id) > 1 ? (
+                          <button className="cart-quantity-decrement" value={product._id} onClick={decrementProductQuantity}>
+                            <RemoveIcon />
+                          </button>
+                        ) : (
+                          <button className="cart-quantity-decrement" value={product._id} onClick={deleteItemFromCart} >
+                            <DeleteOutlineIcon />
+                          </button>
+                        )}
                         <button className="cart-quantity-value"><span>{displayQuantity(product._id)}</span></button>
-                        <button className="cart-quantity-increment" value={product._id} onClick={incrementProductQuantity}><AddIcon /></button>
+                        <button className="cart-quantity-increment" value={product._id} onClick={incrementProductQuantity}>
+                          <AddIcon />
+                        </button>
                       </ButtonGroup>
                     </div>
 

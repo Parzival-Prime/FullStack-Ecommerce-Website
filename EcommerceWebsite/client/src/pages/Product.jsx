@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../styles/product.css'
+import toast from 'react-hot-toast';
+import { useLocation } from 'react-router';
 import { axiosInstance } from '../App';
 import { ButtonGroup, IconButton } from '@mui/material'
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -9,24 +11,30 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-const product = {
-    "_id": "6698ae34f7adb10563f682c4",
-    "name": "Silky Smooth Conditioner",
-    "slug": "silky-smooth-conditioner",
-    "description": "A conditioner that provides silky smooth texture and shine to your hair.",
-    "price": 12.99,
-    "category": "6697b6b1fa345a7e838684ea",
-    "image": "http://res.cloudinary.com/dro8qbk8j/image/upload/v1721282100/gmddlbjxwxu6kilatwum.avif",
-    "quantity": 80,
-    "rating": 0,
-    "createdAt": "2024-07-18T05:55:00.059Z",
-    "updatedAt": "2024-07-18T05:55:00.059Z",
-    "__v": 0
-}
+// const product = {
+//     "_id": "6698ae34f7adb10563f682c4",
+//     "name": "Silky Smooth Conditioner",
+//     "slug": "silky-smooth-conditioner",
+//     "description": "A conditioner that provides silky smooth texture and shine to your hair.",
+//     "price": 12.99,
+//     "category": "6697b6b1fa345a7e838684ea",
+//     "image": "http://res.cloudinary.com/dro8qbk8j/image/upload/v1721282100/gmddlbjxwxu6kilatwum.avif",
+//     "quantity": 80,
+//     "rating": 0,
+//     "createdAt": "2024-07-18T05:55:00.059Z",
+//     "updatedAt": "2024-07-18T05:55:00.059Z",
+//     "__v": 0
+// }
 
 function Product() {
+    const location = useLocation()
     const [favroite, setFavroite] = useState(false)
     const [quantity, setQuantity] = useState(1)
+    const [product, setProduct] = useState({})
+
+    const getProduct = () => {
+        setProduct(location.state)
+    }
 
     function decrementProductQuantity(e) {
         e.stopPropagation()
@@ -43,15 +51,17 @@ function Product() {
     const addToCart = async (e) => {
         const productId = e.currentTarget.getAttribute('product-id')
 
-        const userCart = localStorage.getItem('user')
+        const { data } = await axiosInstance.post('/api/v1/auth/add-to-cart', { productId, quantity })
         
-
-        const { data } = await axiosInstance.post('/api/auth/add-to-cart', { productId, quantity })
-
         if (data?.success) {
+            console.log('Item added to cart')
             toast.success('Item added to Cart')
         }
     }
+
+    useEffect(()=>{
+        getProduct()
+    }, [])
 
     return (
         <>

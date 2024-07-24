@@ -1,7 +1,6 @@
 import { User } from '../models/user.model.js'
 import { uploadOnCloudinary } from '../utils/cloudinary.js'
 import mongoose from 'mongoose'
-import { ObjectId } from 'mongodb'
 
 const options = {
     httpOnly: true,
@@ -217,15 +216,15 @@ export const addToCartController = async (req, res) => {
     try {
         const { productId, quantity } = req.body
         const user = req.user
-        console.log(req.body)
 
         if (!productId) return res.status(404).send({ success: false, message: 'ProductId not found' })
 
 
         if (quantity === 0) {
             try {
-                const newId = new mongoose.Types.ObjectId()
-                const result = await User.findOneAndUpdate({ _id: user._id }, { $push: { cart: { productId, quantity: 1, _id: newId } } }, { new: true })
+                const result = await User.findOneAndUpdate({ _id: user._id }, { $push: { cart: { productId, quantity: 1 } } }, { new: true })
+
+                console.log(result)
 
                 return res.status(200).send({
                     success: true,
@@ -240,8 +239,8 @@ export const addToCartController = async (req, res) => {
         else if (quantity !== 0) {
             try {
                 const result = await User.findOneAndUpdate(
-                    { _id: user._id, "cart.productId": productId },
-                    { $set: { "cart.$.quantity": quantity } }, { new: true }
+                    { _id: user._id },
+                    { $push: { cart: { productId, quantity } } }, { new: true }
                 )
 
                 console.log(result)
