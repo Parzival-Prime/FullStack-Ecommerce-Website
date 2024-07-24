@@ -6,6 +6,7 @@ import {
     changePasswordController,
     userProfileController,
     updateUserController,
+    getCartController,
     addToCartController,
     updateCartController
 } from '../controllers/auth.controller.js'
@@ -24,6 +25,8 @@ router.route('/login').post(loginController)
 
 // ========= Secured Routes ========== //
 router.route('/logout').get(verifyJWT, logoutController)
+
+router.route('/get-cart').get(verifyJWT, getCartController)
 
 router.route('/add-to-cart').post(verifyJWT, addToCartController)
 

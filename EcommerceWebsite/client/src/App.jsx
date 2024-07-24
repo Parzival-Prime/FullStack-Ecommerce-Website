@@ -14,6 +14,7 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import CreateProduct from './pages/admin/CreateProduct'
 import Products from "./pages/Products";
+import Product from "./pages/Product";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3090",
@@ -32,13 +33,14 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="" element={<Layout />}>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<Product />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/policy" element={<Policy />} />
             <Route path="/createProduct" element={<CreateProduct />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/product" element={<Product/>} />
             <Route path="/products" element={<Products />} />
             <Route path="/register" element={<Register />} />
           </Route>

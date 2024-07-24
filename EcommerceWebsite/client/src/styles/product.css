@@ -1,0 +1,128 @@
+.product-container {
+    overflow-x: hidden;
+    max-width: 25.72rem;
+}
+
+.product-top {
+    max-width: inherit;
+    position: relative;
+    max-height: 25rem;
+    z-index: -1;
+}
+
+.product-back-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.product-image-container {
+    max-width: inherit;
+    max-height: 24rem;
+}
+
+.product-image {
+    max-width: inherit;
+    height: 24rem;
+}
+
+.product-bottom {
+    position: relative;
+    max-width: inherit;
+    height: 22rem;
+    padding: 20px;
+    background: radial-gradient(circle, rgba(1, 129, 77, 1) 0%, rgba(1, 77, 19, 1) 100%);
+    border-radius: 2.3rem 2.3rem 0 0;
+    margin-top: -2.6rem;
+    border: 4px solid rgb(0, 56, 23);
+}
+
+.product-title {
+    color: white;
+    font-size: 1.6rem;
+    margin-bottom: 17px;
+}
+
+.product-description {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.product-InStock {
+    color: rgb(71, 255, 142);
+}
+
+.product-OutOfStock {
+    color: red;
+}
+
+.product-price {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 1.7rem;
+    font-weight: 600;
+}
+
+.product-quantity-box {
+    position: absolute;
+    bottom: 9.5rem;
+    right: 4rem;
+    gap: 13px;
+    box-shadow: none !important;
+}
+
+.product-quantity-decrement {
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50%;
+    border: none;
+    background-color: rgba(173, 173, 173, 0.534);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-quantity-value {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.product-quantity-increment {
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50%;
+    border: none;
+    background-color: rgba(173, 173, 173, 0.534);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-bottom-buttons{
+    padding: 1rem;
+    margin-top: 2rem;
+    gap: 5.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-add-to-cart-button{
+    background-color: black;
+    width: 12rem;
+    height: 3rem;
+    border-radius: 3px 1.3rem 1.3rem 1.3rem;
+    padding: 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.product-add-to-cart-button-text{
+    color: white;
+}

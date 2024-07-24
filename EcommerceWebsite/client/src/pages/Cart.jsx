@@ -115,28 +115,21 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 function Cart() {
   const [isLoading, setIsLoading] = useState(false)
   const [cartItems, setCartItems] = useState([])
-  const [productIds, setProductIds] = useState([])
   const [products, setProducts] = useState([])
 
-  const getCartItemsfromLocalStorage = () => {
-    try {
-      const user = JSON.parse(localStorage.getItem('user'))
-      setCartItems(user?.cart)
-      const Ids = user?.cart.map(product => product.productId)
-      setProductIds(Ids)
-    } catch (error) {
-      console.log(error)
-      toast.error('something went wrong while getting cart Items from LocalStorage')
-    }
-  }
 
-  const getCartItemsfromDB = async (productIds) => {
+  const getCartItemsfromDB = async () => {
     try {
       setIsLoading(true)
-      const { data } = await axiosInstance.post('/api/v1/product/get-cart-items', productIds)
+      const { data } = await axiosInstance.get('/api/v1/auth/get-cart')
       if (data?.success) {
-        setIsLoading(false)
-        setProducts(data.fetchedProducts)
+        const productIdsArray = data.cart.map((item) => (item.productId))
+        const res = await axiosInstance.post('/api/v1/product/get-cart-items', productIdsArray)
+        if (res?.data?.success) {
+          setCartItems(data.cart)
+          setProducts(res.data.fetchedProducts)
+          setIsLoading(false)
+        }
       }
     } catch (error) {
       console.log(error)
@@ -157,15 +150,11 @@ function Cart() {
   const deleteItemFromCart = (e) => {
     e.stopPropagation()
     const currentProductId = e.target.value
-
-    const newProductIdsArray = productIds.filter((productId) => (productId !== currentProductId))
-    setProductIds(newProductIdsArray)
-    let user = JSON.parse(localStorage.getItem('user'))
-    user.cart = cartFromLS.cart.filter((product) => (product.productId !== currentProductId))
-    localStorage.removeItem('user')
-    localStorage.setItem('user', JSON.stringify(user))
-    setCartItems(user.cart)
-    updateCart(user.cart)
+    const updatedCart = cartItems.filter((product) => (product.productId !== currentProductId))
+    const updatedProductsState = products.filter((product)=>(product._id !== currentProductId))
+    setCartItems(updatedCart)
+    setProducts(updatedProductsState)
+    updateCart(updatedCart)
   }
 
   const displayQuantity = (Id) => {
@@ -176,46 +165,27 @@ function Cart() {
   const decrementProductQuantity = (e) => {
     e.stopPropagation()
     const currentProductId = e.currentTarget.value
-    console.log(currentProductId)
-    const newCartItemsArray = cartItems.map((item) => (
+    const updatedCart = cartItems.map((item) => (
       (item.productId === currentProductId) ? { ...item, quantity: item.quantity - 1 } : item
     ))
-    console.log(newCartItemsArray)
-    setCartItems(newCartItemsArray)
-    let user = JSON.parse(localStorage.getItem('user'))
-    user.cart = newCartItemsArray
-    console.log('user: ', user)
-    localStorage.removeItem('user')
-    localStorage.setItem('user', JSON.stringify(user))
-    updateCart(user.cart)
+    setCartItems(updatedCart)
+    updateCart(updatedCart)
   }
 
   const incrementProductQuantity = (e) => {
     e.stopPropagation()
     const currentProductId = e.currentTarget.value
-    console.log(currentProductId)
-    const newCartItemsArray = cartItems.map((item) => (
+    const updatedCart = cartItems.map((item) => (
       (item.productId === currentProductId) ? { ...item, quantity: item.quantity + 1 } : item
     ))
-    console.log(newCartItemsArray)
-    setCartItems(newCartItemsArray)
-    let user = JSON.parse(localStorage.getItem('user'))
-    user.cart = newCartItemsArray
-    console.log('user: ', user)
-    localStorage.removeItem('user')
-    localStorage.setItem('user', JSON.stringify(user))
-    updateCart(user.cart)
+    setCartItems(updatedCart)
+    updateCart(updatedCart)
   }
 
-  useEffect(() => {
-    getCartItemsfromLocalStorage()
-  }, [])
 
   useEffect(() => {
-    if (productIds.length > 0) {
-      getCartItemsfromDB(productIds)
-    }
-  }, [productIds])
+    getCartItemsfromDB()
+  }, [])
 
 
   return (
@@ -226,7 +196,7 @@ function Cart() {
         </h1>
 
         <div className="cart-list-section">
-          {productIds.length > 0 ? (<><h5 className='cart-list-title'>My Cart List</h5>
+          {cartItems.length > 0 ? (<><h5 className='cart-list-title'>My Cart List</h5>
 
             <div className="cart-list-container">
               {!isLoading ? (

@@ -1,6 +1,7 @@
 import { User } from '../models/user.model.js'
 import { uploadOnCloudinary } from '../utils/cloudinary.js'
 import mongoose from 'mongoose'
+import { ObjectId } from 'mongodb'
 
 const options = {
     httpOnly: true,
@@ -217,10 +218,11 @@ export const addToCartController = async (req, res) => {
         const { productId, quantity } = req.body
         const user = req.user
         console.log(req.body)
+
         if (!productId) return res.status(404).send({ success: false, message: 'ProductId not found' })
 
 
-        if (quantity === null) {
+        if (quantity === 0) {
             try {
                 const newId = new mongoose.Types.ObjectId()
                 const result = await User.findOneAndUpdate({ _id: user._id }, { $push: { cart: { productId, quantity: 1, _id: newId } } }, { new: true })
@@ -235,7 +237,7 @@ export const addToCartController = async (req, res) => {
             }
         }
 
-        else if (quantity !== null) {
+        else if (quantity !== 0) {
             try {
                 const result = await User.findOneAndUpdate(
                     { _id: user._id, "cart.productId": productId },
@@ -281,6 +283,28 @@ export const updateCartController = async (req, res) => {
         return res.status(404).send({
             success: false,
             message: 'Something went wrong in updateCart Controller'
+        })
+    }
+}
+
+
+
+
+export const getCartController = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id)
+
+        return res.status(200).send({
+            success: true,
+            message: 'All Products in Cart Fetched successfully!',
+            cart: user.cart
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(400).send({
+            success: false,
+            message: 'Something went wrong in getCartItems Controller'
         })
     }
 }
