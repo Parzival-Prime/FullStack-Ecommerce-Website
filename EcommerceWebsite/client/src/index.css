@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+AR:wght@100..400&family=Playwrite+BE+VLG:wght@100..400&family=Playwrite+CU:wght@100..400&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Bubblegum+Sans&family=Expletus+Sans:ital,wght@0,400..700;1,400..700&family=Playpen+Sans:wght@100..800&family=Port+Lligat+Sans&family=Sansita+Swashed:wght@300..900&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&family=Sofia+Sans+Semi+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -12,6 +14,7 @@
     --textColor: #ffff;
     --greybgc: rgba(245, 245, 245, 0.87);
     --subTextColor: #9b9b9b;
+    --cream: rgba(255, 251, 216, 0.993);
     --greenCream: rgb(162, 252, 203);
     --blueCream: rgb(139, 220, 211);
     --greenDarkCream: rgb(122, 240, 175);
@@ -19,6 +22,12 @@
     --bluegrey: rgba(220, 238, 235, 0.897);
     --titleFont: "Playwrite BE VLG", cursive;
     --mainFont: "Poppins", sans-serif;
+    --shantellSans: "Shantell Sans", cursive;
+    --sansitaSwashed: "Sansita Swashed", system-ui;
+    --expletusSans: "Expletus Sans", sans-serif;
+    --sofiaSans: "Sofia Sans Semi Condensed", sans-serif;
+    --balsamiqSans: "Balsamiq Sans", sans-serif;
+    --bubbleGumSans: "Bubblegum Sans", sans-serif;
     --logoFontWeight: 400;
     --mainFontWeight: 300;
     --max-width: 1200px;

@@ -1,0 +1,28 @@
+.home-container {
+    max-width: var(--max-width);
+    background-color: var(--cream);
+    padding: 1.8rem;
+    padding-top: 3.4rem;
+}
+
+.home-hero-section {
+    height: 80svh;
+}
+
+.home-hero-title {
+    font-size: 2rem;
+    font-weight: 500;
+    font-family: var(--sansitaSwashed);
+    color: rgb(133, 1, 133);
+}
+
+.home-hero-p1{
+    padding: .6rem .8rem;
+    font-size: .7rem;
+    font-family: var(--expletusSans);
+    color: rgb(59, 1, 59);
+}
+
+.home-hero-image{
+    height: 30rem;
+}
