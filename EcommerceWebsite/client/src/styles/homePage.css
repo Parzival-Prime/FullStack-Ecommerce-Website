@@ -3,6 +3,7 @@
     background-color: var(--cream);
     padding: 1.8rem;
     padding-top: 3.4rem;
+    overflow-x: hidden;
 }
 
 .home-hero-section {
@@ -13,7 +14,7 @@
     font-size: 2rem;
     font-weight: 500;
     font-family: var(--sansitaSwashed);
-    color: rgb(133, 1, 133);
+    color: rgb(112, 2, 112);
 }
 
 .home-hero-p1{
@@ -25,4 +26,24 @@
 
 .home-hero-image{
     height: 30rem;
+    transform: translateY(-10%);
+}
+
+.home-hero-text{
+    font-family: var(--expletusSans);
+    font-weight: 600;
+    color: rgb(78, 1, 78);
+    padding-right: 3rem;
+    transform: translateY(-110%);
+}
+
+.home-hero-button{
+    height: 2.5rem;
+    width: 9rem;
+    font-family: var(--mainFont);
+    color: var(--cream);
+    background-color: rgb(116, 8, 116);
+    border-color: transparent;
+    transform: translateY(-170%) translateX(10%);
+    box-shadow: 0px 0px 15px rgba(80, 11, 80, 0.904);
 }
