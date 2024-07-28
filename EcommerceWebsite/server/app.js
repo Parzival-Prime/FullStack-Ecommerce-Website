@@ -12,7 +12,7 @@ import paymentRoute from './routes/payment.router.js'
 const app = express()
 
 // Stripe Configuration
-export const stripe = new Stripe(`sk_test_51PgYpnRtcqBN7ORDLscBdSc0gG2rapdeGFBoIBnNqjH4KCKwg1VYgZ2kChpMydGDeF8sZVTm6j48r3MBiiIpO9hS00zjVh6BT9`);
+export const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY}`);
 
 //middlewares
 app.use((req, res, next) => {
