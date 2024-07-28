@@ -5,9 +5,14 @@ import cookieParser from 'cookie-parser'
 import authRoute from './routes/auth.router.js'
 import productRoute from './routes/product.router.js'
 import categoryRoute from './routes/category.router.js'
+import Stripe from 'stripe';
+import paymentRoute from './routes/payment.router.js'
 
 //rest object
 const app = express()
+
+// Stripe Configuration
+export const stripe = new Stripe(`sk_test_51PgYpnRtcqBN7ORDLscBdSc0gG2rapdeGFBoIBnNqjH4KCKwg1VYgZ2kChpMydGDeF8sZVTm6j48r3MBiiIpO9hS00zjVh6BT9`);
 
 //middlewares
 app.use((req, res, next) => {
@@ -31,5 +36,6 @@ app.use(cookieParser())
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/product', productRoute)
 app.use('/api/v1/category', categoryRoute)
+app.use('/api/v1/payment', paymentRoute)
 
 export { app }

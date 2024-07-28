@@ -1,0 +1,13 @@
+.payment{
+    background-color: rgb(1, 65, 51);
+    height: 100svh;
+}
+
+.payment-checkout-button{
+    width: 8rem;
+    height: 3rem;
+    margin-block: 4rem;
+    margin-inline: 5rem;
+    font-size: large;
+    font-weight: 700;
+}

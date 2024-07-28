@@ -1,5 +1,4 @@
 .navbar {
-    display: flex;
     position: sticky;
     padding: 10px;
     background-color: var(--darkColor);
@@ -7,9 +6,7 @@
     z-index: 11000;
 
     .toolbar {
-        width: 25rem;
         display: flex;
-        flex-direction: row;
         justify-content: space-between;
         font-size: 1.2rem;
         position: relative;
@@ -24,9 +21,7 @@
     position: fixed;
     top: 57px;
     right: -1rem;
-    width: 13rem;
-    height: 52vh;
-    border-radius: 0 9px;
+    width: 15rem;
     transform: translateX(50vh);
     transition: transform .3s ease;
 }
@@ -38,7 +33,7 @@
     display: flex;
     flex-direction: column;
     align-items: start;
-    padding: 1rem;
+    padding: 1rem 2rem;
     gap: 3rem;
 }
 
