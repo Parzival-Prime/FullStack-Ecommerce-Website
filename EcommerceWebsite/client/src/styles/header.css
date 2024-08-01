@@ -1,7 +1,7 @@
 .navbar {
     position: sticky;
     padding: 10px;
-    background-color: var(--darkColor);
+    background-color: var(--forestDark);
     color: var(--textColor);
     z-index: 11000;
 
@@ -15,7 +15,7 @@
 
 .column-nav-list {
     z-index: 1;
-    background-color: var(--darkColor);
+    background-color: var(--forestDark);
     font-family: var(--mainFont);
     padding: 5px;
     position: fixed;

@@ -1,0 +1,51 @@
+/* @import "https://unpkg.com/open-props";
+
+@import "https://unpkg.com/open-props/normalize.min.css"; */
+
+.popular-products-carousel{
+    padding-block: 1rem;
+    display: grid;
+    grid-auto-flow: column;
+    /* grid-template-columns: repeat(8, 12.2rem); */
+    gap: .3rem;
+    width: calc((12.1rem) * 11 + 2.5rem);
+    animation: scroll 30s linear infinite;
+    scroll-snap-type: x mandatory;
+    overflow-x: hidden;
+}
+
+.popular-product-card{
+    height: max-content;
+    /* border: 1px solid black; */
+    border-radius: 1.5rem;
+    overflow: clip;
+    width: 12.1rem;
+    scroll-snap-align: start;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-73.16%);
+    }
+}
+
+.popular-product-card-image{
+    height: 12rem;
+}
+
+.popular-product-card-lower{
+    padding-inline: .6rem;
+    padding-bottom: .7rem;
+}
+
+.popular-product-card-title{
+    font-weight: 500;
+}
+
+.popular-product-card-description{
+    font-size: .8rem;
+    font-family: var(--expletusSans);
+}

@@ -2,6 +2,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Bubblegum+Sans&family=Expletus+Sans:ital,wght@0,400..700;1,400..700&family=Playpen+Sans:wght@100..800&family=Port+Lligat+Sans&family=Sansita+Swashed:wght@300..900&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&family=Sofia+Sans+Semi+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap');
 
+
 * {
     margin: 0;
     padding: 0;
@@ -11,6 +12,8 @@
 
 :root {
     --darkColor: #111111;
+    --goldenText: rgb(255, 195, 0);
+    --forestDark: rgb(19, 29, 25);
     --textColor: #ffff;
     --greybgc: rgba(245, 245, 245, 0.87);
     --subTextColor: #9b9b9b;

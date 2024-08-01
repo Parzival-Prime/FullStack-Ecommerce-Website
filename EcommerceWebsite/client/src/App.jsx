@@ -16,6 +16,7 @@ import CreateProduct from './pages/admin/CreateProduct'
 import Products from "./pages/Products";
 import Product from "./pages/Product";
 import Payment from "./pages/payment/Payment";
+import zIndex from "@mui/material/styles/zIndex";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3090",
@@ -30,7 +31,7 @@ export { axiosInstance };
 function App() {
   return (
     <>
-      <Toaster />
+      <Toaster style={{zIndex: 100000 }} />
       <BrowserRouter>
         <Routes>
           <Route path="" element={<Layout />}>
@@ -38,7 +39,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/policy" element={<Policy />} />
-            <Route path="/createProduct" element={<CreateProduct />} />
+            <Route path="/create-product" element={<CreateProduct />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
             <Route path="/product" element={<Product/>} />

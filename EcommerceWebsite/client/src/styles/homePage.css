@@ -1,13 +1,17 @@
 .home-container {
-    max-width: var(--max-width);
-    background-color: var(--cream);
-    padding: 1.8rem;
-    padding-top: 3.4rem;
-    overflow-x: hidden;
+    background-color: var(--forestDark);
+    overflow-x: clip;
 }
 
+
+
+
+/* ================== Hero Section ================== */
+
 .home-hero-section {
-    height: 80svh;
+    padding-left: 1.8rem;
+    padding-top: 2.6rem;
+    background-color: var(--cream);
 }
 
 .home-hero-title {
@@ -17,33 +21,130 @@
     color: rgb(112, 2, 112);
 }
 
-.home-hero-p1{
+.home-hero-p1 {
     padding: .6rem .8rem;
     font-size: .7rem;
     font-family: var(--expletusSans);
     color: rgb(59, 1, 59);
+    /* width: 22rem; */
 }
 
-.home-hero-image{
-    height: 30rem;
-    transform: translateY(-10%);
+.home-hero-image {
+    height: 27rem;
+    transform: translateY(-13%) rotate(-15deg);
 }
 
-.home-hero-text{
+.home-hero-text {
     font-family: var(--expletusSans);
     font-weight: 600;
     color: rgb(78, 1, 78);
-    padding-right: 3rem;
+    padding-right: 2rem;
     transform: translateY(-110%);
+    /* width: 22rem; */
 }
 
-.home-hero-button{
+.home-hero-button {
     height: 2.5rem;
     width: 9rem;
     font-family: var(--mainFont);
     color: var(--cream);
     background-color: rgb(116, 8, 116);
     border-color: transparent;
-    transform: translateY(-170%) translateX(10%);
+    transform: translateY(-120%) translateX(10%);
     box-shadow: 0px 0px 15px rgba(80, 11, 80, 0.904);
+}
+
+
+
+
+
+/* =================== Story Section ================== */
+.home-story-section {
+    padding: 3rem 1.5rem;
+    text-align: center;
+}
+
+.home-story-title {
+    font-weight: 350;
+    font-size: 1.8rem;
+    color: var(--goldenText);
+    font-family: var(--sansitaSwashed);
+}
+
+.home-story-para {
+    color: rgb(253, 251, 223);
+    font-size: .8rem;
+    margin-top: .7rem;
+    font-family: var(--sofiaSans);
+}
+
+
+
+
+.story-boxes-title{
+    color: rgb(253, 251, 223);
+    font-size: 1.2rem;
+    /* text-align: left; */
+    font-weight: 500;
+    margin-top: 3rem;
+}
+
+.story-boxes {
+    margin-top: 2rem;
+    /* margin-left: -.9rem; */
+    display: grid;
+    grid-template-columns: 200px 2fr;
+
+    div {
+        h4 {
+            color: rgb(253, 251, 223);
+            font-weight: 500;
+            font-size: .9rem;
+        }
+
+        p {
+            color: rgb(253, 251, 223);
+            font-weight: 300;
+            font-size: .7rem;
+        }
+    }
+}
+
+
+.story-leaf {
+    fill: var(--goldenText);
+    height: 3.4rem;
+}
+
+.story-hand {
+    fill: var(--goldenText);
+    height: 1.5rem;
+    margin-top: 1.7rem;
+}
+
+.story-rabbit {
+    fill: var(--goldenText) !important;
+    height: 2.7rem;
+    margin-top: 2rem;
+}
+
+.story-bag {
+    fill: var(--goldenText) !important;
+    height: 2.7rem;
+    margin-top: 1.9rem;
+}
+
+
+.popular-products-section{
+    padding-block: .5rem;
+    height: 56svh;
+    background-color: var(--cream);
+}
+
+.popular-products-section-title{
+    text-align: center;
+    padding-block: 1rem .7rem;
+    font-weight: 500;
+    font-size: 1.6rem;
+    font-family: var(--sansitaSwashed);
 }

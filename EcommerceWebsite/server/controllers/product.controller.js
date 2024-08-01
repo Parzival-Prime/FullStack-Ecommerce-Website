@@ -84,7 +84,6 @@ export const getCartItems = async (req, res) => {
 export const getProductController = async (req, res) => {
     try {
         const { id } = req.params
-        console.log(id)
         const productDetails = await ProductModel.findOne({ _id: id })
 
         if (!productDetails) return res.status(500).send({ success: false, message: 'Something went wrong while getting product from db' })
@@ -100,6 +99,44 @@ export const getProductController = async (req, res) => {
         return res.status(400).send({
             success: false,
             message: 'Something went wrong in getProdcut Controller'
+        })
+    }
+}
+
+
+export const getPopularProducts = async(req, res)=>{
+    try {
+        const products = await ProductModel.aggregate([
+            {
+                $match: {
+                    name: {
+                        $in: [
+                            'Charcoal Detox Clay Mask', 
+                            'Golden Elixer Anti-Aging Serum', 
+                            'Lavender Blossom Floral Soap', 
+                            'Midnight Radiance Night Cream', 
+                            'Ocean Breeze Face Mist', 
+                            'Rose Petal Eye Serum', 
+                            'Daisy Hair Oil', 
+                            'Aqua Bliss Hair Mask'
+                        ]
+                    }
+                }
+            }
+        ])
+
+        if(!products) return res.status(500).send({ success: false, message: 'Something went wront in querying db in getProductsController'})
+
+        return res.status(200).send({
+            success: true,
+            message: 'Popular Products fetched Successfully',
+            products
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({
+            success: false,
+            message: 'Something went wrong in getPopular Products Controller'
         })
     }
 }
