@@ -1,98 +1,24 @@
 import React, { useState, useEffect } from 'react'
+import bSwiper from 'swiper'
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css'
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import { axiosInstance } from '../App'
 import '../styles/homePage.css'
 import '../styles/home-scroller.css'
 import toast from 'react-hot-toast'
-
-// ['Charcoal Detox Clay Mask', 'Golden Elixer Anti-Aging Serum', 'Lavender Blossom Floral Soap', 'Midnight Radiance Night Cream', 'Ocean Breeze Face Mist', 'Rose Petal Eye Serum', 'Daisy Hair Oil', 'Aqua Bliss Hair Mask']
-
+import IconButton from '@mui/material/IconButton';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 function HomePage() {
-  // const [products, setProducts] = useState([])
+  const swiper = new bSwiper('.reviews-carousel-wrapper', {
+    loop: true,
+    spaceBetween: 50
+  })
 
-  const products = [
-    {
-      _id: '66aa7c2128438b2164690335',
-      name: 'Aqua Bliss Hair Mask',
-      image: "http://res.cloudinary.com/dro8qbk8j/image/upload/v1722448928/qd6rbid2serizhy3iheb.jpg",
-      slug: 'aqua-bliss-hair-mask',
-      description: 'A nourishing hair mask to hydrate and repair dry and damaged hair.',
-      price: 15.99
-    },
-    {
-      _id: '66aa7c7728438b2164690338',
-      name: 'Charcoal Detox Clay Mask',
-      image: "http://res.cloudinary.com/dro8qbk8j/image/upload/v1722449014/hizcboocazwd7lx4gdik.jpg",
-      slug: 'charcoal-detox-clay-mask',
-      description: 'A detoxifying clay mask to draw out impurities and improve skin clarity.',
-      price: 12.99
-    },
-    {
-      _id: '66aa7cb928438b216469033b',
-      name: 'Golden Elixer Anti-Aging Serum',
-      image: "http://res.cloudinary.com/dro8qbk8j/image/upload/v1722449080/afxn3hvp5aktimux0euw.jpg",
-      slug: 'golden-elixer-anti-aging-serum',
-      description: 'A luxurious anti-aging serum to reduce the appearance of fine lines and wrinkles.',
-      price: 29.99
-    },
-    {
-      _id: '66aa7e8228438b2164690344',
-      name: 'Lavender Blossom Floral Soap',
-      image: "http://res.cloudinary.com/dro8qbk8j/image/upload/v1722449537/ilifns4wuscfwsxisgks.jpg",
-      slug: 'lavender-blossom-floral-soap',
-      description: 'A floral soap bar with a gentle lavender fragrance.',
-      price: 5.99
-    },
-    {
-      _id: '66aa7f8528438b2164690350',
-      name: 'Midnight Radiance Night Cream',
-      image: "http://res.cloudinary.com/dro8qbk8j/image/upload/v1722449797/ihrkaupmbxd5aynbabfv.jpg",
-      slug: 'midnight-radiance-night-cream',
-      description: 'A rich night cream to nourish and revitalize your skin while you sleep.',
-      price: 24.99
-    },
-    {
-      _id: '66aa7fe528438b2164690356',
-      name: 'Ocean Breeze Face Mist',
-      image: "http://res.cloudinary.com/dro8qbk8j/image/upload/v1722449892/xusfamzgc33sozpqjksz.jpg",
-      slug: 'ocean-breeze-face-mist',
-      description: 'A refreshing face mist that hydrates and revitalizes your skin.',
-      price: 11.99
-    },
-    {
-      _id: '66aa805c28438b216469035c',
-      name: 'Rose Petal Eye Serum',
-      image: "http://res.cloudinary.com/dro8qbk8j/image/upload/v1722450010/u6tebdmp8xvzvskspurg.jpg",
-      slug: 'rose-petal-eye-serum',
-      description: 'A gentle eye serum with rose petals to reduce puffiness and dark circles.',
-      price: 13.99
-    },
-    {
-      _id: '66aa809c28438b216469035f',
-      name: 'Daisy Hair Oil',
-      image: "http://res.cloudinary.com/dro8qbk8j/image/upload/v1722450075/tthzvtwf1kp7ow5rsgsg.jpg",
-      slug: 'daisy-hair-oil',
-      description: 'A nourishing hair oil infused with daisy extract for shiny, healthy hair.',
-      price: 13.99
-    }
-  ]
-
-  const getPopularProducts = async () => {
-    try {
-      const { data } = await axiosInstance.get('/api/v1/product/get-popular-products')
-
-      if (data?.success) {
-        console.log(data.products)
-      }
-    } catch (error) {
-      console.log(error)
-      toast.error('Something went wrong while fetching popular Products')
-    }
-  }
-
-  // useEffect(() => {
-  //   getPopularProducts()
-  // }, [])
 
   return (
     <>
@@ -277,11 +203,127 @@ function HomePage() {
 
         {/* ================= We are Better Section ================ */}
         <section className="We-are-better-section">
-          <div className="we-are-better-1">
 
+          <div className="we-are-better" style={{ backgroundColor: '#c4fcf0' }}>
+            <div className="we-are-better-left">
+              <h2>Craftsmanship and Quality</h2>
+              <p>Our products are crafted with meticulous attention to detail using the finest materials. Each item undergoes rigorous quality checks to ensure it meets our high standards, ensuring you receive nothing but the best.</p>
+            </div>
+            <div className="we-are-better-right">
+              <img src="/homePage/newFolder1/aquaBliss2.jpg" alt="" />
+            </div>
+          </div>
+
+          <div className="we-are-better" style={{
+            backgroundColor
+              : '#ffe5d1',
+          }}>
+            <div className="we-are-better-right" style={{ marginRight: '1.2rem' }}>
+              <img src="/homePage/newFolder1/goldenElixer4.jpg" alt="" />
+            </div>
+            <div className="we-are-better-left">
+              <h2>Personalized Service</h2>
+              <p>We believe in creating experiences, not just transactions. Our dedicated team takes the time to understand your needs and preferences, offering tailored solutions that exceed your expectations.</p>
+            </div>
+          </div>
+
+          <div className="we-are-better" style={{ backgroundColor: '#4e5956', color: '#ffff' }}>
+            <div className="we-are-better-left">
+              <h2>Innovation and Design</h2>
+              <p>We stay ahead of the curve by continually embracing new technologies and design trends. Our products feature cutting-edge innovations and aesthetic appeal, setting new standards in the industry.</p>
+            </div>
+            <div className="we-are-better-right">
+              <img src="/homePage/newFolder1/clayMask3.jpg" alt="" />
+            </div>
+          </div>
+
+          <div className="we-are-better" style={{
+            backgroundColor
+              : '#e2d3fa',
+          }}>
+            <div className="we-are-better-right" style={{ marginRight: '1.2rem' }}>
+              <img src="/homePage/newFolder1/lavenderSoap3.jpg" alt="" />
+            </div>
+            <div className="we-are-better-left">
+              <h2>Sustainability Commitment</h2>
+              <p>We are committed to environmental responsibility. Our sustainable practices and eco-friendly materials reflect our dedication to preserving the planet for future generations.</p>
+            </div>
           </div>
         </section>
 
+        {/* ================ Reviews Section ============ */}
+        <section className="reviews-section">
+          <h1>Some Feedbacks from Our Customers</h1>
+          {/* <---- Main Container ----> */}
+          <div className="reviews-carousel-container">
+            <Swiper
+              className="reviews-carousel-wrapper"
+              slidesPerView={'auto'}
+              loop={true}
+            >
+
+
+              <SwiperSlide className="reviews-carousel-item">
+                <p>"From the moment I placed my order to the delivery, everything was seamless. The quality of the products exceeded my expectations, and the customer service team was incredibly helpful. Whispering Willow has earned a loyal customer in me!"</p>
+                <h4>~ Olivia J.</h4>
+              </SwiperSlide>
+
+              <SwiperSlide className="reviews-carousel-item">
+                <p>"Whispering Willow is my go-to for unique, artisanal gifts. The website is easy to navigate, and shipping is always prompt. I appreciate the thoughtful packaging and the handwritten notes that come with every order. Keep up the great work!"</p>
+                <h4>~ David K.</h4>
+              </SwiperSlide>
+
+              <SwiperSlide className="reviews-carousel-item">
+                <p>"The quality of the products at Whispering Willow is outstanding. I recently tried their new collection and was blown away by the craftsmanship. The only reason I'm not giving a 5-star rating is that I wish there were more options for customization."</p>
+                <h4>~ Sarah M.</h4>
+              </SwiperSlide>
+
+              <SwiperSlide className="reviews-carousel-item">
+                <p>"I've been a loyal customer for years, and Whispering Willow never disappoints. Their products are always fresh, and the attention to detail in every item is impressive. The personalized touch in their service makes every purchase feel special."</p>
+                <h4>~ James T.</h4>
+              </SwiperSlide>
+
+              <SwiperSlide className="reviews-carousel-item">
+                <p>"Whispering Willow has been a game-changer for me! The natural, hand-crafted products are top-notch, and the customer service is exceptional. I especially love their eco-friendly packaging and the way they truly care about sustainability. "</p>
+                <h4>~ Emily R.</h4>
+              </SwiperSlide>
+              <div className="swiper-pagination"></div>
+            </Swiper>
+
+            <div style={{
+              position: 'absolute',
+              left: '3rem',
+              backgroundColor: 'rgb(229, 229, 230, 0.3)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '2rem',
+              height: '2rem',
+              borderRadius: '50%'
+            }}
+              onClick={() => swiper.slidePrev()}
+            >
+              <ArrowBackIosIcon sx={{ color: 'white', transform: 'translateX(.2rem)' }} />
+            </div>
+
+            <div style={{
+              position: 'absolute',
+              right: '2.7rem',
+              backgroundColor: 'rgb(229, 229, 230, 0.3)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '2rem',
+              height: '2rem',
+              borderRadius: '50%'
+            }}
+              onClick={() => swiper.slideNext()}
+            >
+              <ArrowForwardIosIcon sx={{ color: 'white' }} />
+            </div>
+            
+          </div>
+        </section>
       </div >
     </>
   )
