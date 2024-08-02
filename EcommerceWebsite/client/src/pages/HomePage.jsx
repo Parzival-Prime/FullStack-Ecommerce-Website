@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import bSwiper from 'swiper'
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css'
@@ -9,16 +8,10 @@ import { axiosInstance } from '../App'
 import '../styles/homePage.css'
 import '../styles/home-scroller.css'
 import toast from 'react-hot-toast'
-import IconButton from '@mui/material/IconButton';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 function HomePage() {
-  const swiper = new bSwiper('.reviews-carousel-wrapper', {
-    loop: true,
-    spaceBetween: 50
-  })
-
 
   return (
     <>
@@ -258,6 +251,13 @@ function HomePage() {
           <div className="reviews-carousel-container">
             <Swiper
               className="reviews-carousel-wrapper"
+              modules={[Navigation, Pagination]}
+              navigation={{
+                prevEl: '.swiper-button-prev',
+                nextEl: '.swiper-button-next',
+              }}
+              pagination={{ clickable: true }}
+              spaceBetween={50}
               slidesPerView={'auto'}
               loop={true}
             >
@@ -287,7 +287,6 @@ function HomePage() {
                 <p>"Whispering Willow has been a game-changer for me! The natural, hand-crafted products are top-notch, and the customer service is exceptional. I especially love their eco-friendly packaging and the way they truly care about sustainability. "</p>
                 <h4>~ Emily R.</h4>
               </SwiperSlide>
-              <div className="swiper-pagination"></div>
             </Swiper>
 
             <div style={{
@@ -321,7 +320,6 @@ function HomePage() {
             >
               <ArrowForwardIosIcon sx={{ color: 'white' }} />
             </div>
-            
           </div>
         </section>
       </div >

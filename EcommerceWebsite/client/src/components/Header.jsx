@@ -54,7 +54,7 @@ function Header() {
           <FlexCenter
             sx={{ fontSize: ".9rem", fontFamily: "Playwrite BE VLG" }}
           >
-            <Box variant="span" sx={{ display: 'flex', alignSelf: 'start' }}>Wispering</Box>
+            <Box variant="span" sx={{ display: 'flex', alignSelf: 'start' }}>Whispering</Box>
             <Box variant="span" sx={{ display: 'flex', alignSelf: 'end' }}>Willow</Box>
           </FlexCenter>
 
