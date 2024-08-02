@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css'
 import 'swiper/css/navigation';
@@ -253,8 +253,8 @@ function HomePage() {
               className="reviews-carousel-wrapper"
               modules={[Navigation, Pagination]}
               navigation={{
-                prevEl: '.swiper-button-prev',
-                nextEl: '.swiper-button-next',
+                prevEl: '.button-prev',
+                nextEl: '.button-next',
               }}
               pagination={{ clickable: true }}
               spaceBetween={50}
@@ -300,7 +300,7 @@ function HomePage() {
               height: '2rem',
               borderRadius: '50%'
             }}
-              onClick={() => swiper.slidePrev()}
+              className='button-prev'
             >
               <ArrowBackIosIcon sx={{ color: 'white', transform: 'translateX(.2rem)' }} />
             </div>
@@ -316,7 +316,7 @@ function HomePage() {
               height: '2rem',
               borderRadius: '50%'
             }}
-              onClick={() => swiper.slideNext()}
+              className='button-next'
             >
               <ArrowForwardIosIcon sx={{ color: 'white' }} />
             </div>
