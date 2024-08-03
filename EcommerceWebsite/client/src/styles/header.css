@@ -1,9 +1,10 @@
 .navbar {
-    position: sticky;
+    position: fixed;
     padding: 10px;
     background-color: var(--forestDark);
     color: var(--textColor);
     z-index: 11000;
+    width: 100%;
 
     .toolbar {
         display: flex;
@@ -21,9 +22,12 @@
     position: fixed;
     top: 57px;
     right: -1rem;
-    width: 15rem;
+    width: 17rem;
     transform: translateX(50vh);
     transition: transform .3s ease;
+}
+.column-nav-list-show {
+    transform: none;
 }
 
 .navigation-list {
@@ -46,6 +50,8 @@
 
 .nav-li{
     display: flex;
+    gap: .8rem;
+    display: flex;
     text-decoration: none;
     align-items: center;
     width: 100%;
@@ -53,7 +59,15 @@
     font-size: 1.30rem;
 }
 
+.nav-your-account{
+    display: flex;
+    gap: .4rem;
+    align-items: center;
+    margin-left: -1.7rem;
 
-.column-nav-list-show {
-    transform: none;
+    p{
+        color: white;
+        font-size: 1.2rem;
+    }
 }
+

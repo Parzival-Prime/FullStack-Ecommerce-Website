@@ -5,17 +5,41 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { IconButton, Box } from "@mui/material";
 import FlexCenter from "./FlexCenter";
 import SearchIcon from "@mui/icons-material/Search";
+import Avatar from '@mui/material/Avatar';
 import Logout from "../pages/auth/Logout";
 import Backdrop from '@mui/material/Backdrop';
 import { useSelector, useDispatch } from "react-redux";
 import { setIsLoggedInTrue } from "../features/counter/counterSlice";
+import { RiArrowLeftSFill, RiHome2Line, RiShoppingBagLine, RiUserLine, RiLogoutBoxLine, RiTeamLine, RiShoppingCart2Line, RiCustomerServiceLine, RiPriceTag3Line, RiArchiveLine, RiLoginBoxLine } from '@remixicon/react'
+
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Fade from '@mui/material/Fade';
+
 
 function Header() {
   const [open, setOpen] = useState(false)
+  const [user, setUser] = useState(null)
   const isLoggedIn = useSelector((state) => state.counter.isLoggedIn)
   const dispatch = useDispatch()
   const navRef = useRef();
   const navigate = useNavigate();
+
+
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open2 = Boolean(anchorEl);
+  const handleClick = (event) => {
+    event.stopPropagation()
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = (e) => {
+    e.stopPropagation()
+    setAnchorEl(null);
+  };
+
+
 
   const handleBackdropToggle = () => {
     setOpen(prev => !prev)
@@ -36,30 +60,31 @@ function Header() {
   }
 
   function checkIsLoggedInState() {
-    const user = localStorage.getItem('user')
-    if (user) {
+    const luser = localStorage.getItem('user')
+    setUser(JSON.parse(luser).value)
+    if (luser) {
       dispatch(setIsLoggedInTrue())
     }
   }
 
-  const clearExpiredItems=()=>{
+  const clearExpiredItems = () => {
     const keys = Object.keys(localStorage)
 
     keys.forEach(key => {
-        const itemStr = localStorage.getItem(key)
-        if (!itemStr) return
+      const itemStr = localStorage.getItem(key)
+      if (!itemStr) return
 
-        const item = JSON.parse(itemStr)
-        const now = new Date()
+      const item = JSON.parse(itemStr)
+      const now = new Date()
 
-        if(now.getTime() > item.expiry){
-            localStorage.removeItem(key)
-        }
+      if (now.getTime() > item.expiry) {
+        localStorage.removeItem(key)
+      }
     });
-}
+  }
 
 
-useEffect(() => {
+  useEffect(() => {
     clearExpiredItems()
     checkIsLoggedInState()
   }, [dispatch])
@@ -121,37 +146,92 @@ useEffect(() => {
           <ul className="navigation-list">
             <NavLink to="/" className="nav-item" onClick={handleNavLinkClick}>
               <li className="nav-li" >
-                Home
+                <RiHome2Line/>Home
               </li>
             </NavLink>
             <NavLink onClick={handleNavLinkClick} to="/products" className="nav-item" >
               <li className="nav-li">
-                All Products
+                <RiShoppingBagLine/>Products
               </li>
             </NavLink>
             <NavLink to="/protected/cart" className="nav-item" onClick={handleNavLinkClick}>
               <li className="nav-li">
-                Cart
+                <RiShoppingCart2Line/>Cart
               </li>
             </NavLink>
-            <NavLink to="/your-account" className="nav-item" onClick={handleNavLinkClick}>
+            <NavLink to="/about" className="nav-item" onClick={handleNavLinkClick}>
               <li className="nav-li">
-                Your Account
+                <RiTeamLine/>About Us
               </li>
             </NavLink>
+            <NavLink to="/contact" className="nav-item" onClick={handleNavLinkClick}>
+              <li className="nav-li">
+                <RiCustomerServiceLine/>ContactUs
+              </li>
+            </NavLink>
+
+
+            
             {isLoggedIn ? (
-              <span className="nav-item" onClick={handleNavLinkClick}>
-                <li className="nav-li">
-                  <Logout />
+              <div>
+              <Button
+                id="fade-button"
+                aria-controls={open2 ? 'fade-menu' : undefined}
+                // aria-haspopup="true"
+                aria-expanded={open2 ? 'true' : undefined}
+                onClick={handleClick}
+              >
+
+                <li className="nav-li nav-item">
+                  <div className="nav-your-account">
+                    <RiArrowLeftSFill /><Avatar alt='Avatar' src={user?.profileImage} />
+                    <p>{user?.name}</p>
+                  </div>
                 </li>
-              </span>
+
+              </Button>
+              <Menu
+                id="fade-menu"
+                MenuListProps={{
+                  'aria-labelledby': 'fade-button',
+                }}
+                transformOrigin={{vertical: 40, horizontal: 170}}
+                anchorEl={anchorEl}
+                open={open2}
+                onClose={handleClose}
+                TransitionComponent={Fade}
+                sx={{
+                  '& .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper':{
+                    color: 'white',
+                    backgroundColor: 'var(--oceanDark)',
+                    borderRadius: '6px',
+                    width: '9rem',
+                    height: '11rem'
+                    // maxHeight: '12rem',
+                  }
+                }}
+              >
+                <MenuItem onClick={handleClose} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiUserLine/>Profile</MenuItem>
+                <MenuItem onClick={handleClose} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiArchiveLine/>Orders</MenuItem>
+                <MenuItem 
+                onClick={handleClose} 
+                sx={{ 
+                  fontSize: '1.25rem',
+                  gap: '.8rem',
+                  backgroundColor: 'rgb(216, 0, 40, 0.75)'
+                  }}>
+                    <RiLogoutBoxLine/>Logout</MenuItem>
+              </Menu>
+            </div>
             ) : (
               <NavLink to="/login" className="nav-item" onClick={handleNavLinkClick}>
                 <li className="nav-li">
-                  LogIn
+                  <RiLoginBoxLine/>LogIn
                 </li>
               </NavLink>
             )}
+
+
           </ul>
         </div>
 
