@@ -13,6 +13,7 @@
   "author": "parzivalprime",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.7.3",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.2.0",
     "concurrently": "^8.2.2",
@@ -28,6 +29,7 @@
     "mongoose": "^8.5.0",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
+    "node-mailjet": "^6.0.5",
     "nodemailer": "^6.9.14",
     "nodemon": "^3.1.4",
     "passport": "^0.7.0",

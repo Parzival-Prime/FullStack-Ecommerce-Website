@@ -14,6 +14,7 @@
     --darkColor: #111111;
     --goldenText: rgb(255, 195, 0);
     --forestDark: rgb(19, 29, 25);
+    --oceanDark:rgb(4, 41, 33);
     --textColor: #ffff;
     --greybgc: rgba(245, 245, 245, 0.87);
     --subTextColor: #9b9b9b;
@@ -23,6 +24,7 @@
     --greenDarkCream: rgb(122, 240, 175);
     --blueDarkCream: rgb(64, 193, 176);
     --bluegrey: rgba(220, 238, 235, 0.897);
+    --darkPink1: #fb2080;
     --titleFont: "Playwrite BE VLG", cursive;
     --mainFont: "Poppins", sans-serif;
     --shantellSans: "Shantell Sans", cursive;
@@ -45,8 +47,5 @@ body {
     font-family: var(--mainFont);
     max-width: var(--max-width);
     min-width: var(--min-width);
-    /* max-height: var(--max-height);
-    min-height: var(--min-height); */
-    /* margin: 0 auto; */
     overflow: auto;
 }
