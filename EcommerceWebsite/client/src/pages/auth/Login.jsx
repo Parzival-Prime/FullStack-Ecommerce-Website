@@ -20,17 +20,24 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const setItemWithExpiry = (key, value, expiryInHours) =>{
+    const now = new Date()
+    const expiry = new Date(now.getTime() + expiryInHours * 60 * 60000)
+    const item = {
+      value: value,
+      expiry: expiry.getTime()
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { data } = await axiosInstance.post(
-      `/api/v1/auth/login`,
-      { email, password }
-    );
+
+    const { data } = await axiosInstance.post(`/api/v1/auth/login`,{ email, password });
+
     if (data?.success) {
-      toast.success("Logged In Successfully");
-      console.log(data);
       navigate("/");
-      localStorage.setItem('user', JSON.stringify(data?.user))
+      setItemWithExpiry('user', data?.user, 24)
       dispatch(setIsLoggedInTrue())
       toast.success('User LoggedIn successfully!')
       setEmail("");

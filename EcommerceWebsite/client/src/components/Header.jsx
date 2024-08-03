@@ -12,7 +12,7 @@ import { setIsLoggedInTrue } from "../features/counter/counterSlice";
 
 function Header() {
   const [open, setOpen] = useState(false)
-  let isLoggedIn = useSelector((state) => state.counter.isLoggedIn)
+  const isLoggedIn = useSelector((state) => state.counter.isLoggedIn)
   const dispatch = useDispatch()
   const navRef = useRef();
   const navigate = useNavigate();
@@ -42,7 +42,25 @@ function Header() {
     }
   }
 
-  useEffect(() => {
+  const clearExpiredItems=()=>{
+    const keys = Object.keys(localStorage)
+
+    keys.forEach(key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if(now.getTime() > item.expiry){
+            localStorage.removeItem(key)
+        }
+    });
+}
+
+
+useEffect(() => {
+    clearExpiredItems()
     checkIsLoggedInState()
   }, [dispatch])
 
@@ -111,10 +129,9 @@ function Header() {
                 All Products
               </li>
             </NavLink>
-            <NavLink to="/cart" className="nav-item" onClick={handleNavLinkClick}>
+            <NavLink to="/protected/cart" className="nav-item" onClick={handleNavLinkClick}>
               <li className="nav-li">
                 Cart
-
               </li>
             </NavLink>
             <NavLink to="/your-account" className="nav-item" onClick={handleNavLinkClick}>
@@ -132,7 +149,6 @@ function Header() {
               <NavLink to="/login" className="nav-item" onClick={handleNavLinkClick}>
                 <li className="nav-li">
                   LogIn
-
                 </li>
               </NavLink>
             )}

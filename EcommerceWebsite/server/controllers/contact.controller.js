@@ -48,14 +48,3 @@ export const sendEmailController = async (req, res) => {
 }
 
 
-// export const sendEmailController = async(req, res)=>{
-//     try{
-//         const {senderName, senderEmail, message} = req.body
-//     }catch(error){
-//         console.log(error)
-//         return res.status(500).send({
-//             success: false,
-//             message: 'Something went wrong in send Email Controller'
-//         })
-//     }
-// }

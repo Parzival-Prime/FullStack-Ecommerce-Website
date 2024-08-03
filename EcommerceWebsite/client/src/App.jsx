@@ -16,7 +16,7 @@ import CreateProduct from './pages/admin/CreateProduct'
 import Products from "./pages/Products";
 import Product from "./pages/Product";
 import Payment from "./pages/payment/Payment";
-import zIndex from "@mui/material/styles/zIndex";
+import ProtectedRoute from './components/ProtectedRoute'
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3090",
@@ -31,7 +31,7 @@ export { axiosInstance };
 function App() {
   return (
     <>
-      <Toaster style={{zIndex: 100000 }} />
+      <Toaster style={{ zIndex: 10000 }} />
       <BrowserRouter>
         <Routes>
           <Route path="" element={<Layout />}>
@@ -39,13 +39,13 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/policy" element={<Policy />} />
-            <Route path="/create-product" element={<CreateProduct />} />
-            <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/product" element={<Product/>} />
+            <Route path="/product" element={<Product />} />
             <Route path="/products" element={<Products />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/payment" element={<Payment />} />
+            <Route path="/cart" element={<ProtectedRoute><CreateProduct /></ProtectedRoute>} />
+            <Route path="/create-product" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+            <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
           </Route>
           <Route path="/*" element={<PageNotFound />} />
         </Routes>

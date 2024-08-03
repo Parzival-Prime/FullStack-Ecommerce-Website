@@ -38,7 +38,7 @@ export const createProductController = async (req, res) => {
 
 export const getAllProductsController = async (req, res) => {
     try {
-        const products = await ProductModel.find({})
+        const products = await ProductModel.find({}).sort({ createdAt: -1 })
 
         return res.status(200).json({
             success: true,
@@ -104,20 +104,20 @@ export const getProductController = async (req, res) => {
 }
 
 
-export const getPopularProducts = async(req, res)=>{
+export const getPopularProducts = async (req, res) => {
     try {
         const products = await ProductModel.aggregate([
             {
                 $match: {
                     name: {
                         $in: [
-                            'Charcoal Detox Clay Mask', 
-                            'Golden Elixer Anti-Aging Serum', 
-                            'Lavender Blossom Floral Soap', 
-                            'Midnight Radiance Night Cream', 
-                            'Ocean Breeze Face Mist', 
-                            'Rose Petal Eye Serum', 
-                            'Daisy Hair Oil', 
+                            'Charcoal Detox Clay Mask',
+                            'Golden Elixer Anti-Aging Serum',
+                            'Lavender Blossom Floral Soap',
+                            'Midnight Radiance Night Cream',
+                            'Ocean Breeze Face Mist',
+                            'Rose Petal Eye Serum',
+                            'Daisy Hair Oil',
                             'Aqua Bliss Hair Mask'
                         ]
                     }
@@ -125,7 +125,7 @@ export const getPopularProducts = async(req, res)=>{
             }
         ])
 
-        if(!products) return res.status(500).send({ success: false, message: 'Something went wront in querying db in getProductsController'})
+        if (!products) return res.status(500).send({ success: false, message: 'Something went wront in querying db in getProductsController' })
 
         return res.status(200).send({
             success: true,
