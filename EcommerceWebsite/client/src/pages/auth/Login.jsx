@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import FlexCenter from "../../components/FlexCenter";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -16,13 +16,16 @@ axios.defaults.withCredentials = true;
 function Login() {
   const dispatch = useDispatch()
   const navigate = useNavigate();
+  const location = useLocation()
+
+  const { from } = location.state || "/"
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const setItemWithExpiry = (key, value, expiryInHours) =>{
     const now = new Date()
-    const expiry = new Date(now.getTime() + expiryInHours * 60 * 60000)
+    const expiry = new Date(now.getTime() + expiryInHours * 60 * 60 * 1000)
     const item = {
       value: value,
       expiry: expiry.getTime()
@@ -36,9 +39,9 @@ function Login() {
     const { data } = await axiosInstance.post(`/api/v1/auth/login`,{ email, password });
 
     if (data?.success) {
-      navigate("/");
-      setItemWithExpiry('user', data?.user, 24)
+      setItemWithExpiry('user', data.user, 24)
       dispatch(setIsLoggedInTrue())
+      navigate(from || '/');
       toast.success('User LoggedIn successfully!')
       setEmail("");
       setPassword("");
@@ -47,7 +50,7 @@ function Login() {
 
   return (
     <>
-      <div className="container">
+      <div className="login-container">
         <FlexCenter
           sx={{ flexDirection: "column", marginBottom: "3rem", gap: "5px" }}
         >

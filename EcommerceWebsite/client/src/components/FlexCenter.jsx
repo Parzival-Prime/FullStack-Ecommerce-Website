@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function FlexCenter({children, sx}){
+export default function FlexCenter({children, sx, className}){
     return (
         <div style={{
             display: 'flex',
@@ -8,7 +8,9 @@ export default function FlexCenter({children, sx}){
             alignItems: 'center',
             textAlign: 'center',
             ...sx
-        }}>
+        }}
+        className={className}
+        >
             {children}
         </div>
     )

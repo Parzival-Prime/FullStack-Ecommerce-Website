@@ -61,12 +61,12 @@ function Header() {
 
   function checkIsLoggedInState() {
     const luser = localStorage.getItem('user')
-    setUser(JSON.parse(luser).value)
     if (luser) {
+      setUser(JSON.parse(luser).value)
       dispatch(setIsLoggedInTrue())
     }
   }
-
+  
   const clearExpiredItems = () => {
     const keys = Object.keys(localStorage)
 
@@ -146,87 +146,87 @@ function Header() {
           <ul className="navigation-list">
             <NavLink to="/" className="nav-item" onClick={handleNavLinkClick}>
               <li className="nav-li" >
-                <RiHome2Line/>Home
+                <RiHome2Line />Home
               </li>
             </NavLink>
             <NavLink onClick={handleNavLinkClick} to="/products" className="nav-item" >
               <li className="nav-li">
-                <RiShoppingBagLine/>Products
+                <RiShoppingBagLine />Products
               </li>
             </NavLink>
-            <NavLink to="/protected/cart" className="nav-item" onClick={handleNavLinkClick}>
+            <NavLink to="/cart" className="nav-item" onClick={handleNavLinkClick}>
               <li className="nav-li">
-                <RiShoppingCart2Line/>Cart
+                <RiShoppingCart2Line />Cart
               </li>
             </NavLink>
             <NavLink to="/about" className="nav-item" onClick={handleNavLinkClick}>
               <li className="nav-li">
-                <RiTeamLine/>About Us
+                <RiTeamLine />About Us
               </li>
             </NavLink>
             <NavLink to="/contact" className="nav-item" onClick={handleNavLinkClick}>
               <li className="nav-li">
-                <RiCustomerServiceLine/>ContactUs
+                <RiCustomerServiceLine />ContactUs
               </li>
             </NavLink>
 
 
-            
+
             {isLoggedIn ? (
               <div>
-              <Button
-                id="fade-button"
-                aria-controls={open2 ? 'fade-menu' : undefined}
-                // aria-haspopup="true"
-                aria-expanded={open2 ? 'true' : undefined}
-                onClick={handleClick}
-              >
+                <Button
+                  id="fade-button"
+                  aria-controls={open2 ? 'fade-menu' : undefined}
+                  // aria-haspopup="true"
+                  aria-expanded={open2 ? 'true' : undefined}
+                  onClick={handleClick}
+                >
 
-                <li className="nav-li nav-item">
-                  <div className="nav-your-account">
-                    <RiArrowLeftSFill /><Avatar alt='Avatar' src={user?.profileImage} />
-                    <p>{user?.name}</p>
-                  </div>
-                </li>
+                  <li className="nav-li nav-item">
+                    <div className="nav-your-account">
+                      <RiArrowLeftSFill /><Avatar alt='Avatar' src={user?.profileImage} />
+                      <p>{user?.name}</p>
+                    </div>
+                  </li>
 
-              </Button>
-              <Menu
-                id="fade-menu"
-                MenuListProps={{
-                  'aria-labelledby': 'fade-button',
-                }}
-                transformOrigin={{vertical: 40, horizontal: 170}}
-                anchorEl={anchorEl}
-                open={open2}
-                onClose={handleClose}
-                TransitionComponent={Fade}
-                sx={{
-                  '& .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper':{
-                    color: 'white',
-                    backgroundColor: 'var(--oceanDark)',
-                    borderRadius: '6px',
-                    width: '9rem',
-                    height: '11rem'
-                    // maxHeight: '12rem',
-                  }
-                }}
-              >
-                <MenuItem onClick={handleClose} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiUserLine/>Profile</MenuItem>
-                <MenuItem onClick={handleClose} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiArchiveLine/>Orders</MenuItem>
-                <MenuItem 
-                onClick={handleClose} 
-                sx={{ 
-                  fontSize: '1.25rem',
-                  gap: '.8rem',
-                  backgroundColor: 'rgb(216, 0, 40, 0.75)'
-                  }}>
-                    <RiLogoutBoxLine/>Logout</MenuItem>
-              </Menu>
-            </div>
+                </Button>
+                <Menu
+                  id="fade-menu"
+                  MenuListProps={{
+                    'aria-labelledby': 'fade-button',
+                  }}
+                  transformOrigin={{ vertical: 40, horizontal: 170 }}
+                  anchorEl={anchorEl}
+                  open={open2}
+                  onClose={handleClose}
+                  TransitionComponent={Fade}
+                  sx={{
+                    '& .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper': {
+                      color: 'white',
+                      backgroundColor: 'var(--oceanDark)',
+                      borderRadius: '6px',
+                      width: '9rem',
+                      height: '11rem'
+                      // maxHeight: '12rem',
+                    }
+                  }}
+                >
+                  <MenuItem onClick={handleClose} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiUserLine />Profile</MenuItem>
+                  <MenuItem onClick={handleClose} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiArchiveLine />Orders</MenuItem>
+                  <MenuItem
+                    onClick={handleClose}
+                    sx={{
+                      fontSize: '1.25rem',
+                      gap: '.8rem',
+                      backgroundColor: 'rgb(216, 0, 40, 0.75)'
+                    }}>
+                    <RiLogoutBoxLine />Logout</MenuItem>
+                </Menu>
+              </div>
             ) : (
               <NavLink to="/login" className="nav-item" onClick={handleNavLinkClick}>
                 <li className="nav-li">
-                  <RiLoginBoxLine/>LogIn
+                  <RiLoginBoxLine />LogIn
                 </li>
               </NavLink>
             )}

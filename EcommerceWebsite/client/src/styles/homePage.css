@@ -1,6 +1,7 @@
 .home-container {
     background-color: var(--forestDark);
     overflow-x: clip;
+    padding-top: 3.5rem;
 }
 
 

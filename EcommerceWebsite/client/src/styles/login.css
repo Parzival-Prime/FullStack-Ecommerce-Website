@@ -1,8 +1,9 @@
-.container {
+.login-container {
+    padding: 2rem;
+    padding-top: 8rem;
     height: 80vh;
     display: flex;
     flex-direction: column;
-    padding: 2rem;
     font-family: var(--mainFont);
 
     .forgot {
@@ -10,12 +11,10 @@
         margin: 1rem;
     }
 
+}
 
-
-    .line {
-        border: 1px solid;
-        height: 2px;
-        width: 7rem;
-    }
-
+.line {
+    border: 1px solid;
+    height: 2px;
+    width: 7rem;
 }

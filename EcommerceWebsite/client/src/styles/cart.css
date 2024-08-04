@@ -1,13 +1,15 @@
 .cart-container {
     max-height: fit-content;
     padding: 5px;
+    padding-top: 4.5rem;
     background-color: var(--greybgc);
 }
 
 .cart-title {
-    font-size: 3rem;
+    font-size: 2.7rem;
     font-weight: 500;
     text-align: center;
+    font-family: var(--sansitaSwashed);
 }
 
 .cart-list-section {
@@ -18,6 +20,7 @@
     font-size: 1.1rem;
     margin-left: 1rem;
     margin-bottom: -0.6rem;
+    font-family: var(--expletusSans);
 }
 
 .cart-list-container {
@@ -144,4 +147,33 @@
     border-radius: 1.5rem !important;
     margin: 6px 10px !important;
     background-color: rgba(155, 250, 213, 0.301) !important;
+}
+
+
+.proceed-button-container{
+    max-height: 15rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-Subtotal{
+    align-self: flex-start;
+    margin: 1rem 0 1rem 2.3rem;
+    font-size: 1.2rem;
+
+    span {
+        font-weight: 500;
+    }
+}
+
+.proceed-button{
+    width: 22rem;
+    height: 2.6rem;
+    padding: .4rem;
+    border-radius: 1.5rem;
+    font-family: var(--expletusSans);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    background-color: var(--goldenText);
+    border: none;
 }

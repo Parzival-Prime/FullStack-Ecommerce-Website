@@ -91,7 +91,7 @@ function CreateProduct() {
 
   return (
     <Box
-      sx={{ height: "100vh", background: "var(--linearGradient1)", padding: "15px" }}
+      sx={{ height: "100vh", background: "var(--linearGradient1)", padding: "15px", paddingTop: '3rem' }}
     >
       <Typography
         variant="h1"

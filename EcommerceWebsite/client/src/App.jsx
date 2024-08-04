@@ -15,7 +15,6 @@ import Register from "./pages/auth/Register";
 import CreateProduct from './pages/admin/CreateProduct'
 import Products from "./pages/Products";
 import Product from "./pages/Product";
-import Payment from "./pages/payment/Payment";
 import ProtectedRoute from './components/ProtectedRoute'
 
 const axiosInstance = axios.create({
@@ -31,7 +30,7 @@ export { axiosInstance };
 function App() {
   return (
     <>
-      <Toaster style={{ zIndex: 10000 }} />
+      <Toaster style={{ zIndex: 1000 }} />
       <BrowserRouter>
         <Routes>
           <Route path="" element={<Layout />}>
@@ -43,9 +42,8 @@ function App() {
             <Route path="/product" element={<Product />} />
             <Route path="/products" element={<Products />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/cart" element={<ProtectedRoute><CreateProduct /></ProtectedRoute>} />
-            <Route path="/create-product" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
-            <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
+            <Route path="/create-product" element={<ProtectedRoute><CreateProduct /></ProtectedRoute>} />
+            <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
           </Route>
           <Route path="/*" element={<PageNotFound />} />
         </Routes>

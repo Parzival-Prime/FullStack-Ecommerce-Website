@@ -214,15 +214,15 @@ export const updateUserController = async (req, res) => {
 
 export const addToCartController = async (req, res) => {
     try {
-        const { productId, quantity } = req.body
+        const { productId, quantity, price, name } = req.body
         const user = req.user
 
         if (!productId) return res.status(404).send({ success: false, message: 'ProductId not found' })
 
 
-        if (quantity === 0) {
+        if (quantity === undefined) {
             try {
-                const result = await User.findOneAndUpdate({ _id: user._id }, { $push: { cart: { productId, quantity: 1 } } }, { new: true })
+                const result = await User.findOneAndUpdate({ _id: user._id }, { $push: { cart: { productId, quantity: 1, price, name } } }, { new: true })
 
                 console.log(result)
 
@@ -239,8 +239,8 @@ export const addToCartController = async (req, res) => {
         else if (quantity !== 0) {
             try {
                 const result = await User.findOneAndUpdate(
-                    { _id: user._id },
-                    { $push: { cart: { productId, quantity } } }, { new: true }
+                    { _id: user._id, 'cart.productId': productId },
+                    { $set: { 'cart.$.quantity': quantity } }, { new: true }
                 )
 
                 console.log(result)

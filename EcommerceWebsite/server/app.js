@@ -24,18 +24,18 @@ axiosInstance.defaults.headers.common["Accept"] = "application/json"
 export { axiosInstance }
 
 // Stripe Configuration
-export const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY}`);
+export const stripe = new Stripe('sk_test_51PgYpnRtcqBN7ORDLscBdSc0gG2rapdeGFBoIBnNqjH4KCKwg1VYgZ2kChpMydGDeF8sZVTm6j48r3MBiiIpO9hS00zjVh6BT9');
 
 //middlewares
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+  res.header('Access-Control-Allow-Origin', process.env.CLIENT_URL);
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   next();
 });
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: process.env.CLIENT_URL,
   credentials: 'include'
 }))
 app.use(express.json())

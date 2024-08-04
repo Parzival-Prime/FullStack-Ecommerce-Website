@@ -2,6 +2,7 @@
     /* height: 85vh; */
     overflow: hidden;
     background-color: var(--greenCream);
+    padding-top: 5rem;
 }
 
 .about-box {

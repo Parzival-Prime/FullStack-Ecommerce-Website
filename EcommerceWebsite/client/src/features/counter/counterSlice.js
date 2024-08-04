@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 export const counterSlice = createSlice({
     name: 'counter',
     initialState: {
@@ -34,5 +33,7 @@ export const {
     setIsLoggedInFalse,
     setIsLoggedInTrue,
 } = counterSlice.actions
+
+
 
 export default counterSlice.reducer
