@@ -1,0 +1,145 @@
+.profile-container {
+    padding: 2rem;
+    padding-top: 8rem;
+    min-height: 100svh;
+    /* background-color: var(--oceanDark); */
+    /* color: aqua; */
+}
+
+.profile-image-container {
+    border-radius: 50%;
+    height: 12rem;
+    width: 12rem;
+    overflow: clip;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-image {
+    height: 12rem;
+}
+
+.edit-profile {
+    padding: .1rem .9rem;
+    display: inline-block;
+    border: 1px solid var(--greybgc);
+    border-radius: .9rem;
+    transform: translate(220%, -50%);
+}
+
+.profile-name {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-top: -.5rem;
+    margin-left: .5rem;
+}
+
+.profile-email {
+    font-size: .97rem;
+    font-weight: 300;
+    margin-left: .7rem;
+    margin-top: .2rem;
+    /* color: rgba(0, 255, 255, 0.603); */
+}
+
+.profile-dateofbirth {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: .5rem;
+    margin-top: .8rem;
+    margin-left: .6rem;
+}
+
+.profile-joinedOn {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: .5rem;
+    margin-top: .8rem;
+    margin-left: .6rem;
+}
+
+.profile-lower {
+    margin-top: 2rem;
+}
+
+.profile-lower-address-title {
+    font-weight: 400;
+}
+
+.profile-address {
+    border: 1px solid var(--greybgc);
+    height: 5rem;
+    border-radius: 8px;
+    padding: .4rem;
+}
+
+.profile-lower-phoneNumber-title {
+    font-weight: 400;
+    margin-top: 2rem;
+}
+
+.profile-phoneNumber {
+    border: 1px solid var(--greybgc);
+    height: 2.5rem;
+    border-radius: 8px;
+    padding: .4rem;
+}
+
+
+/* Edit Popup */
+
+.profile-edit-popup-backdrop {
+    min-height: 100svh;
+    background-color: rgba(0, 0, 0, 0.486);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-edit-popup-container {
+    top: 6.5rem;
+    left: 1.9rem;
+    position: absolute;
+    min-height: 70svh;
+    width: 85%;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+}
+
+.profile-edit-popup-goback-container{
+    position: absolute;
+    left: 1.2rem;
+    top: 1rem;
+}
+
+.profile-edit-popup-upper{
+    flex-direction: column;
+}
+
+.profile-edit-popup-image-container {
+    border-radius: 50%;
+    height: 8rem;
+    width: 8rem;
+    overflow: clip;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+
+.profile-edit-poup-image {
+    height: 8rem;
+}
+
+
+.profile-edit-popup-lower{
+    flex-direction: column;
+}
+

@@ -16,6 +16,10 @@ import CreateProduct from './pages/admin/CreateProduct'
 import Products from "./pages/Products";
 import Product from "./pages/Product";
 import ProtectedRoute from './components/ProtectedRoute'
+import Profile from './pages/Profile'
+import Dashboard from './pages/admin/Dashboad'
+import Orders from './pages/Orders'
+import Settings from './pages/Settings'
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3090",
@@ -44,6 +48,10 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/create-product" element={<ProtectedRoute><CreateProduct /></ProtectedRoute>} />
             <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+            <Route path="/myOrders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
           </Route>
           <Route path="/*" element={<PageNotFound />} />
         </Routes>

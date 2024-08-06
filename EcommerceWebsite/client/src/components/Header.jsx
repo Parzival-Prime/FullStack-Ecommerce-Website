@@ -211,7 +211,7 @@ function Header() {
                     }
                   }}
                 >
-                  <MenuItem onClick={handleClose} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiUserLine />Profile</MenuItem>
+                  <MenuItem onClick={()=>navigate('/profile')} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiUserLine />Profile</MenuItem>
                   <MenuItem onClick={handleClose} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiArchiveLine />Orders</MenuItem>
                   <MenuItem
                     onClick={handleClose}

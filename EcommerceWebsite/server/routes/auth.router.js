@@ -38,7 +38,7 @@ router.route('/change-password').patch(verifyJWT, changePasswordController)
 
 router.route('/user-profile').get(verifyJWT, userProfileController)
 
-router.route('/update-user').put(verifyJWT, updateUserController)
+router.route('/update-user').put(verifyJWT, upload.single('profileImage'), updateUserController)
 
 
 export default router

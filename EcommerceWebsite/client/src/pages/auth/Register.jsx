@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import FlexCenter from "../../components/FlexCenter";
 import { styled } from "@mui/material/styles";
@@ -7,6 +6,11 @@ import toast from "react-hot-toast";
 import { Box, FormControl, Typography, Button, TextField } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { axiosInstance } from "../../App";
+import { yellow, orange } from '@mui/material/colors';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import dayjs from 'dayjs';
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -22,7 +26,16 @@ const VisuallyHiddenInput = styled("input")({
 
 function Register() {
   const navigate = useNavigate();
+  const [dateOfBirth, setDateOfBirth] = useState(dayjs('01-january-2000'));
   const readyFormData = new FormData();
+
+  const textFieldRef = useRef(null);
+
+  useEffect(() => {
+    if (textFieldRef.current) {
+      textFieldRef.current.focus();
+    }
+  }, []);
 
   const formDataToJson = (formData) => {
     const jsonObject = {};
@@ -39,6 +52,7 @@ function Register() {
     phone: "",
     address: "",
     answer: "",
+    pincode: ""
   });
 
   const handleChange = (e) => {
@@ -52,14 +66,16 @@ function Register() {
   };
 
   const handleFileUpload = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files[0]
     readyFormData.append("name", formData.name);
     readyFormData.append("email", formData.email);
     readyFormData.append("password", formData.password);
     readyFormData.append("phone", formData.phone);
+    readyFormData.append("dateOfBirth", dateOfBirth.format('DD-MM-YYYY'));
     readyFormData.append("address", formData.address);
+    readyFormData.append("pincode", formData.pincode);
     readyFormData.append("answer", formData.answer);
-    readyFormData.append("file", file);
+    readyFormData.append("file", file)
   };
 
   const handleSubmit = async (e) => {
@@ -84,36 +100,12 @@ function Register() {
   return (
     <>
       <Box
-        variant={"div"}
-        sx={{
-          height: "100vh",
-          paddingTop: "2rem",
-          background: "var(--linearGradient1)",
-        }}
-      >
-        <FlexCenter
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <Typography
-            variant="h1"
-            sx={{
-              fontSize: "2.5rem",
-              fontWeight: "700",
-            }}
-          >
+        variant={"div"} sx={{ height: "100vh", paddingTop: "6rem", background: "var(--linearGradient1)", }} >
+        <FlexCenter sx={{ display: "flex", flexDirection: "column" }} >
+          <Typography variant="h1" sx={{ fontSize: "2.5rem", fontWeight: "700", }} >
             Create Account
           </Typography>
-          <Typography
-            variant="p"
-            sx={{
-              fontSize: ".85rem",
-              color: "var(--subTextColor)",
-              fontWeight: "var(--logoFontWeight)",
-            }}
-          >
+          <Typography variant="p" sx={{ fontSize: ".85rem", color: "var(--subTextColor)", fontWeight: "var(--logoFontWeight)", }} >
             Fill your Information below or register <br /> with your Social
             Account
           </Typography>
@@ -167,6 +159,46 @@ function Register() {
                 color="warning"
                 focused
               />
+
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="Date of Birth"
+                  type="number"
+                  value={dateOfBirth}
+                  onChange={(newValue) => setDateOfBirth(newValue)}
+                  slots={{
+                    textField: (params) => (
+                      <TextField
+                        {...params}
+                        sx={{
+                          '& .MuiInputBase-root': {
+                            '&.Mui-focused': {
+                              borderColor: orange[700], // Color for the focused state
+                            },
+                          },
+                          '& .MuiInputLabel-root': {
+                            '&.Mui-focused': {
+                              color: orange[700], // Color for the label in focused state
+                            },
+                          },
+                          '& .MuiOutlinedInput-root': {
+                            '& fieldset': {
+                              borderColor: orange[700], // Default color for the border
+                            },
+                            '&:hover fieldset': {
+                              borderColor: orange[700], // Hover color
+                            },
+                            '&.Mui-focused fieldset': {
+                              borderColor: orange[700], // Color when focused
+                            },
+                          },
+                        }}
+                      />
+                    ),
+                  }}
+                />
+              </LocalizationProvider>
+
               <TextField
                 label="Address"
                 name="address"
@@ -176,6 +208,16 @@ function Register() {
                 onChange={handleChange}
                 variant="outlined"
                 type="text"
+                color="warning"
+                focused
+              />
+              <TextField
+                label="Pincode"
+                name="pincode"
+                value={formData.pincode}
+                onChange={handleChange}
+                variant="outlined"
+                type="number"
                 color="warning"
                 focused
               />

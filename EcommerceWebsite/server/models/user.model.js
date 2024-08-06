@@ -83,9 +83,19 @@ const userSchema = new mongoose.Schema({
         required: true
     },
 
+    dateOfBirth:{
+        type: String,
+        required: true
+    },
+
     answer: {
         type: String,
         required: true,
+    },
+
+    pincode: {
+        type: Number,
+        required: true
     },
 
     role: {

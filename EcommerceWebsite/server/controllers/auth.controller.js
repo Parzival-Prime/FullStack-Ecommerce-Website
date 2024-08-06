@@ -28,10 +28,10 @@ const generateAccessAndRefreshToken = async (userId) => {
 
 export const registerController = async (req, res) => {
     try {
-        const { name, email, password, phone, address, answer } = req.body
+        const { name, email, password, phone, address, answer, dateOfBirth, pincode } = req.body
 
         if (
-            !name || !email || !password || !phone || !address || !answer
+            !name || !email || !password || !phone || !address || !answer || !dateOfBirth || !pincode
         ) {
             return res.status(400).send({
                 success: false,
@@ -48,7 +48,7 @@ export const registerController = async (req, res) => {
         const profileImage = await uploadOnCloudinary(ImageLocalPath)
 
 
-        const user = await User.create({ name, email, password, phone, address, answer, profileImage: profileImage?.url })
+        const user = await User.create({ name, email, password, phone, dateOfBirth, pincode, address, answer, profileImage: profileImage?.url })
 
         const createdUser = await User.findOne(user._id).select('-password -refreshToken')
 
@@ -100,7 +100,7 @@ export const loginController = async (req, res) => {
 
         const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id)
 
-        const loggedInUser = await User.findById(user._id).select('-password -refreshToken')
+        const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
 
         return res
             .status(200)
@@ -171,7 +171,7 @@ export const changePasswordController = async (req, res) => {
 export const userProfileController = async (req, res) => {
     try {
         const { user } = req.user
-
+        console.log(user)
         return res.status(200).send({
             success: true,
             message: 'User data fetched Successfully',
@@ -190,10 +190,35 @@ export const userProfileController = async (req, res) => {
 
 export const updateUserController = async (req, res) => {
     try {
-        const { name, email, phone, address } = req.body
-        const { user } = req.user
+        const { name, email, phone, address, dateOfBirth, pincode, profileImage } = req.body
 
-        const updatedUser = await User.findByIdAndUpdate(user._id, { email, name, phone, address }, { new: true }).select('-password -refreshToken')
+        const user = req.user
+
+        if (
+            !name || !email || !phone || !address || !dateOfBirth || !pincode
+        ) {
+            return res.status(400).send({
+                success: false,
+                message: 'All fields are required'
+            })
+        }
+
+        const ImageLocalPath = req?.file?.path
+        let profileImageres
+        if(ImageLocalPath){
+            profileImageres = await uploadOnCloudinary(ImageLocalPath)
+        }
+
+        let fileToPut
+
+        if(profileImageres){
+            fileToPut = profileImageres.url
+        } else {
+            fileToPut = profileImage
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(user._id, { email, name, phone, address, profileImage:fileToPut, pincode, dateOfBirth }, { new: true }).select('-password -refreshToken')
+
         return res.status(200).send({
             success: true,
             message: 'User Updated Successfully',
@@ -201,7 +226,7 @@ export const updateUserController = async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        return res.status(400).sned({
+        return res.status(400).send({
             success: false,
             message: 'Some Error occuered in user Update Controller',
             error
