@@ -6,27 +6,28 @@ import { IconButton, Box } from "@mui/material";
 import FlexCenter from "./FlexCenter";
 import SearchIcon from "@mui/icons-material/Search";
 import Avatar from '@mui/material/Avatar';
-import Logout from "../pages/auth/Logout";
 import Backdrop from '@mui/material/Backdrop';
 import { useSelector, useDispatch } from "react-redux";
-import { setIsLoggedInTrue } from "../features/counter/counterSlice";
+import { setIsLoggedInTrue, setIsLoggedInFalse } from "../features/counter/counterSlice";
 import { RiArrowLeftSFill, RiHome2Line, RiShoppingBagLine, RiUserLine, RiLogoutBoxLine, RiTeamLine, RiShoppingCart2Line, RiCustomerServiceLine, RiPriceTag3Line, RiArchiveLine, RiLoginBoxLine } from '@remixicon/react'
 
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
+import toast from "react-hot-toast";
+import { axiosInstance } from "../App";
 
 
 function Header() {
   const [open, setOpen] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
   const [user, setUser] = useState(null)
+
   const isLoggedIn = useSelector((state) => state.counter.isLoggedIn)
   const dispatch = useDispatch()
   const navRef = useRef();
   const navigate = useNavigate();
-
-
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open2 = Boolean(anchorEl);
@@ -34,11 +35,11 @@ function Header() {
     event.stopPropagation()
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = (e) => {
     e.stopPropagation()
     setAnchorEl(null);
   };
-
 
 
   const handleBackdropToggle = () => {
@@ -59,10 +60,29 @@ function Header() {
     toggleNavMenu()
   }
 
+  const handleLogOut = async(e)=>{
+    try {
+      const {data} = await axiosInstance.get('/api/v1/auth/logout')
+      if(data?.success){
+        localStorage.removeItem('user')
+        dispatch(setIsLoggedInFalse())
+        handleClose(e)
+        console.log('LoggedOut Successfully')
+        toast.success('LoggedOut Successfully')
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error('Something went wrong in handleLogOut')
+    }
+  }
+
   function checkIsLoggedInState() {
-    const luser = localStorage.getItem('user')
+    const luser = JSON.parse(localStorage.getItem('user'))
     if (luser) {
-      setUser(JSON.parse(luser).value)
+      setUser(luser)
+      if(luser.value.role == 1){
+        setIsAdmin(true)
+      }
       dispatch(setIsLoggedInTrue())
     }
   }
@@ -149,6 +169,16 @@ function Header() {
                 <RiHome2Line />Home
               </li>
             </NavLink>
+            {isAdmin && (<><NavLink to="/dashboard" className="nav-item" onClick={handleNavLinkClick}>
+              <li className="nav-li" >
+                <RiHome2Line />Dashboard
+              </li>
+            </NavLink>
+            <NavLink to="/create-product" className="nav-item" onClick={handleNavLinkClick}>
+              <li className="nav-li" >
+                <RiHome2Line />CreateProduct
+              </li>
+            </NavLink></>)}
             <NavLink onClick={handleNavLinkClick} to="/products" className="nav-item" >
               <li className="nav-li">
                 <RiShoppingBagLine />Products
@@ -195,7 +225,7 @@ function Header() {
                   MenuListProps={{
                     'aria-labelledby': 'fade-button',
                   }}
-                  transformOrigin={{ vertical: 40, horizontal: 170 }}
+                  transformOrigin={{ vertical: 110, horizontal: 170 }}
                   anchorEl={anchorEl}
                   open={open2}
                   onClose={handleClose}
@@ -214,7 +244,7 @@ function Header() {
                   <MenuItem onClick={()=>navigate('/profile')} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiUserLine />Profile</MenuItem>
                   <MenuItem onClick={handleClose} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiArchiveLine />Orders</MenuItem>
                   <MenuItem
-                    onClick={handleClose}
+                    onClick={handleLogOut}
                     sx={{
                       fontSize: '1.25rem',
                       gap: '.8rem',

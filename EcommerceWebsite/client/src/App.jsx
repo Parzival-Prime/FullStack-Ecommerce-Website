@@ -20,7 +20,10 @@ import Profile from './pages/Profile'
 import Dashboard from './pages/admin/Dashboad'
 import Orders from './pages/Orders'
 import Settings from './pages/Settings'
+import AdminRoute from "./components/AdminRoute";
 
+
+// Creating axios Instance
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3090",
   withCredentials: true,
@@ -31,7 +34,10 @@ axiosInstance.defaults.headers.common["Accept"] = "application/json";
 
 export { axiosInstance };
 
+
+
 function App() {
+
   return (
     <>
       <Toaster style={{ zIndex: 1000 }} />
@@ -46,12 +52,40 @@ function App() {
             <Route path="/product" element={<Product />} />
             <Route path="/products" element={<Products />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/create-product" element={<ProtectedRoute><CreateProduct /></ProtectedRoute>} />
-            <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
-            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-            <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-            <Route path="/myOrders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+            <Route path="/create-product" element={
+              <ProtectedRoute>
+                <AdminRoute>
+                  <CreateProduct />
+                </AdminRoute>
+              </ProtectedRoute>
+            } />
+            <Route path="/cart" element={
+              <ProtectedRoute>
+                <Cart />
+              </ProtectedRoute>
+            } />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <AdminRoute>
+                  <Dashboard />
+                </AdminRoute>
+              </ProtectedRoute>
+            } />
+            <Route path="/settings" element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>}
+            />
+            <Route path="/myOrders" element={
+              <ProtectedRoute>
+                <Orders />
+              </ProtectedRoute>
+            } />
           </Route>
           <Route path="/*" element={<PageNotFound />} />
         </Routes>

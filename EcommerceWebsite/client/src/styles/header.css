@@ -22,7 +22,7 @@
     position: fixed;
     top: 57px;
     right: -1rem;
-    width: 17rem;
+    width: 18rem;
     transform: translateX(50vh);
     transition: transform .3s ease;
 }
