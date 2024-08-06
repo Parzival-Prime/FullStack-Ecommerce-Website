@@ -18,3 +18,14 @@
     height: 2px;
     width: 7rem;
 }
+
+.login-No-Account{
+    font-size: .9rem;
+    align-self: center;
+}
+
+.registerPage-link{
+    font-size: 1rem;
+    font-weight: 600;
+    color: blue;
+}

@@ -5,6 +5,7 @@ export const counterSlice = createSlice({
     initialState: {
         showPreview: true,
         isLoggedIn: false,
+        isAdmin: false
     },
     reducers: {
         setShowPreviewFalse: (state) => {
@@ -22,6 +23,14 @@ export const counterSlice = createSlice({
         setIsLoggedInFalse: (state) => {
             state.isLoggedIn = false
         },
+
+        setIsAdminFalse: (state) => {
+            state.isAdmin = false
+        },
+
+        setIsAdminTrue: (state) => {
+            state.isAdmin = true
+        },
     }
 })
 
@@ -32,6 +41,8 @@ export const {
     setShowPreviewTrue,
     setIsLoggedInFalse,
     setIsLoggedInTrue,
+    setIsAdminTrue,
+    setIsAdminFalse
 } = counterSlice.actions
 
 

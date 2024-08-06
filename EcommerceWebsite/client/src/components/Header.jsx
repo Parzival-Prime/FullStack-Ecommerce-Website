@@ -9,7 +9,7 @@ import Avatar from '@mui/material/Avatar';
 import Backdrop from '@mui/material/Backdrop';
 import { useSelector, useDispatch } from "react-redux";
 import { setIsLoggedInTrue, setIsLoggedInFalse } from "../features/counter/counterSlice";
-import { RiArrowLeftSFill, RiHome2Line, RiShoppingBagLine, RiUserLine, RiLogoutBoxLine, RiTeamLine, RiShoppingCart2Line, RiCustomerServiceLine, RiPriceTag3Line, RiArchiveLine, RiLoginBoxLine } from '@remixicon/react'
+import { RiArrowLeftSFill, RiHome2Line, RiShoppingBagLine, RiUserLine, RiLogoutBoxLine, RiTeamLine, RiShoppingCart2Line, RiCustomerServiceLine, RiArchiveLine, RiLoginBoxLine } from '@remixicon/react'
 
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -21,7 +21,7 @@ import { axiosInstance } from "../App";
 
 function Header() {
   const [open, setOpen] = useState(false)
-  const [isAdmin, setIsAdmin] = useState(false)
+  const isAdmin = useSelector((state)=>state.counter.isAdmin)
   const [user, setUser] = useState(null)
 
   const isLoggedIn = useSelector((state) => state.counter.isLoggedIn)
@@ -31,6 +31,7 @@ function Header() {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open2 = Boolean(anchorEl);
+
   const handleClick = (event) => {
     event.stopPropagation()
     setAnchorEl(event.currentTarget);
@@ -40,7 +41,6 @@ function Header() {
     e.stopPropagation()
     setAnchorEl(null);
   };
-
 
   const handleBackdropToggle = () => {
     setOpen(prev => !prev)
@@ -67,6 +67,8 @@ function Header() {
         localStorage.removeItem('user')
         dispatch(setIsLoggedInFalse())
         handleClose(e)
+        handleNavLinkClick(e)
+        navigate('/login')
         console.log('LoggedOut Successfully')
         toast.success('LoggedOut Successfully')
       }
@@ -79,10 +81,8 @@ function Header() {
   function checkIsLoggedInState() {
     const luser = JSON.parse(localStorage.getItem('user'))
     if (luser) {
+      // console.log(luser)
       setUser(luser)
-      if(luser.value.role == 1){
-        setIsAdmin(true)
-      }
       dispatch(setIsLoggedInTrue())
     }
   }
@@ -179,6 +179,7 @@ function Header() {
                 <RiHome2Line />CreateProduct
               </li>
             </NavLink></>)}
+
             <NavLink onClick={handleNavLinkClick} to="/products" className="nav-item" >
               <li className="nav-li">
                 <RiShoppingBagLine />Products
@@ -241,8 +242,8 @@ function Header() {
                     }
                   }}
                 >
-                  <MenuItem onClick={()=>navigate('/profile')} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiUserLine />Profile</MenuItem>
-                  <MenuItem onClick={handleClose} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiArchiveLine />Orders</MenuItem>
+                  <MenuItem onClick={(e)=>{handleClose(e); handleNavLinkClick(e); navigate('/profile')}} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiUserLine />Profile</MenuItem>
+                  <MenuItem onClick={(e)=>handleClose(e)} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiArchiveLine />Orders</MenuItem>
                   <MenuItem
                     onClick={handleLogOut}
                     sx={{

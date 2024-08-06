@@ -9,7 +9,7 @@ import FormControl from "@mui/material/FormControl";
 import "../../styles/login.css";
 import { axiosInstance } from "../../App";
 import { useDispatch } from "react-redux";
-import { setIsLoggedInTrue } from '../../features/counter/counterSlice.js'
+import { setIsLoggedInTrue, setIsAdminTrue } from '../../features/counter/counterSlice.js'
 
 axios.defaults.withCredentials = true;
 
@@ -23,7 +23,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const setItemWithExpiry = (key, value, expiryInHours) =>{
+  const setItemWithExpiry = (key, value, expiryInHours) => {
     const now = new Date()
     const expiry = new Date(now.getTime() + expiryInHours * 60 * 60 * 1000)
     const item = {
@@ -36,11 +36,14 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { data } = await axiosInstance.post(`/api/v1/auth/login`,{ email, password });
+    const { data } = await axiosInstance.post(`/api/v1/auth/login`, { email, password });
 
     if (data?.success) {
       setItemWithExpiry('user', data.user, 24)
       dispatch(setIsLoggedInTrue())
+      if (data.user.role == 1) {
+        dispatch(setIsAdminTrue())
+      }
       navigate(from || '/');
       toast.success('User LoggedIn successfully!')
       setEmail("");
@@ -90,6 +93,9 @@ function Login() {
           or SignIn with
           <div className="line"></div>
         </FlexCenter> */}
+        <p className="login-No-Account">Don't have account? &nbsp;
+          <span className="registerPage-link" onClick={()=>navigate('/register')}>Create One</span>
+        </p>
       </div>
     </>
   );

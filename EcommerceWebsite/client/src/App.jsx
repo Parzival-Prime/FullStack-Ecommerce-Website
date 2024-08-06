@@ -3,6 +3,8 @@ import "./App.css";
 import axios from "axios";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setIsAdminTrue, setIsAdminFalse } from "./features/counter/counterSlice";
 import Layout from "./pages/layout/Layout";
 import HomePage from "./pages/HomePage";
 import About from "./pages/About";
@@ -37,6 +39,13 @@ export { axiosInstance };
 
 
 function App() {
+  const loggedUser = JSON.parse(localStorage?.getItem('user'))
+  const dispatch = useDispatch()
+  if(loggedUser?.value?.role === 1){
+    dispatch(setIsAdminTrue())
+  } else {
+    dispatch(setIsAdminFalse())
+  }
 
   return (
     <>

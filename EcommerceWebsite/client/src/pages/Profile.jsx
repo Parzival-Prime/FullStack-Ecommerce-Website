@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import SendIcon from '@mui/icons-material/Send';
 import toast from 'react-hot-toast'
 import { axiosInstance } from '../App'
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 const StyledTextField = styled(TextField)({
   marginBottom: '1rem',
@@ -40,7 +41,9 @@ function Profile() {
   const [phone, setPhone] = useState(0)
   const [pincode, setPincode] = useState(0)
   const [createdAt, setCreatedAt] = useState('')
-  const [dateOfBirth, setDateOfBirth] = useState(dayjs('01-january-2000'));
+  const [dateOfBirth, setDateOfBirth] = useState({});
+  dayjs.extend(customParseFormat);
+  const format = 'DD-MM-YYYY';
 
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   const convertDateFormat = (date) => {
@@ -71,13 +74,16 @@ function Profile() {
       setPincode(userData.pincode || '')
       setPhone(userData.phone || '')
       setCreatedAt(convertDateFormat((((((userData.createdAt).split('T'))[0]).split('-')).reverse()).join('-')))
-      setDateOfBirth(dayjs(`${userData.dateOfBirth}`) || dayjs('01-01-2000'))
+      setDateOfBirth(dayjs(`${userData.dateOfBirth}`, format))
     }
   }, [userData])
 
   const handleFlexCenterClick = () => {
     fileInputRef.current.click()
   }
+
+  // console.log("userData",userData.dateOfBirth)
+  console.log("dateOfBirth",dateOfBirth)
 
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0]
@@ -186,7 +192,7 @@ function Profile() {
                       onChange={handleImageChange}
                     />
 
-
+{/* {console.log(dateOfBirth)} */}
                     <TextField
                       label="Name"
                       type="text"

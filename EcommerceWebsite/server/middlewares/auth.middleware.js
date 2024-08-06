@@ -4,6 +4,7 @@ import { User } from '../models/user.model.js'
 
 export const verifyJWT = async (req, res, next) => {
     try {
+        
         const token = req.cookies?.accessToken || req.header('Authorization')?.replace("Bearer ", "")
         if (!token) {
             return res.status(401).json({ success: false, message: "No token, authorization denied" })
