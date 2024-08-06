@@ -82,9 +82,6 @@ function Profile() {
     fileInputRef.current.click()
   }
 
-  // console.log("userData",userData.dateOfBirth)
-  console.log("dateOfBirth",dateOfBirth)
-
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0]
     if (selectedFile) {

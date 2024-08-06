@@ -21,8 +21,10 @@ import { axiosInstance } from "../App";
 
 function Header() {
   const [open, setOpen] = useState(false)
-  const isAdmin = useSelector((state)=>state.counter.isAdmin)
+  const isAdmin = useSelector((state) => state.counter.isAdmin)
   const [user, setUser] = useState(null)
+  const [profileImage, setProfileImage] = useState('')
+  const [name, setName] = useState('')
 
   const isLoggedIn = useSelector((state) => state.counter.isLoggedIn)
   const dispatch = useDispatch()
@@ -60,10 +62,10 @@ function Header() {
     toggleNavMenu()
   }
 
-  const handleLogOut = async(e)=>{
+  const handleLogOut = async (e) => {
     try {
-      const {data} = await axiosInstance.get('/api/v1/auth/logout')
-      if(data?.success){
+      const { data } = await axiosInstance.get('/api/v1/auth/logout')
+      if (data?.success) {
         localStorage.removeItem('user')
         dispatch(setIsLoggedInFalse())
         handleClose(e)
@@ -81,12 +83,13 @@ function Header() {
   function checkIsLoggedInState() {
     const luser = JSON.parse(localStorage.getItem('user'))
     if (luser) {
-      // console.log(luser)
-      setUser(luser)
+      setUser(luser.value)
+      setName(luser.value.name)
+      setProfileImage(luser.value.profileImage)
       dispatch(setIsLoggedInTrue())
     }
   }
-  
+
   const clearExpiredItems = () => {
     const keys = Object.keys(localStorage)
 
@@ -104,10 +107,16 @@ function Header() {
   }
 
 
+
   useEffect(() => {
     clearExpiredItems()
     checkIsLoggedInState()
   }, [dispatch])
+
+  useEffect(() => {
+    clearExpiredItems()
+    checkIsLoggedInState()
+  }, [])
 
   return (
     <>
@@ -174,11 +183,11 @@ function Header() {
                 <RiHome2Line />Dashboard
               </li>
             </NavLink>
-            <NavLink to="/create-product" className="nav-item" onClick={handleNavLinkClick}>
-              <li className="nav-li" >
-                <RiHome2Line />CreateProduct
-              </li>
-            </NavLink></>)}
+              <NavLink to="/create-product" className="nav-item" onClick={handleNavLinkClick}>
+                <li className="nav-li" >
+                  <RiHome2Line />CreateProduct
+                </li>
+              </NavLink></>)}
 
             <NavLink onClick={handleNavLinkClick} to="/products" className="nav-item" >
               <li className="nav-li">
@@ -212,11 +221,10 @@ function Header() {
                   aria-expanded={open2 ? 'true' : undefined}
                   onClick={handleClick}
                 >
-
                   <li className="nav-li nav-item">
                     <div className="nav-your-account">
-                      <RiArrowLeftSFill /><Avatar alt='Avatar' src={user?.profileImage} />
-                      <p>{user?.name}</p>
+                      <RiArrowLeftSFill /><Avatar alt='Avatar' src={profileImage} />
+                      <p>{name}</p>
                     </div>
                   </li>
 
@@ -242,8 +250,8 @@ function Header() {
                     }
                   }}
                 >
-                  <MenuItem onClick={(e)=>{handleClose(e); handleNavLinkClick(e); navigate('/profile')}} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiUserLine />Profile</MenuItem>
-                  <MenuItem onClick={(e)=>handleClose(e)} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiArchiveLine />Orders</MenuItem>
+                  <MenuItem onClick={(e) => { handleClose(e); handleNavLinkClick(e); navigate('/profile') }} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiUserLine />Profile</MenuItem>
+                  <MenuItem onClick={(e) => handleClose(e)} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiArchiveLine />Orders</MenuItem>
                   <MenuItem
                     onClick={handleLogOut}
                     sx={{
