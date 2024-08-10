@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination } from 'swiper/modules';
+import { useNavigate } from 'react-router';
 import 'swiper/css'
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -12,6 +13,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 function HomePage() {
+  const navigate = useNavigate()
 
   return (
     <>
@@ -23,7 +25,7 @@ function HomePage() {
           <p className="home-hero-p1">Embrace Nature’s Best for Your Hair & Skin</p>
           <img src="\homePage\temphd.png" alt="Image" className="home-hero-image" />
           <p className="home-hero-text">Nourish your hair and skin with our range of all-natural, high-quality products. Crafted with care, inspired by nature.</p>
-          <button className="home-hero-button">Explore Products</button>
+          <button className="home-hero-button" onClick={()=>navigate('/products')}>Explore Products</button>
         </section>
 
         {/* ================= Our Story Section ==================== */}

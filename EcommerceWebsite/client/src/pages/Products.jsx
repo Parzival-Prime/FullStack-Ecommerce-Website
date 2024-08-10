@@ -43,7 +43,7 @@ function Products() {
         let user = JSON.parse(localStorage.getItem('user'))
 
         let quantity;
-        if (user.value.cart.length !== 0) {
+        if (user?.value?.cart?.length !== 0) {
             const cartItemIndex = user.value.cart.findIndex(item => item.productId === currentItem._id)
             if (cartItemIndex !== -1) {
                 quantity = user.value.cart[cartItemIndex].quantity += 1
@@ -55,6 +55,7 @@ function Products() {
             if (data?.success) {
                 toast.success('Item Added to cart successfully!')
                 localStorage.removeItem('user')
+                // console.log(data)
                 user.value = data.result 
                 localStorage.setItem('user', JSON.stringify(user))
             }

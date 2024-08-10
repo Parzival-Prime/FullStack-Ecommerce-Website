@@ -1,7 +1,7 @@
 import slugify from 'slugify'
 import ProductModel from '../models/product.model.js'
 import { uploadOnCloudinary } from '../utils/cloudinary.js'
-
+import { ObjectId } from 'mongodb'
 
 export const createProductController = async (req, res) => {
     try {
@@ -104,39 +104,74 @@ export const getProductController = async (req, res) => {
 }
 
 
-export const getPopularProducts = async (req, res) => {
+// export const getPopularProducts = async (req, res) => {
+//     try {
+//         const products = await ProductModel.aggregate([
+//             {
+//                 $match: {
+//                     name: {
+//                         $in: [
+//                             'Charcoal Detox Clay Mask',
+//                             'Golden Elixer Anti-Aging Serum',
+//                             'Lavender Blossom Floral Soap',
+//                             'Midnight Radiance Night Cream',
+//                             'Ocean Breeze Face Mist',
+//                             'Rose Petal Eye Serum',
+//                             'Daisy Hair Oil',
+//                             'Aqua Bliss Hair Mask'
+//                         ]
+//                     }
+//                 }
+//             }
+//         ])
+
+//         if (!products) return res.status(500).send({ success: false, message: 'Something went wront in querying db in getProductsController' })
+
+//         return res.status(200).send({
+//             success: true,
+//             message: 'Popular Products fetched Successfully',
+//             products
+//         })
+//     } catch (error) {
+//         console.log(error)
+//         return res.status(500).send({
+//             success: false,
+//             message: 'Something went wrong in getPopular Products Controller'
+//         })
+//     }
+// }
+
+
+export const decreaseQuantityOfProduct = async (productsIdAndQuantity) => {
     try {
-        const products = await ProductModel.aggregate([
+
+        const bulkOperation = productsIdAndQuantity.map((item) => (
             {
-                $match: {
-                    name: {
-                        $in: [
-                            'Charcoal Detox Clay Mask',
-                            'Golden Elixer Anti-Aging Serum',
-                            'Lavender Blossom Floral Soap',
-                            'Midnight Radiance Night Cream',
-                            'Ocean Breeze Face Mist',
-                            'Rose Petal Eye Serum',
-                            'Daisy Hair Oil',
-                            'Aqua Bliss Hair Mask'
-                        ]
+                updateOne: {
+                    filter: { name: item.name },
+                    update: {
+                        $inc: { quantity: -item.quantity }
                     }
                 }
             }
-        ])
+        ))
 
-        if (!products) return res.status(500).send({ success: false, message: 'Something went wront in querying db in getProductsController' })
+        const result = await ProductModel.bulkWrite(bulkOperation)
 
-        return res.status(200).send({
+        return {
             success: true,
-            message: 'Popular Products fetched Successfully',
-            products
-        })
+            message: 'Products Quantity decreased ',
+            result
+        }
+
     } catch (error) {
         console.log(error)
-        return res.status(500).send({
-            success: false,
-            message: 'Something went wrong in getPopular Products Controller'
-        })
+        return {
+            success: true,
+            message: 'Something went wrong in decrease Product Quantity'
+        }
     }
 }
+
+
+

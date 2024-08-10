@@ -22,7 +22,7 @@
     position: fixed;
     top: 57px;
     right: -1rem;
-    width: 18rem;
+    width: 19rem;
     transform: translateX(50vh);
     transition: transform .3s ease;
 }
@@ -37,14 +37,15 @@
     display: flex;
     flex-direction: column;
     align-items: start;
-    padding: 1rem 2rem;
+    padding-block: 1rem;
+    padding-left: 2rem;
     gap: 3rem;
 }
 
 .nav-item {
     text-decoration: none;
     color: var(--textColor);
-    width: 9rem;
+    width: 13rem;
     height: 2rem;
 }
 

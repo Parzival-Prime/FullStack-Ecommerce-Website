@@ -19,10 +19,11 @@ import Products from "./pages/Products";
 import Product from "./pages/Product";
 import ProtectedRoute from './components/ProtectedRoute'
 import Profile from './pages/Profile'
-import Dashboard from './pages/admin/Dashboad'
+import Dashboard from './pages/admin/Dashboard'
 import Orders from './pages/Orders'
 import Settings from './pages/Settings'
 import AdminRoute from "./components/AdminRoute";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 
 // Creating axios Instance
@@ -93,6 +94,11 @@ function App() {
             <Route path="/myOrders" element={
               <ProtectedRoute>
                 <Orders />
+              </ProtectedRoute>
+            } />
+            <Route path="/payment-success" element={
+              <ProtectedRoute>
+                <PaymentSuccess />
               </ProtectedRoute>
             } />
           </Route>

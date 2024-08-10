@@ -7,6 +7,36 @@ const validateEmail = function (email) {
     return re.test(email)
 };
 
+const shippingAddressSchema = new mongoose.Schema({
+    city: {
+        type: String,
+        required: true
+    },
+
+    state: {
+        type: String,
+        required: true
+    },
+
+    line1: {
+        type: String,
+        required: true
+    },
+
+    line2: {
+        type: String
+    },
+
+    pinCode:{
+        type: Number,
+        required: true
+    },
+
+    country: {
+        type: String,
+        required: true
+    } 
+})
 
 const cartItemSchema = new mongoose.Schema({
     productId: {
@@ -19,15 +49,16 @@ const cartItemSchema = new mongoose.Schema({
         required: true,
         default: 1
     },
-    price:{
+    price: {
         type: Number,
         required: true
     },
-    name :{
+    name: {
         type: String,
         required: true
     }
 }, { timestamps: true })
+
 
 const wishListSchema = new mongoose.Schema({
     productId: {
@@ -41,6 +72,47 @@ const wishListSchema = new mongoose.Schema({
         default: 1
     }
 }, { timestamps: true })
+
+
+const orderItemSchema = new mongoose.Schema({
+    products: [
+        {
+            productName: {
+                type: String,
+                required: true
+            },
+
+            units:{
+                type: Number,
+                required: true
+            },
+
+            price: {
+                type: Number,
+                required: true
+            }
+        },
+    ],
+
+    shippingAddress: shippingAddressSchema,
+
+    totalAmount: {
+        type: Number,
+        required: true
+    },
+
+    billID: {
+        type: String,
+        required: true
+    },
+
+    paymentMode: {
+        type: String,
+        required: true
+    }
+
+}, { timestamps: true })
+
 
 
 const userSchema = new mongoose.Schema({
@@ -82,8 +154,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    
 
-    dateOfBirth:{
+    dateOfBirth: {
         type: String,
         required: true
     },
@@ -110,6 +183,12 @@ const userSchema = new mongoose.Schema({
         type: [wishListSchema],
         default: []
     },
+
+    orders: {
+        type: [orderItemSchema],
+        default: []
+    },
+
     refreshToken: {
         type: String
     }

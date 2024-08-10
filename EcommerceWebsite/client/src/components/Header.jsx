@@ -9,7 +9,7 @@ import Avatar from '@mui/material/Avatar';
 import Backdrop from '@mui/material/Backdrop';
 import { useSelector, useDispatch } from "react-redux";
 import { setIsLoggedInTrue, setIsLoggedInFalse } from "../features/counter/counterSlice";
-import { RiArrowLeftSFill, RiHome2Line, RiShoppingBagLine, RiUserLine, RiLogoutBoxLine, RiTeamLine, RiShoppingCart2Line, RiCustomerServiceLine, RiArchiveLine, RiLoginBoxLine } from '@remixicon/react'
+import { RiArrowLeftSFill, RiHome2Line, RiShoppingBagLine, RiUserLine, RiLogoutBoxLine, RiTeamLine, RiShoppingCart2Line, RiCustomerServiceLine, RiArchiveLine, RiLoginBoxLine, RiDashboardLine, RiFunctionAddLine } from '@remixicon/react'
 
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -82,10 +82,10 @@ function Header() {
 
   function checkIsLoggedInState() {
     const luser = JSON.parse(localStorage.getItem('user'))
-    if (luser) {
-      setUser(luser.value)
-      setName(luser.value.name)
-      setProfileImage(luser.value.profileImage)
+    if (luser && luser.value) {
+      setUser(luser?.value)
+      setName(luser?.value?.name)
+      setProfileImage(luser?.value?.profileImage)
       dispatch(setIsLoggedInTrue())
     }
   }
@@ -105,8 +105,6 @@ function Header() {
       }
     });
   }
-
-
 
   useEffect(() => {
     clearExpiredItems()
@@ -180,12 +178,12 @@ function Header() {
             </NavLink>
             {isAdmin && (<><NavLink to="/dashboard" className="nav-item" onClick={handleNavLinkClick}>
               <li className="nav-li" >
-                <RiHome2Line />Dashboard
+                <RiDashboardLine />Dashboard
               </li>
             </NavLink>
               <NavLink to="/create-product" className="nav-item" onClick={handleNavLinkClick}>
                 <li className="nav-li" >
-                  <RiHome2Line />CreateProduct
+                  <RiFunctionAddLine />CreateProduct
                 </li>
               </NavLink></>)}
 

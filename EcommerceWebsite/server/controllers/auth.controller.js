@@ -205,19 +205,19 @@ export const updateUserController = async (req, res) => {
 
         const ImageLocalPath = req?.file?.path
         let profileImageres
-        if(ImageLocalPath){
+        if (ImageLocalPath) {
             profileImageres = await uploadOnCloudinary(ImageLocalPath)
         }
 
         let fileToPut
 
-        if(profileImageres){
+        if (profileImageres) {
             fileToPut = profileImageres.url
         } else {
             fileToPut = profileImage
         }
 
-        const updatedUser = await User.findByIdAndUpdate(user._id, { email, name, phone, address, profileImage:fileToPut, pincode, dateOfBirth }, { new: true }).select('-password -refreshToken')
+        const updatedUser = await User.findByIdAndUpdate(user._id, { email, name, phone, address, profileImage: fileToPut, pincode, dateOfBirth }, { new: true }).select('-password -refreshToken')
 
         return res.status(200).send({
             success: true,
@@ -249,7 +249,7 @@ export const addToCartController = async (req, res) => {
             try {
                 const result = await User.findOneAndUpdate({ _id: user._id }, { $push: { cart: { productId, quantity: 1, price, name } } }, { new: true })
 
-                console.log(result)
+                // console.log(result)
 
                 return res.status(200).send({
                     success: true,
@@ -268,7 +268,7 @@ export const addToCartController = async (req, res) => {
                     { $set: { 'cart.$.quantity': quantity } }, { new: true }
                 )
 
-                console.log(result)
+                // console.log(result)
                 return res.status(200).send({
                     success: true,
                     message: 'Item added to cart successfully',
@@ -330,5 +330,80 @@ export const getCartController = async (req, res) => {
             success: false,
             message: 'Something went wrong in getCartItems Controller'
         })
+    }
+}
+
+
+
+export const removeItemsFromUserCart = async (user) => {
+    try {
+        const { email, productsNameAndQuantity } = user
+
+        const result = await User.updateOne(
+            { email: email },
+            {
+                $pull: {
+                    cart: {
+                        name: { $in: productsNameAndQuantity.map(item => item.name) }
+                    }
+                }
+            }
+        )
+
+        return {
+            success: true,
+            message: 'Items Removed from cart Successfully',
+            result
+        }
+
+    } catch (error) {
+        console.log(error)
+        return {
+            success: false,
+            message: 'Something went wrong in remove Items from cart Controller'
+        }
+    }
+}
+
+
+
+export const InsertTransactionInOrder = async (data) => {
+    try {
+        const { status, totalAmount, billID, lineItems, paymentMethod, customerDetails } = data
+
+        const orderData = {
+            products: [lineItems.data.map((item) => (
+                { ProductName: item.description, units: item.quantity, price: item.amount_subtotal }
+            ))],
+            shippingAddress: {
+                city: customerDetails.address.city,
+                state: customerDetails.address.state,
+                line1: customerDetails.address.line1,
+                line2: customerDetails.address.line2,
+                pincode: customerDetails.address.postal_code,
+                country: customerDetails.address.country
+            },
+            billID,
+            totalAmount,
+            paymentMode: paymentMethod
+        }
+
+        const result = await User.findOneAndUpdate(
+            { email: customerDetails.email },
+            {
+                $push: {
+                    orders: orderData
+                }
+            },
+            { new: true }
+        )
+
+        return {
+            success: true,
+            result
+        }
+    } catch (error) {
+        console.log(error)
+        return
     }
 }

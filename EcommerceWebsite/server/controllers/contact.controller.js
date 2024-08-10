@@ -1,5 +1,4 @@
 import { axiosInstance } from '../app.js'
-import mailjet from 'node-mailjet'
 
 const websiteEmail = 'dvnhrajput@gmail.com'
 const adminEmail = 'trnrajput29@gmail.com'
