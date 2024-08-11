@@ -134,10 +134,10 @@ function Cart() {
   const handleCheckout = async () => {
     try {
       // console.log(selectedItems)
-      const { data } = await axiosInstance.post(`/api/v1/payment/create-checkout-session`, {selectedItems, subtotal})
+      const { data } = await axiosInstance.post(`/api/v1/payment/create-checkout-session`, { selectedItems, subtotal })
 
       if (data?.success) {
-        console.log("data.sessionURL: ",data.sessionURL)
+        console.log("data.sessionURL: ", data.sessionURL)
         window.location = data.sessionURL
       }
     } catch (error) {
@@ -148,15 +148,21 @@ function Cart() {
 
   useEffect(() => {
     getCartItemsfromDB()
+    if (!isLoggedIn) {
+      return navigate('/login', { state: { from: location.pathname } })
+    }
   }, [])
 
   useEffect(() => {
     calcTotal()
   }, [selectedItems])
 
-  if (!isLoggedIn) {
-    return navigate('/login', { state: { from: location.pathname } })
-  }
+  useEffect(() => {
+    if (!isLoggedIn) {
+      return navigate('/login', { state: { from: location.pathname } })
+    }
+  }, [isLoggedIn])
+
   return (
     <>
       <div className="cart-container">

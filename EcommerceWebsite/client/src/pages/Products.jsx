@@ -55,7 +55,6 @@ function Products() {
             if (data?.success) {
                 toast.success('Item Added to cart successfully!')
                 localStorage.removeItem('user')
-                // console.log(data)
                 user.value = data.result 
                 localStorage.setItem('user', JSON.stringify(user))
             }

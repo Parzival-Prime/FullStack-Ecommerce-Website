@@ -8,7 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import Avatar from '@mui/material/Avatar';
 import Backdrop from '@mui/material/Backdrop';
 import { useSelector, useDispatch } from "react-redux";
-import { setIsLoggedInTrue, setIsLoggedInFalse } from "../features/counter/counterSlice";
+import { setIsAdminFalse, setIsLoggedInFalse } from "../features/counter/counterSlice";
 import { RiArrowLeftSFill, RiHome2Line, RiShoppingBagLine, RiUserLine, RiLogoutBoxLine, RiTeamLine, RiShoppingCart2Line, RiCustomerServiceLine, RiArchiveLine, RiLoginBoxLine, RiDashboardLine, RiFunctionAddLine } from '@remixicon/react'
 
 import Button from '@mui/material/Button';
@@ -22,7 +22,6 @@ import { axiosInstance } from "../App";
 function Header() {
   const [open, setOpen] = useState(false)
   const isAdmin = useSelector((state) => state.counter.isAdmin)
-  const [user, setUser] = useState(null)
   const [profileImage, setProfileImage] = useState('')
   const [name, setName] = useState('')
 
@@ -33,6 +32,14 @@ function Header() {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open2 = Boolean(anchorEl);
+
+  function setNameAndProfile() {
+    const luser = JSON.parse(localStorage.getItem('user'))
+    if (luser && luser.value) {
+      setName(luser?.value?.name)
+      setProfileImage(luser?.value?.profileImage)
+    }
+  }
 
   const handleClick = (event) => {
     event.stopPropagation()
@@ -68,6 +75,7 @@ function Header() {
       if (data?.success) {
         localStorage.removeItem('user')
         dispatch(setIsLoggedInFalse())
+        dispatch(setIsAdminFalse())
         handleClose(e)
         handleNavLinkClick(e)
         navigate('/login')
@@ -80,41 +88,9 @@ function Header() {
     }
   }
 
-  function checkIsLoggedInState() {
-    const luser = JSON.parse(localStorage.getItem('user'))
-    if (luser && luser.value) {
-      setUser(luser?.value)
-      setName(luser?.value?.name)
-      setProfileImage(luser?.value?.profileImage)
-      dispatch(setIsLoggedInTrue())
-    }
-  }
-
-  const clearExpiredItems = () => {
-    const keys = Object.keys(localStorage)
-
-    keys.forEach(key => {
-      const itemStr = localStorage.getItem(key)
-      if (!itemStr) return
-
-      const item = JSON.parse(itemStr)
-      const now = new Date()
-
-      if (now.getTime() > item.expiry) {
-        localStorage.removeItem(key)
-      }
-    });
-  }
-
-  useEffect(() => {
-    clearExpiredItems()
-    checkIsLoggedInState()
-  }, [dispatch])
-
-  useEffect(() => {
-    clearExpiredItems()
-    checkIsLoggedInState()
-  }, [])
+  useEffect(()=>{
+    setNameAndProfile()
+  }, [isLoggedIn])
 
   return (
     <>

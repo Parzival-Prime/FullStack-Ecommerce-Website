@@ -1,12 +1,16 @@
 import { User } from '../models/user.model.js'
 import { uploadOnCloudinary } from '../utils/cloudinary.js'
-import mongoose from 'mongoose'
+import bcrypt from 'bcrypt'
 
 const options = {
     httpOnly: true,
     secure: true,
     path: "/",
-    sameSite: 'none'
+    sameSite: 'Strict'
+}
+const options2 = {
+    path: "/",
+    sameSite: 'Strict'
 }
 
 
@@ -100,12 +104,30 @@ export const loginController = async (req, res) => {
 
         const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id)
 
-        const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
+        const loggedInUser = await User.findById(user._id).select("-password -refreshToken -answer")
+
+        if (loggedInUser.role === 1) {
+
+            return res
+                .status(200)
+                .cookie("accessToken", accessToken, options)
+                .cookie("refreshToken", refreshToken, options)
+                .cookie("isLoggedIn", 'true', options2)
+                .cookie("isAdmin", 'true', options2)
+                .json({
+                    success: true,
+                    message: 'User LoggedIn Successfully',
+                    user: loggedInUser,
+                    accessToken: accessToken,
+                    refreshToken: refreshToken
+                })
+        }
 
         return res
             .status(200)
             .cookie("accessToken", accessToken, options)
             .cookie("refreshToken", refreshToken, options)
+            .cookie("isLoggedIn", 'true', options2)
             .json({
                 success: true,
                 message: 'User LoggedIn Successfully',
@@ -126,12 +148,14 @@ export const loginController = async (req, res) => {
 
 export const logoutController = async (req, res) => {
     try {
-        await User.findByIdAndUpdate(req.user._id, { $set: { refreshToken: undefined } }, { new: true })
+        await User.findByIdAndUpdate(req.user._id, { $set: { refreshToken: null } }, { new: true })
 
         return res
             .status(200)
             .clearCookie('accessToken', options)
             .clearCookie('refreshToken', options)
+            .clearCookie('isLoggedIn', options2)
+            .clearCookie('isAdmin', options2)
             .send({
                 success: true,
                 message: 'LoggedOut Successfully'
@@ -148,13 +172,16 @@ export const logoutController = async (req, res) => {
 
 export const changePasswordController = async (req, res) => {
     try {
-        const { password } = req.body
-        const res = await User.findByIdAndUpdate(req.user._id, { $set: { password: password } }, { new: true }).select('-password -refreshToken')
+        const { password, email } = req.body
 
-        return res.status(200).sned({
+        const hashedPassword = await bcrypt.hash(password, 10)
+
+        const response = await User.findOneAndUpdate({ email: email }, { $set: { password: hashedPassword } }, { new: true }).select('-password -refreshToken')
+
+        return res.status(200).send({
             success: true,
             message: 'Password Changed Successfully',
-            user: res
+            user: response
         })
     } catch (error) {
         console.log(error)

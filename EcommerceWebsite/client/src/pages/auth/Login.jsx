@@ -33,17 +33,30 @@ function Login() {
     localStorage.setItem(key, JSON.stringify(item))
   }
 
+  const getCookie = (name) => {
+    const cookies = document.cookie.split(';')
+    const cookieValue = cookies.map((cookie) => {
+      if (((cookie.split('='))[0]).trim() === name) {
+        return (cookie.split('='))[1]
+      }
+    })
+    return cookieValue
+  }
+
+  const checkCookieAndSetState = () => {
+    if (getCookie('isLoggedIn')) dispatch(setIsLoggedInTrue())
+    if (getCookie('isAdmin')) dispatch(setIsAdminTrue())
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const { data } = await axiosInstance.post(`/api/v1/auth/login`, { email, password });
 
     if (data?.success) {
+      navigate(from)
       setItemWithExpiry('user', data.user, 24)
-      dispatch(setIsLoggedInTrue())
-      if (data.user.role == 1) {
-        dispatch(setIsAdminTrue())
-      }
+      checkCookieAndSetState() // checking accessAndisAdmin Tokens and setting States in Store
       navigate(from || '/');
       toast.success('User LoggedIn successfully!')
       setEmail("");
@@ -94,7 +107,7 @@ function Login() {
           <div className="line"></div>
         </FlexCenter> */}
         <p className="login-No-Account">Don't have account? &nbsp;
-          <span className="registerPage-link" onClick={()=>navigate('/register')}>Create One</span>
+          <span className="registerPage-link" onClick={() => navigate('/register')}>Create One</span>
         </p>
       </div>
     </>

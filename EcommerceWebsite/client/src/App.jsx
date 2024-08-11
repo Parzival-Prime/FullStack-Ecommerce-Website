@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import axios from "axios";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setIsAdminTrue, setIsAdminFalse } from "./features/counter/counterSlice";
+import { setIsAdminTrue, setIsAdminFalse, setIsLoggedInFalse, setIsLoggedInTrue } from "./features/counter/counterSlice";
 import Layout from "./pages/layout/Layout";
 import HomePage from "./pages/HomePage";
 import About from "./pages/About";
@@ -40,14 +40,41 @@ export { axiosInstance };
 
 
 function App() {
-  const loggedUser = JSON.parse(localStorage?.getItem('user'))
   const dispatch = useDispatch()
-  if(loggedUser?.value?.role === 1){
-    dispatch(setIsAdminTrue())
-  } else {
-    dispatch(setIsAdminFalse())
+
+  const getCookie = (name) => {
+    const cookies = document.cookie.split(';')
+    const cookieValue = cookies.map((cookie) => {
+      if (((cookie.split('='))[0]).trim() === name) {
+        return (cookie.split('='))[1]
+      }
+    })
+    return cookieValue
   }
 
+  const checkCookieAndSetState = () => {
+    if (document.cookie) {
+      if (getCookie('isLoggedIn')) {
+        dispatch(setIsLoggedInTrue())
+      } else {
+        dispatch(setIsLoggedInFalse())
+        if ((localStorage.getItem('user'))) {
+          localStorage.removeItem('user')
+        }
+      }
+
+      if (getCookie('isAdmin')) {
+        dispatch(setIsAdminTrue())
+      } else {
+        dispatch(setIsAdminFalse())
+      }
+    }
+  }
+
+
+  useEffect(() => {
+    checkCookieAndSetState()
+  }, [])
   return (
     <>
       <Toaster style={{ zIndex: 1000 }} />

@@ -10,6 +10,10 @@ function Logout() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+
+    // Component is Not In Use
+
+
     const handleLogout = async () => {
         try {
             const { data } = await axiosInstance.get('/api/v1/auth/logout')
@@ -25,6 +29,8 @@ function Logout() {
             toast.error('Something went wrong in Logout')
         }
     }
+
+    // Component is Not in use  
     return (
         <Button 
         variant='contained'

@@ -22,7 +22,7 @@ function HomePage() {
         {/* =========== Hero Section =========== */}
         <section className="home-hero-section">
           <h1 className="home-hero-title">Whispering Willow</h1>
-          <p className="home-hero-p1">Embrace Nature’s Best for Your Hair & Skin</p>
+          <p className="http://res.cloudinary.com/dro8qbk8j/image/upload/v1723342616/xhvtjqhy2vlfutgdqun2.png">Embrace Nature’s Best for Your Hair & Skin</p>
           <img src="\homePage\temphd.png" alt="Image" className="home-hero-image" />
           <p className="home-hero-text">Nourish your hair and skin with our range of all-natural, high-quality products. Crafted with care, inspired by nature.</p>
           <button className="home-hero-button" onClick={()=>navigate('/products')}>Explore Products</button>
