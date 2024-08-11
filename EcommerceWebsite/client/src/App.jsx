@@ -54,7 +54,7 @@ function App() {
 
   const checkCookieAndSetState = () => {
     if (document.cookie) {
-      if (getCookie('isLoggedIn')) {
+      if ((getCookie('isLoggedIn'))[0] !== undefined) {
         dispatch(setIsLoggedInTrue())
       } else {
         dispatch(setIsLoggedInFalse())
@@ -63,7 +63,7 @@ function App() {
         }
       }
 
-      if (getCookie('isAdmin')) {
+      if ((getCookie('isAdmin'))[0] !== undefined) {
         dispatch(setIsAdminTrue())
       } else {
         dispatch(setIsAdminFalse())

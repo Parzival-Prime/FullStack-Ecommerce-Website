@@ -9,7 +9,7 @@ import FormControl from "@mui/material/FormControl";
 import "../../styles/login.css";
 import { axiosInstance } from "../../App";
 import { useDispatch } from "react-redux";
-import { setIsLoggedInTrue, setIsAdminTrue } from '../../features/counter/counterSlice.js'
+import { setIsLoggedInTrue, setIsLoggedInFalse, setIsAdminTrue, setIsAdminFalse } from '../../features/counter/counterSlice.js'
 
 axios.defaults.withCredentials = true;
 
@@ -44,8 +44,18 @@ function Login() {
   }
 
   const checkCookieAndSetState = () => {
-    if (getCookie('isLoggedIn')) dispatch(setIsLoggedInTrue())
-    if (getCookie('isAdmin')) dispatch(setIsAdminTrue())
+    if ((getCookie('isLoggedIn'))[0] !== undefined) {
+      dispatch(setIsLoggedInTrue())
+    } else {
+      dispatch(setIsLoggedInFalse())
+    }
+    if ((getCookie('isAdmin'))[0] !== undefined) {
+      console.log('inside admin true')
+      dispatch(setIsAdminTrue())
+    } else {
+      console.log('inside admin false')
+      dispatch(setIsAdminFalse())
+    }
   }
 
   const handleSubmit = async (e) => {
