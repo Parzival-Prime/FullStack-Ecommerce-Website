@@ -73,6 +73,7 @@ export const registerController = async (req, res) => {
 }
 
 
+
 export const loginController = async (req, res) => {
     try {
         const { email, password } = req.body
@@ -338,7 +339,6 @@ export const updateCartController = async (req, res) => {
 
 
 
-
 export const getCartController = async (req, res) => {
     try {
         const user = await User.findById(req.user._id)
@@ -430,6 +430,20 @@ export const InsertTransactionInOrder = async (data) => {
     } catch (error) {
         console.log(error)
         return
+    }
+}
+
+
+
+export const getAllOrders = async (req, res) => {
+    try {
+        const allOrders = await User.findOne({ email: req.user.email }, { orders: 1 })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).send({
+            success: false,
+            message: 'Something went wrong in getAllOrdersController'
+        })
     }
 }
 
@@ -558,14 +572,4 @@ export const getDashboardData = async (req, res) => {
 }
 
 
-export const getAllOrders = async (req, res) => {
-    try {
-        const allOrders = await User.findOne({ email: req.user.email }, {})
-    } catch (error) {
-        console.log(error)
-        return res.status(400).send({
-            success: false,
-            message: 'Something went wrong in getAllOrdersController'
-        })
-    }
-}
+

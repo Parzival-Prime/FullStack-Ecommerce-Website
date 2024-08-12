@@ -9,7 +9,8 @@ import {
     getCartController,
     addToCartController,
     updateCartController,
-    getDashboardData
+    getDashboardData,
+    getAllOrders
 } from '../controllers/auth.controller.js'
 import { verifyJWT } from '../middlewares/auth.middleware.js'
 import { upload } from '../middlewares/multer.middleware.js'
@@ -32,6 +33,8 @@ router.route('/get-cart').get(verifyJWT, getCartController)
 router.route('/add-to-cart').post(verifyJWT, addToCartController)
 
 router.route('/update-cart').post(verifyJWT, updateCartController)
+
+router.route('/get-all-Orders').get(verifyJWT, getAllOrders)
 
 router.route('/get-dashboard-data').get(getDashboardData)
 
