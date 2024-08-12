@@ -262,8 +262,6 @@ export const updateUserController = async (req, res) => {
 }
 
 
-
-
 export const addToCartController = async (req, res) => {
     try {
         const { productId, quantity, price, name } = req.body
@@ -432,5 +430,142 @@ export const InsertTransactionInOrder = async (data) => {
     } catch (error) {
         console.log(error)
         return
+    }
+}
+
+
+
+export const getDashboardData = async (req, res) => {
+    try {
+        console.log('Inside GetDashboard')
+
+        const totalSalesAndRevenue = await User.aggregate([
+            {
+                $unwind: "$orders"
+            },
+            {
+                $unwind: "$orders.products"
+            },
+            {
+                $group: {
+                    _id: "$_id",
+                    name: { $first: "$name" },
+                    email: { $first: "$email" },
+                    totalSpent: { $sum: "$orders.totalAmount" },
+                    totalSales: { $sum: "$orders.products.quantity" }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    users: {
+                        $push: {
+                            name: "$name",
+                            email: "$email",
+                            totalSpent: "$totalSpent",
+                            totalSales: "$totalSales"
+                        }
+                    },
+                    totalRevenue: { $sum: "$totalSpent" },
+                    totalSaleCount: { $sum: "$totalSales" }
+                }
+            },
+            {
+                $project: {
+                    totalRevenue: 1,
+                    totalSaleCount: 1
+                }
+            }
+        ])
+        console.log('totalSalesAndRevenue', totalSalesAndRevenue)
+
+        const totalUser_totalProducts_topFiveCustomers = await User.aggregate([
+            {
+                "$facet": {
+                    "totalUsers": [{ "$count": "count" }],
+                    "totalProducts": [
+                        {
+                            "$lookup": {
+                                "from": "products",
+                                "pipeline": [{ "$count": "count" }],
+                                "as": "totalProducts"
+                            }
+                        },
+                        { "$unwind": "$totalProducts" },
+                        { "$replaceRoot": { "newRoot": "$totalProducts" } }
+                    ],
+                    "topCustomers": [
+                        { "$unwind": "$orders" },
+                        {
+                            "$group": {
+                                "_id": "$_id",
+                                "name": { "$first": "$name" },
+                                "totalSpent": { "$sum": "$orders.totalAmount" }
+                            }
+                        },
+                        { "$sort": { "totalSpent": -1 } },
+                        { "$limit": 5 }
+                    ]
+                }
+            }
+        ])
+        console.log('totalUser_totalProducts_topFiveCustomers', totalUser_totalProducts_topFiveCustomers)
+
+        const allUsers = await User.find({}).sort('-1')
+        console.log('allUsers', allUsers)
+
+        const topFiveMostSoldProducts = await User.aggregate([
+            {
+                $unwind: "$orders"
+            },
+            {
+                $unwind: "$orders.products"
+            },
+            {
+                $group: {
+                    _id: "$orders.products.name",
+                    totalQuantity: {
+                        $sum: "$orders.products.quantity"
+                    }
+                }
+            },
+            {
+                $sort: {
+                    totalQuantity: -1
+                }
+            },
+            {
+                $limit: 5
+            }
+        ])
+        console.log('topFiveMostSoldProducts', topFiveMostSoldProducts)
+
+        return res.status(200).send({
+            success: true,
+            totalSalesAndRevenue,
+            totalUser_totalProducts_topFiveCustomers,
+            allUsers,
+            topFiveMostSoldProducts
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(400).send({
+            success: false,
+            message: 'Something went wrong in getDashboardData Controller'
+        })
+    }
+}
+
+
+export const getAllOrders = async (req, res) => {
+    try {
+        const allOrders = await User.findOne({ email: req.user.email }, {})
+    } catch (error) {
+        console.log(error)
+        return res.status(400).send({
+            success: false,
+            message: 'Something went wrong in getAllOrdersController'
+        })
     }
 }

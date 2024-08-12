@@ -8,7 +8,8 @@ import {
     updateUserController,
     getCartController,
     addToCartController,
-    updateCartController
+    updateCartController,
+    getDashboardData
 } from '../controllers/auth.controller.js'
 import { verifyJWT } from '../middlewares/auth.middleware.js'
 import { upload } from '../middlewares/multer.middleware.js'
@@ -31,6 +32,8 @@ router.route('/get-cart').get(verifyJWT, getCartController)
 router.route('/add-to-cart').post(verifyJWT, addToCartController)
 
 router.route('/update-cart').post(verifyJWT, updateCartController)
+
+router.route('/get-dashboard-data').get(getDashboardData)
 
 
 // Profile Routes
