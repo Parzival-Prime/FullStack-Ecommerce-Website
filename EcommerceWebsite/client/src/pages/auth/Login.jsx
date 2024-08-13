@@ -37,9 +37,10 @@ function Login() {
     const cookies = document.cookie.split(';')
     const cookieValue = cookies.map((cookie) => {
       if (((cookie.split('='))[0]).trim() === name) {
-        return (cookie.split('='))[1]
+        return ((cookie.split('='))[1]).trim()
       }
     })
+    // console.log(cookieValue)
     return cookieValue
   }
 
@@ -49,7 +50,7 @@ function Login() {
     } else {
       dispatch(setIsLoggedInFalse())
     }
-    if ((getCookie('isAdmin'))[0] !== undefined) {
+    if ((getCookie('isAdmin'))[1] !== undefined) {
       console.log('inside admin true')
       dispatch(setIsAdminTrue())
     } else {

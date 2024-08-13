@@ -80,7 +80,7 @@ function Products() {
     }, [])
 
     return (
-        <Box sx={{paddingTop: '3rem'}}>
+        <Box sx={{paddingTop: '3rem', minHeight: '70svh'}}>
             <Typography variant='h1' sx={{ fontSize: '2.5rem', paddingTop: '3rem', textAlign: 'center', fontWeight: '500' }}>All Products</Typography>
             <Box sx={{ flexGrow: 1, padding: '1rem' }}>
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>

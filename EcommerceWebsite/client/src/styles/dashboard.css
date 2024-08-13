@@ -1,0 +1,13 @@
+.dashboard-page-title{
+    font-family: var(--sansitaSwashed);
+    color: var(--greenCream);
+    text-align: center;
+}
+
+.dashboard-tsales-revenue-box{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 2rem;
+    font-size: 1.5rem;
+}

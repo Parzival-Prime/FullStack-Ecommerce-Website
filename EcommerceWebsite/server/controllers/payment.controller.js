@@ -14,7 +14,7 @@ export const paymentController = async (req, res) => {
             mode: 'payment',
             billing_address_collection: 'required',
             shipping_address_collection: {
-                allowed_countries: ['IN']
+                allowed_countries: ['IN', 'CH', 'JP', 'NL', 'IT', 'US', 'RU', 'IE', 'FR', 'ID', 'VN', 'TW', 'KR', 'NO', 'ES', 'DE', 'CA', 'BR', 'SA', 'AE', 'PT', 'TH'], 
             },
             client_reference_id: billID,
             line_items: selectedItems.map(item => ({

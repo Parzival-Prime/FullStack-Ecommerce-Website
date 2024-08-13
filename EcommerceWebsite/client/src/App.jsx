@@ -63,7 +63,7 @@ function App() {
         }
       }
 
-      if ((getCookie('isAdmin'))[0] !== undefined) {
+      if ((getCookie('isAdmin'))[1] !== undefined) {
         dispatch(setIsAdminTrue())
       } else {
         dispatch(setIsAdminFalse())

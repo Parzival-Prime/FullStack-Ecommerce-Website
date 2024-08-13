@@ -340,20 +340,24 @@ function PaymentSuccess() {
     const fetchPaymentDetails = async (sessionID) => {
         try {
             const { data } = await axiosInstance.post(`/api/v1/payment/get-payment-details`, { sessionID })
-            console.log("response: ", data)
             return data?.paymentDetails
         } catch (error) {
             console.error('Error fetching payment Details: ', error)
         }
     }
 
-    const displayPaymentDetails = async () => {
+    const displayPaymentDetails = async() => {
         const { sessionID } = getQueryParams()
         if (sessionID) {
             const paymentDetails = await fetchPaymentDetails(sessionID)
             if (paymentDetails) {
-                console.log('Payment Details: ', paymentDetails)
                 setPaymentDetails(paymentDetails)
+                const { data } = await axiosInstance.get('/api/v1/auth/get-cart')
+                if (data?.success) {
+                    let user = JSON.parse(localStorage.getItem('user'))
+                    user.value.cart = data.cart
+                    localStorage.setItem('user', JSON.stringify(user))
+                }
             } else {
                 console.error('No payment Details Found')
             }
@@ -382,9 +386,9 @@ function PaymentSuccess() {
                                     ${' '}{parseFloat(paymentDetails.totalAmount / 100).toFixed(2)}
                                 </h3>
                                 <div>
-                                    <div className="payment-success-upper-subtext-date"> Date: {((paymentDetails.transactionDate).split('T'))[0]}</div>
+                                    <div className="payment-success-upper-subtext-date"> Date: {(paymentDetails.transactionDate)}</div>
                                     <div className="payment-success-upper-subtext-billId">Bill ID: &nbsp;
-                                        {(paymentDetails.billID).substring(0, 16)}
+                                        {(paymentDetails.billID)}
                                     </div>
                                 </div>
                             </div>
@@ -414,8 +418,8 @@ function PaymentSuccess() {
                         </div>
                     </div>
                     <div className="payment-success-lower">
-                        <button className="payment-success-lower-goback" onClick={()=>navigate('/cart')}>Goback</button>
-                        <button className="payment-success-lower-shopmore" onClick={()=>navigate('/products')}>Shop More</button>
+                        <button className="payment-success-lower-goback" onClick={() => navigate('/cart')}>Goback</button>
+                        <button className="payment-success-lower-shopmore" onClick={() => navigate('/products')}>Shop More</button>
                     </div>
                 </>
             )}

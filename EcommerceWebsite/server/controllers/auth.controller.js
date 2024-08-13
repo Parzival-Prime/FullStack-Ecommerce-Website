@@ -275,8 +275,7 @@ export const addToCartController = async (req, res) => {
             try {
                 const result = await User.findOneAndUpdate({ _id: user._id }, { $push: { cart: { productId, quantity: 1, price, name } } }, { new: true })
 
-                // console.log(result)
-
+                // console.log("undefined: ",result)
                 return res.status(200).send({
                     success: true,
                     message: 'Item added to cart successfully',
@@ -287,14 +286,14 @@ export const addToCartController = async (req, res) => {
             }
         }
 
-        else if (quantity !== 0) {
+        else if (quantity !== undefined) {
             try {
                 const result = await User.findOneAndUpdate(
                     { _id: user._id, 'cart.productId': productId },
                     { $set: { 'cart.$.quantity': quantity } }, { new: true }
                 )
 
-                // console.log(result)
+                // console.log("not undefined: ",result)
                 return res.status(200).send({
                     success: true,
                     message: 'Item added to cart successfully',
@@ -451,7 +450,7 @@ export const getAllOrders = async (req, res) => {
 
 export const getDashboardData = async (req, res) => {
     try {
-        console.log('Inside GetDashboard')
+        // console.log('Inside GetDashboard')
 
         const totalSalesAndRevenue = await User.aggregate([
             {
@@ -491,7 +490,7 @@ export const getDashboardData = async (req, res) => {
                 }
             }
         ])
-        console.log('totalSalesAndRevenue', totalSalesAndRevenue)
+        // console.log('totalSalesAndRevenue', totalSalesAndRevenue)
 
         const totalUser_totalProducts_topFiveCustomers = await User.aggregate([
             {
@@ -523,10 +522,10 @@ export const getDashboardData = async (req, res) => {
                 }
             }
         ])
-        console.log('totalUser_totalProducts_topFiveCustomers', totalUser_totalProducts_topFiveCustomers)
+        // console.log('totalUser_totalProducts_topFiveCustomers', totalUser_totalProducts_topFiveCustomers)
 
         const allUsers = await User.find({}).sort('-1')
-        console.log('allUsers', allUsers)
+        // console.log('allUsers', allUsers)
 
         const topFiveMostSoldProducts = await User.aggregate([
             {
@@ -552,14 +551,58 @@ export const getDashboardData = async (req, res) => {
                 $limit: 5
             }
         ])
-        console.log('topFiveMostSoldProducts', topFiveMostSoldProducts)
+        // console.log('topFiveMostSoldProducts', topFiveMostSoldProducts)
+
+        const productsSoldEachMonth = await User.aggregate([
+              {
+                $unwind: "$orders"
+              },
+              {
+                $unwind: "$orders.products"
+              },
+              {
+                $group: {
+                  _id: {
+                    year: { $year: "$orders.createdAt" },
+                    month: { $month: "$orders.createdAt" }
+                  },
+                  totalProductsSold: { $sum: 1 }
+                }
+              },
+              {
+                $project: {
+                  year: "$_id.year",
+                  month: "$_id.month",
+                  totalProductsSold: 1,
+                  _id: 0
+                }
+              }
+            ])
+
+            const numberOfOrdersPlacedInCountries = await User.aggregate([
+                {
+                  "$unwind": "$orders"
+                },
+                {
+                  "$group": {
+                    "country": "$orders.shippingAddress.country",
+                    "numberOfOrders": {
+                      "$sum": 1
+                    }
+                  }
+                }
+              ])
+
+        
 
         return res.status(200).send({
             success: true,
             totalSalesAndRevenue,
             totalUser_totalProducts_topFiveCustomers,
             allUsers,
-            topFiveMostSoldProducts
+            topFiveMostSoldProducts,
+            productsSoldEachMonth,
+            OrdersPlacedInCountries
         })
 
     } catch (error) {

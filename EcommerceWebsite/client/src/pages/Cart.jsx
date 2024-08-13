@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useMemo } from 'react'
 import { useNavigate, useLocation } from 'react-router';
 import '../styles/cart.css'
 import toast from 'react-hot-toast'
@@ -20,6 +20,7 @@ function Cart() {
   const [products, setProducts] = useState([])
   const [selectedItems, setSelectedItems] = useState([])
   const [subtotal, setSubtotal] = useState(0)
+  const [totalItemsSelected, setTotalItemsSelected] = useState(0)
 
   const getCartItemsfromDB = async () => {
     try {
@@ -123,12 +124,15 @@ function Cart() {
     setSelectedItems((prev) => prev.concat(checkedItem))
   }, [selectedItems])
 
-  const calcTotal = () => {
-    let total = 0;
-    selectedItems.forEach((item) => {
-      total += (item.price * item.quantity)
-    })
-    setSubtotal(total.toFixed(2))
+  const calcTotal = ()=>{
+      let total = 0;
+      let totalItems = 0
+      selectedItems.forEach((item) => {
+        total += (item.price * item.quantity)
+        totalItems += item.quantity
+      })
+      setSubtotal(total.toFixed(2))
+      setTotalItemsSelected(totalItems)
   }
 
   const handleCheckout = async () => {
@@ -146,23 +150,18 @@ function Cart() {
     }
   }
 
-  useEffect(() => {
-    getCartItemsfromDB()
-    if (!isLoggedIn) {
-      return navigate('/login', { state: { from: location.pathname } })
-    }
-  }, [])
 
   useEffect(() => {
     calcTotal()
   }, [selectedItems])
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      return navigate('/login', { state: { from: location.pathname } })
-    }
-  }, [isLoggedIn])
+    getCartItemsfromDB()
+  }, [])
 
+  if (!isLoggedIn) {
+    return navigate('/login', { state: { from: location.pathname } })
+  }
   return (
     <>
       <div className="cart-container">
@@ -213,18 +212,18 @@ function Cart() {
                 <Skeleton variant="rounded" animation='wave' className='cart-skeleton' />
                 <Skeleton variant="rounded" animation='wave' className='cart-skeleton' />
                 <Skeleton variant="rounded" animation='wave' className='cart-skeleton' />
-                {/* <Skeleton variant="rounded" animation='wave' className='cart-skeleton' />
-                <Skeleton variant="rounded" animation='wave' className='cart-skeleton' />
-                <Skeleton variant="rounded" animation='wave' className='cart-skeleton' />
-                <Skeleton variant="rounded" animation='wave' className='cart-skeleton' />
-                <Skeleton variant="rounded" animation='wave' className='cart-skeleton' /> */}
               </Stack>)}
             </div>
             <FlexCenter className="proceed-button-container">
               <div className="cart-Subtotal">Subtotal &nbsp;<span>${subtotal}</span></div>
-              <button className="proceed-button" onClick={handleCheckout}>Proceed to Buy ({selectedItems.length} items)</button>
+              <button className="proceed-button" onClick={handleCheckout}>Proceed to Buy ({totalItemsSelected} items)</button>
             </FlexCenter>
-          </>) : (<div className='empty-cart'>Your Cart Is Empty</div>)}
+          </>) : (
+            <div className='empty-cart'>
+              <h2>Your Cart Is Empty</h2>
+              <button onClick={()=>navigate('/products')}>Fill Your Cart</button>
+            </div>
+          )}
         </div>
       </div>
     </>

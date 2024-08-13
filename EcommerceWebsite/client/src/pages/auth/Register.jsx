@@ -31,11 +31,6 @@ function Register() {
 
   const textFieldRef = useRef(null);
 
-  useEffect(() => {
-    if (textFieldRef.current) {
-      textFieldRef.current.focus();
-    }
-  }, []);
 
   const formDataToJson = (formData) => {
     const jsonObject = {};
@@ -97,6 +92,12 @@ function Register() {
       navigate("/");
     }
   };
+
+  useEffect(() => {
+    if (textFieldRef.current) {
+      textFieldRef.current.focus();
+    }
+  }, []);
   return (
     <>
       <Box
