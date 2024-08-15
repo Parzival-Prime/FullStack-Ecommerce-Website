@@ -40,7 +40,7 @@ router.route('/get-dashboard-data').get(getDashboardData)
 
 
 // Profile Routes
-router.route('/change-password').patch(verifyJWT, changePasswordController)
+router.route('/change-password').post(verifyJWT, changePasswordController)
 
 router.route('/user-profile').get(verifyJWT, userProfileController)
 

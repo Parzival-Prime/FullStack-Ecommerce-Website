@@ -9,7 +9,7 @@ import Avatar from '@mui/material/Avatar';
 import Backdrop from '@mui/material/Backdrop';
 import { useSelector, useDispatch } from "react-redux";
 import { setIsAdminFalse, setIsLoggedInFalse } from "../features/counter/counterSlice";
-import { RiArrowLeftSFill, RiHome2Line, RiShoppingBagLine, RiUserLine, RiLogoutBoxLine, RiTeamLine, RiShoppingCart2Line, RiCustomerServiceLine, RiArchiveLine, RiLoginBoxLine, RiDashboardLine, RiFunctionAddLine } from '@remixicon/react'
+import { RiArrowLeftSFill, RiHome2Line, RiShoppingBagLine, RiUserLine, RiLogoutBoxLine, RiTeamLine, RiShoppingCart2Line, RiCustomerServiceLine, RiArchiveLine, RiLoginBoxLine, RiDashboardLine, RiFunctionAddLine, RiSettings5Line } from '@remixicon/react'
 
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -226,6 +226,7 @@ function Header() {
                 >
                   <MenuItem onClick={(e) => { handleClose(e); handleNavLinkClick(e); navigate('/profile') }} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiUserLine />Profile</MenuItem>
                   <MenuItem onClick={(e) => handleClose(e)} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiArchiveLine />Orders</MenuItem>
+                  <MenuItem onClick={(e) => { handleClose(e); handleNavLinkClick(e); navigate('/settings') }} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiSettings5Line />Settings</MenuItem>
                   <MenuItem
                     onClick={handleLogOut}
                     sx={{

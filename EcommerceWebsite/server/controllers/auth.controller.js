@@ -173,16 +173,25 @@ export const logoutController = async (req, res) => {
 
 export const changePasswordController = async (req, res) => {
     try {
-        const { password, email } = req.body
+        const { password, answer } = req.body
+        console.log(req.body)
+        if (!password || !answer) return res.status(400).send({ success: false, message: 'All fields are required!' })
+
+        const canswer = await User.findOne({ email: req.user.email }, { answer: 1 })
+
+        console.log("canswer", canswer)
+
+        if(answer !== canswer.answer) return res.status(400).send({success: false, message: 'Unauthorized! Answer is Incorrect'})
 
         const hashedPassword = await bcrypt.hash(password, 10)
 
-        const response = await User.findOneAndUpdate({ email: email }, { $set: { password: hashedPassword } }, { new: true }).select('-password -refreshToken')
+        const response = await User.findOneAndUpdate({ email: req.user.email }, { $set: { password: hashedPassword } }, { new: true }).select('-password -refreshToken')
+
+        console.log("response", response)
 
         return res.status(200).send({
             success: true,
-            message: 'Password Changed Successfully',
-            user: response
+            message: 'Password Changed Successfully'
         })
     } catch (error) {
         console.log(error)
@@ -199,7 +208,7 @@ export const changePasswordController = async (req, res) => {
 export const userProfileController = async (req, res) => {
     try {
         const { user } = req.user
-        console.log(user)
+        // console.log(user)
         return res.status(200).send({
             success: true,
             message: 'User data fetched Successfully',
@@ -395,22 +404,32 @@ export const InsertTransactionInOrder = async (data) => {
     try {
         const { status, totalAmount, billID, lineItems, paymentMethod, customerDetails } = data
 
+        const alpha3 = ['IND', 'CHN', 'JPN', 'NLD', 'ITA', 'USA', 'RUS', 'IRL', 'FRA', 'IDN', 'VNM', 'TWN', 'KOR', 'NOR', 'ESP', 'DEU', 'CAN', 'BRA', 'SAU', 'ARE', 'PRT', 'THA']
+
+        const alpha2 = ['IN', 'CH', 'JP', 'NL', 'IT', 'US', 'RU', 'IE', 'FR', 'ID', 'VN', 'TW', 'KR', 'NO', 'ES', 'DE', 'CA', 'BR', 'SA', 'AE', 'PT', 'TH']
+
+        const index = alpha2.findIndex(item => customerDetails.address.country === item)
+
+        const productsarray = lineItems.data.map((item) => (
+            { productName: item.description, units: item.quantity, price: item.amount_subtotal }
+        ))
+
+
         const orderData = {
-            products: [lineItems.data.map((item) => (
-                { ProductName: item.description, units: item.quantity, price: item.amount_subtotal }
-            ))],
+            products: productsarray,
             shippingAddress: {
                 city: customerDetails.address.city,
                 state: customerDetails.address.state,
                 line1: customerDetails.address.line1,
                 line2: customerDetails.address.line2,
                 pincode: customerDetails.address.postal_code,
-                country: customerDetails.address.country
+                country: alpha3[index]
             },
             billID,
             totalAmount,
             paymentMode: paymentMethod
         }
+
 
         const result = await User.findOneAndUpdate(
             { email: customerDetails.email },
@@ -536,15 +555,15 @@ export const getDashboardData = async (req, res) => {
             },
             {
                 $group: {
-                    _id: "$orders.products.name",
-                    totalQuantity: {
-                        $sum: "$orders.products.quantity"
+                    _id: "$orders.products.productName",
+                    totalSold: {
+                        $sum: "$orders.products.units"
                     }
                 }
             },
             {
                 $sort: {
-                    totalQuantity: -1
+                    totalSold: -1
                 }
             },
             {
@@ -554,46 +573,51 @@ export const getDashboardData = async (req, res) => {
         // console.log('topFiveMostSoldProducts', topFiveMostSoldProducts)
 
         const productsSoldEachMonth = await User.aggregate([
-              {
+            {
                 $unwind: "$orders"
-              },
-              {
+            },
+            {
                 $unwind: "$orders.products"
-              },
-              {
+            },
+            {
                 $group: {
-                  _id: {
-                    year: { $year: "$orders.createdAt" },
-                    month: { $month: "$orders.createdAt" }
-                  },
-                  totalProductsSold: { $sum: 1 }
+                    _id: {
+                        year: { $year: "$orders.createdAt" },
+                        month: { $month: "$orders.createdAt" }
+                    },
+                    totalProductsSold: { $sum: 1 }
                 }
-              },
-              {
+            },
+            {
                 $project: {
-                  year: "$_id.year",
-                  month: "$_id.month",
-                  totalProductsSold: 1,
-                  _id: 0
+                    year: "$_id.year",
+                    month: "$_id.month",
+                    totalProductsSold: 1,
+                    _id: 0
                 }
-              }
-            ])
+            }
+        ])
 
-            const numberOfOrdersPlacedInCountries = await User.aggregate([
-                {
-                  "$unwind": "$orders"
-                },
-                {
-                  "$group": {
-                    "country": "$orders.shippingAddress.country",
+        const OrdersPlacedInCountries = await User.aggregate([
+            {
+                "$unwind": "$orders"
+            },
+            {
+                "$group": {
+                    "_id": "$orders.shippingAddress.country",
                     "numberOfOrders": {
-                      "$sum": 1
+                        "$sum": 1
                     }
-                  }
                 }
-              ])
+            },
+            {
+                "$project": {
+                    "country": "$_id",
+                    "numberOfOrders": 1
+                }
+            }
+        ])
 
-        
 
         return res.status(200).send({
             success: true,

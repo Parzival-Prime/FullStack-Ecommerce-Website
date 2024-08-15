@@ -23,7 +23,7 @@ export const paymentController = async (req, res) => {
                     product_data: {
                         name: item.name
                     },
-                    unit_amount: parseInt(item.price) * 100
+                    unit_amount: item.price * 100
                 },
                 quantity: item.quantity
             })),
