@@ -413,11 +413,8 @@
     --bubbleGumSans: "Bubblegum Sans", sans-serif;
     --logoFontWeight: 400;
     --mainFontWeight: 300;
-    --max-width: 1200px;
+    --max-width: 100%;
     --min-width: 320px;
-    --max-height: 1200px;
-    --min-height: 400px;
-
     --linearGradient1: linear-gradient(34deg, rgba(0, 25, 117, 1) 0%, rgba(3, 144, 87, 1) 84%);
 }
 

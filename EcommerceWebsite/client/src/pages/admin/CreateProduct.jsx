@@ -91,7 +91,7 @@ function CreateProduct() {
 
   return (
     <Box
-      sx={{ height: "100vh", background: theme.background, padding: "15px", paddingTop: '3rem' }}
+      sx={{ minHeight: "100vh", background: theme.background, padding: "15px", paddingTop: '3rem' }}
     >
       <Typography
         variant="h1"
@@ -149,6 +149,10 @@ function CreateProduct() {
                     borderColor: theme.heading, // Border color when focused
                   },
                 },
+                '@media (min-width: 700px)': {
+                  width: '40rem',
+                  alignSelf: 'center'
+                }
               }}
             />
             <CreateCategory categories={categories} category={category} setCategory={setCategory} />
@@ -182,6 +186,10 @@ function CreateProduct() {
                     borderColor: theme.heading, // Border color when focused
                   },
                 },
+                '@media (min-width: 700px)': {
+                  width: '40rem',
+                  alignSelf: 'center'
+                }
               }}
             />
             <TextField
@@ -210,6 +218,10 @@ function CreateProduct() {
                     borderColor: theme.heading, // Border color when focused
                   },
                 },
+                '@media (min-width: 700px)': {
+                  width: '40rem',
+                  alignSelf: 'center'
+                }
               }}
             />
             <TextField
@@ -240,10 +252,14 @@ function CreateProduct() {
                     borderColor: theme.heading, // Border color when focused
                   },
                 },
+                '@media (min-width: 700px)': {
+                  width: '40rem',
+                  alignSelf: 'center'
+                }
               }}
             />
             <ImageUploadPreview onImageChange={handleImageChange} />
-            <Button type="submit" variant="contained" sx={{backgroundColor: theme.heading, color: theme.background}}>
+            <Button type="submit" variant="contained" sx={{backgroundColor: theme.heading, color: theme.background, minWidth: '10rem', maxWidth: '40rem', alignSelf: 'center'}}>
               Submit
             </Button>
           </FormControl>

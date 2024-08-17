@@ -1,19 +1,18 @@
 .dashboard-page-title{
     font-family: var(--sansitaSwashed);
     text-align: center;
+    margin-bottom: 3rem;
 }
 
 .dashboard-tsales-revenue-box{
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    margin: 2rem;
     font-size: 1.5rem;
 }
 
 .month-sales-chart{
-    min-width: 20rem;
-    height: 20rem;
+    min-width: 17rem;
+    min-height: 18rem;
     margin-block: 1rem;
 }
 
@@ -23,19 +22,32 @@
 }
 
 .country-sales-chart{
-    min-width: 21rem;
-    height: 20rem;
+    min-width: 17rem;
+    min-height: 18rem;
     overflow: clip;
-    margin-block: 3rem;
-    margin-top: 4rem;
+    margin-block: 2rem;
+    /* margin-top: 4rem; */
 }
 
 .country-sales-chart-heading{
     font-size: 1.5rem;
     font-weight: 500;
+    /* margin-bottom: 1rem; */
 }
 
-/* .top-products{} */
+.geo-chart{
+    margin: auto;
+    overflow: clip;
+}
+
+.small-chart {
+    width: 300px;
+    height: 300px;
+  }
+
+.top-products{
+    margin-top: 4rem;
+}
 
 .top-products-heading{
     margin-block: 1rem;
@@ -60,4 +72,81 @@
     margin-block: 1rem;
     font-size: 1.5rem;
     font-weight: 500;
+}
+
+
+@media (min-width: 300px){
+    .small-chart {
+        width: 400px;
+        height: 300px;
+      }
+}
+@media (min-width: 400px){
+    .small-chart {
+        width: 450px;
+        height: 350px;
+      }
+}
+@media (min-width: 470px){
+    .small-chart {
+        width: 450px;
+        height: 400px;
+      }
+}
+@media (min-width: 530px){
+    .small-chart {
+        width: 530px;
+        height: 430px;
+      }
+}
+@media (min-width: 580px){
+    .small-chart {
+        width: 550px;
+        height: 430px;
+      }
+}
+@media (min-width: 630px){
+
+    .dashboard-page-title{
+        font-size: 2.5rem;
+    }
+
+    .dashboard-tsales-revenue-box{
+        gap: 6rem;
+        flex-direction: row;
+        margin-block: 2rem;
+
+        div{
+            margin-bottom: 1rem;
+        }
+    }
+
+    .small-chart {
+        width: 620px;
+        height: 470px;
+      }
+}
+@media (min-width: 780px){
+    .small-chart {
+        width: 780px;
+        height: 560px;
+      }
+}
+@media (min-width: 940px){
+
+    .dashboard-page-title{
+        font-size: 3rem;
+    }
+
+
+    .small-chart {
+        width: 940px;
+        height: 620px;
+      }
+}
+@media (min-width: 1020px){
+    .small-chart {
+        width: 1020px;
+        height: 780px;
+      }
 }

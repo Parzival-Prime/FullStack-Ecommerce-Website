@@ -29,8 +29,8 @@ function CreateCategory({ categories, category, setCategory }) {
 
   return (
     <>
-      <Box>
-        <FormControl sx={{ width: 330 }}>
+      <Box sx={{alignSelf: 'center'}}>
+        <FormControl sx={{ width: 260, alignSelf: 'center' }}>
           <InputLabel id="select" style={{color: theme.heading}}>Category</InputLabel>
           <Select
             labelId="select"

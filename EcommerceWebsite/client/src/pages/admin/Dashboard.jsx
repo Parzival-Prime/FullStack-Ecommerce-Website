@@ -10,24 +10,21 @@ import { DataGrid } from '@mui/x-data-grid'
 import { useTheme } from '../../theme/theme.js'
 
 
-const productTableStruct = [
-  { field: '_id', headerName: 'Product', width: 230, cellClassName: 'text-color' },
-  { field: 'totalSold', headerName: 'TotalSold', width: 130, cellClassName: 'text-color' }
-]
-
-const allUsersTableStruct = [
-  { field: 'name', headerName: 'Name', width: 130, cellClassName: 'text-color' },
-  { field: 'email', headerName: 'Email', width: 220, cellClassName: 'text-color' },
-  { field: 'joinedAt', headerName: 'JoinedAt', width: 120, cellClassName: 'text-color' }
-]
-
-const topUserTableStruct = [
-  { field: 'name', headerName: 'Name', width: 170, cellClassName: 'text-color' },
-  { field: 'totalSpent', headerName: 'TotalSpent', width: 150, cellClassName: 'text-color' }
-]
-
 function Dashboard() {
   const theme = useTheme()
+  const [topUserTableStruct, setTopUserTableStruct] = useState([
+    { field: 'name', headerName: 'Name', width: 170, cellClassName: 'text-color' },
+    { field: 'totalSpent', headerName: 'TotalSpent', width: 150, cellClassName: 'text-color' }
+  ])
+  const [allUsersTableStruct, setAllUsersTableStruct] = useState([
+    { field: 'name', headerName: 'Name', width: 130, cellClassName: 'text-color' },
+    { field: 'email', headerName: 'Email', width: 220, cellClassName: 'text-color' },
+    { field: 'joinedAt', headerName: 'JoinedAt', width: 120, cellClassName: 'text-color' }
+  ])
+  const [productTableStruct, setProductTableStruct] = useState([
+    { field: '_id', headerName: 'Product', width: 230, cellClassName: 'text-color' },
+    { field: 'totalSold', headerName: 'TotalSold', width: 130, cellClassName: 'text-color' }
+  ])
   const [totalSales, setTotalSales] = useState(0)
   const [totalRevenue, setTotalRevenue] = useState(0)
   const [totalProductsCount, setTotalProductsCount] = useState(0)
@@ -41,8 +38,8 @@ function Dashboard() {
   const year = 2024
 
   const colorScale = scaleQuantize()
-  .domain([0, 100])
-  .range([theme.color1, theme.color2, theme.color3, theme.color4]);
+    .domain([0, 100])
+    .range([theme.color1, theme.color2, theme.color3, theme.color4]);
 
   const monthdata = new Array()
   for (let i = 0; i < 12; i++) {
@@ -142,39 +139,112 @@ function Dashboard() {
     GeoDatafunc()
   }, [ordersPlacedInCountries])
 
+
+  const [dimensions, setDimensions] = useState({ width: 300, height: 200, scale: 0 });
+
+  const calculateScale = (width) => {
+    return width / 7;  // Adjust as necessary
+  };
+
+  const updateDimensions = () => {
+    const screenWidth = window.innerWidth;
+    let width, height;
+    // console.log(screenWidth)
+    if (screenWidth < 200) {
+      width = 300;
+      height = 200;
+    }
+    else if (400 > screenWidth > 300) {
+      width = 350;
+      height = 300;
+    }
+    else if (screenWidth >= 400 && screenWidth < 470) {
+      width = 400;
+      height = 350;
+    }
+    else if (screenWidth >= 470 && screenWidth < 530) {
+      width = 450;
+      height = 400;
+    }
+    else if (screenWidth >= 530 && screenWidth < 580) {
+      width = 500;
+      height = 380;
+    }
+    else if (screenWidth >= 580 && screenWidth < 630) {
+      width = 550;
+      height = 430;
+    }
+    else if (screenWidth >= 630 && screenWidth < 780) {
+      width = 620;
+      height = 470;
+    }
+    else if (screenWidth >= 780 && screenWidth < 940) {
+      width = 780;
+      height = 560;
+    }
+    else if (screenWidth >= 940 && screenWidth < 1020) {
+      width = 940;
+      height = 620;
+    }
+    else {
+      width = 1020;
+      height = 780;
+    }
+
+    const scale = calculateScale(width);  // Dynamically calculate scale
+    setDimensions({ width, height, scale });
+  };
+
+  useEffect(() => {
+    updateDimensions(); // Set initial dimensions
+    window.addEventListener('resize', updateDimensions); // Update on resize
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
   return (
-    <div style={{ paddingTop: '6rem', minHeight: '140svh', maxHeight: '305svh', color: theme.heading, backgroundColor: theme.background, fontFamily: 'var(--sofiaSans)' }}>
-      <h1 className="dashboard-page-title" style={{color: theme.heading}}>Dashboard</h1>
+    <div style={{ paddingTop: '6rem', minHeight: '140svh', color: theme.heading, backgroundColor: theme.background, fontFamily: 'var(--sofiaSans)', marginBottom: '-3rem', paddingInline: '1.5rem' }}>
+      <h1 className="dashboard-page-title" style={{ color: theme.heading }}>Dashboard</h1>
+
       <div className="dashboard-tsales-revenue-box">
-        <div className="tRevenue">Total Revenue: {' '}${parseFloat(totalRevenue / 100).toFixed(2)}</div>
-        <div className="tSales">Total Sales: {totalSales}</div>
-        <div className="total-users-count">Total Users:{' '} {totalUsersCount}</div>
-        <div className="total-products-count">Total Products:{' '} {totalProductsCount}</div>
-        <div className="month-sales-chart">
-          <h2 className="month-sales-chart-heading">Sales this Year:</h2>
-          <ApexCharts
-            options={chartState.options}
-            series={chartState.series}
-            type='area'
-            height={350}
-          />
+        <div>
+          <div className="tRevenue">Total Revenue: {' '}${parseFloat(totalRevenue / 100).toFixed(2)}</div>
+          <div className="tSales">Total Sales: {totalSales}</div>
         </div>
-        <div className="country-sales-chart">
-          <h2 className="country-sales-chart-heading">Sales around the World:</h2>
-          {geoData ? (
+        <div>
+          <div className="total-users-count">Total Users:{' '} {totalUsersCount}</div>
+          <div className="total-products-count">Total Products:{' '} {totalProductsCount}</div>
+        </div>
+      </div>
+
+
+      <div className="month-sales-chart">
+        <h2 className="month-sales-chart-heading">Sales this Year:</h2>
+        <ApexCharts
+          options={chartState.options}
+          series={chartState.series}
+          type='area'
+          height={350}
+        />
+      </div>
+      <div className="country-sales-chart">
+        <h2 className="country-sales-chart-heading">Sales around the World:</h2>
+        {geoData ? (
+          <div className="geo-chart small-chart">
             <ResponsiveChoropleth
               data={geoData}
               features={geoCopiedData.features}
-              margin={{ top: -40, right: 0, bottom: 0, left: 0 }}
+              margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
               projectionType="mercator"
               enableGraticule={false}
               domain={[0, 100]}
+              width={dimensions.width}
+              height={dimensions.height}
               colors={colorScale}
               unknownColor={theme.unknown}
               label="properties.name"
               valueFormat=".2s"
-              projectionScale={50}
-              projectionTranslation={[0.5, 0.65]}
+              projectionScale={dimensions.scale}
+              projectionTranslation={[0.5, 0.60]}
               projectionRotation={[0, 0, 0]}
               borderWidth={.1}
               borderColor="#68f5a8"
@@ -187,12 +257,12 @@ function Dashboard() {
                   translateX: 0,
                   translateY: -40,
                   itemsSpacing: 0,
-                  itemWidth: 70,
-                  itemHeight: 18,
+                  itemWidth: 60,
+                  itemHeight: 17,
                   itemDirection: "left-to-right",
                   itemTextColor: '#6ef5ab',
                   itemOpacity: 0.85,
-                  symbolSize: 10,
+                  symbolSize: 9,
                   effects: [
                     {
                       on: "hover",
@@ -205,55 +275,55 @@ function Dashboard() {
                 },
               ]}
             />
-          ) : (
-            <>Loading...</>
-          )}
-        </div>
-        <div className="top-products">
-          <h2 className="top-products-heading">Top Five most Sold Products:</h2>
-          <DataGrid
-            columns={productTableStruct}
-            rows={topFiveProducts}
-            // pageSize={4}
-            getRowId={(row) => row._id}
-            sx={{
-              '& .text-color': {
-                color: theme.heading,
-              }
-            }}
-            disableColumnMenu
-          />
-        </div>
-        <div className="top-customers">
-          <h2 className="top-customers-heading">Top Five Customers:</h2>
-          <DataGrid
-            columns={topUserTableStruct}
-            rows={topFiveCustomers}
-            pageSize={5}
-            getRowId={(row) => row._id}
-            sx={{
-              '& .text-color': {
-                color: theme.heading,
-              }
-            }}
-            disableColumnMenu
-          />
-        </div>
-        <div className="all-customers">
-          <h2 className="all-customers-heading">All Customers:</h2>
-          <DataGrid
-            columns={allUsersTableStruct}
-            rows={allUsers}
-            pageSize={5}
-            getRowId={(row) => row.email}
-            sx={{
-              '& .text-color': {
-                color: theme.heading,
-              }
-            }}
-            disableColumnMenu
-          />
-        </div>
+          </div>
+        ) : (
+          <>Loading...</>
+        )}
+      </div>
+      <div className="top-products">
+        <h2 className="top-products-heading">Top Five most Sold Products:</h2>
+        <DataGrid
+          columns={productTableStruct}
+          rows={topFiveProducts}
+          // pageSize={4}
+          getRowId={(row) => row._id}
+          sx={{
+            '& .text-color': {
+              color: theme.heading,
+            }
+          }}
+          disableColumnMenu
+        />
+      </div>
+      <div className="top-customers">
+        <h2 className="top-customers-heading">Top Five Customers:</h2>
+        <DataGrid
+          columns={topUserTableStruct}
+          rows={topFiveCustomers}
+          pageSize={5}
+          getRowId={(row) => row._id}
+          sx={{
+            '& .text-color': {
+              color: theme.heading,
+            }
+          }}
+          disableColumnMenu
+        />
+      </div>
+      <div className="all-customers">
+        <h2 className="all-customers-heading">All Customers:</h2>
+        <DataGrid
+          columns={allUsersTableStruct}
+          rows={allUsers}
+          pageSize={5}
+          getRowId={(row) => row.email}
+          sx={{
+            '& .text-color': {
+              color: theme.heading,
+            }
+          }}
+          disableColumnMenu
+        />
       </div>
     </div>
   )

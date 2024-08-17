@@ -13,6 +13,7 @@
     padding-left: 1.8rem;
     padding-top: 2.6rem;
     background-color: var(--cream);
+    min-height: 85svh;
 }
 
 .home-hero-title {
@@ -32,7 +33,7 @@
 
 .home-hero-image {
     height: 27rem;
-    transform: translateY(-13%) rotate(-15deg);
+    transform: translateY(-13%) translateX(10%) rotate(-15deg);
 }
 
 .home-hero-text {
@@ -63,6 +64,7 @@
 .home-story-section {
     padding: 3rem 1.5rem;
     text-align: center;
+
 }
 
 .home-story-title {
@@ -82,7 +84,7 @@
 
 
 
-.story-boxes-title{
+.story-boxes-title {
     color: rgb(253, 251, 223);
     font-size: 1.2rem;
     /* text-align: left; */
@@ -92,9 +94,11 @@
 
 .story-boxes {
     margin-top: 2rem;
-    /* margin-left: -.9rem; */
-    display: grid;
-    grid-template-columns: 200px 2fr;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-width: 10rem;
+    max-width: 40rem;
 
     div {
         h4 {
@@ -124,25 +128,25 @@
 }
 
 .story-rabbit {
-    fill: var(--golden) !important;
+    fill: var(--golden);
     height: 2.7rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .story-bag {
-    fill: var(--golden) !important;
+    fill: var(--golden);
     height: 2.7rem;
-    margin-top: 1.9rem;
+    margin-top: .7rem;
 }
 
 
-.popular-products-section{
+.popular-products-section {
     padding-block: .5rem;
-    height: 56svh;
+    height: 70svh;
     background-color: var(--cream);
 }
 
-.popular-products-section-title{
+.popular-products-section-title {
     text-align: center;
     padding-block: 1rem .7rem;
     font-weight: 500;
@@ -152,7 +156,7 @@
 
 
 /* =================== We are better section =============== */
-.We-are-better-section{
+.We-are-better-section {
     min-height: 80svh;
     background-color: var(--forestDark);
     gap: .5rem;
@@ -161,7 +165,7 @@
     padding-block: 1rem;
 }
 
-.we-are-better{
+.we-are-better {
     max-width: 100%;
     min-width: 80%;
     max-height: 50svh;
@@ -171,7 +175,7 @@
     gap: .3rem;
 }
 
-.we-are-better-left{
+.we-are-better-left {
     height: inherit;
     flex: 3;
 
@@ -189,13 +193,13 @@
     }
 }
 
-.we-are-better-right{
+.we-are-better-right {
     height: inherit;
     flex: 2;
     align-content: center;
     margin-right: -.6rem;
 
-    img{
+    img {
         height: 10rem;
         border-radius: 5px;
     }
@@ -205,13 +209,13 @@
 
 /* =========== Reviews Section ========== */
 
-.reviews-section{
+.reviews-section {
     min-height: 50svh;
     max-height: 70svh;
     background-color: var(--forestDark);
     padding-block: 2rem;
-    
-    h1{
+
+    h1 {
         color: white;
         font-family: var(--sansitaSwashed);
         font-size: 1.3rem;
@@ -220,34 +224,343 @@
     }
 }
 
-.reviews-carousel-container{
+.reviews-carousel-container {
     margin-block: 2.8rem;
     position: relative;
 }
 
-.reviews-carousel-wrapper{
+.reviews-carousel-wrapper {
     margin-block: 1rem;
     width: 20rem;
 }
 
-.reviews-carousel-item{
+.reviews-carousel-item {
     background-color: var(--grey);
     padding: 1rem;
     border-radius: 5px;
     /* width: 19rem !important; */
 
-    p{
+    p {
         font-size: .9rem;
         margin-bottom: .5rem;
         font-style: italic;
         font-family: var(--shantellSans);
     }
 
-    h4{
+    h4 {
         font-size: 1rem;
         font-weight: 400;
         text-align: right;
         font-family: var(--titleFont);
         font-style: italic;
+    }
+}
+
+
+
+
+/* Media Queries */
+
+@media (min-width: 511px) {
+    .home-hero-button {
+        transform: translateY(-56%) translateX(10%) !important;
+    }
+
+    .home-hero-image {
+        transform: translateY(-13%) translateX(17%) rotate(-15deg);
+    }
+
+    .home-story-para {
+        margin-inline: 2rem;
+    }
+}
+
+@media (min-width: 611px) {
+    .home-hero-image {
+        transform: translateY(-13%) translateX(29%) rotate(-15deg);
+    }
+
+    .home-hero-text {
+        transform: translateY(-200%);
+        width: 35rem;
+    }
+
+    .home-hero-button {
+        transform: translateY(-170%) translateX(20%) !important;
+    }
+
+    .we-are-better-right {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+
+@media (min-width: 739px) {
+    .home-hero-image {
+        transform: translateY(-13%) translateX(60%) rotate(-15deg);
+        height: 32rem;
+    }
+
+    .story-boxes {
+        margin-left: 2.8rem;
+    }
+
+    .home-hero-title {
+        transform: translateY(7rem) translateX(5%);
+    }
+
+    .home-hero-subtitle {
+        transform: translateY(7.3rem) translateX(5%);
+    }
+
+    .home-hero-text {
+        transform: translateY(-240%) translateX(10%);
+        width: 25rem;
+    }
+
+    .home-hero-button {
+        transform: translateY(-246%) translateX(30%) !important;
+    }
+}
+
+
+@media (min-width: 838px) {
+
+    .home-hero-section {
+        height: 105svh;
+        margin-top: -2.5rem;
+    }
+
+    .home-hero-image {
+        transform: translateY(-13%) translateX(64%) rotate(-15deg);
+        height: 35rem;
+    }
+
+    .home-hero-title {
+        transform: translateY(9rem);
+    }
+
+    .home-hero-subtitle {
+        transform: translateY(9.2rem);
+    }
+
+    .home-hero-text {
+        padding-right: 2rem;
+        transform: translateY(-480%);
+        width: 25rem;
+    }
+
+    .home-hero-button {
+        transform: translateY(-686%) translateX(10%) !important;
+    }
+
+    .story-boxes {
+        margin-left: 4.8rem;
+    }
+}
+
+
+@media (min-width: 919px) {
+    .story-boxes {
+        margin-left: 6.8rem;
+    }
+}
+
+
+
+
+@media (min-width: 980px) {
+
+    .home-hero-title {
+        font-size: 2.5rem;
+        transform: translateY(9rem) translateX(3rem);
+    }
+
+    .home-hero-image {
+        transform: translateY(-13%) translateX(84%) rotate(-15deg);
+        height: 40rem;
+    }
+
+    .home-hero-subtitle {
+        transform: translateY(9.2rem) translateX(3rem);
+    }
+
+    .home-hero-text {
+        padding-right: 2rem;
+        font-size: 1.1rem;
+        transform: translateY(-440%) translateX(3rem);
+        width: 29rem;
+    }
+
+    .home-hero-button {
+        transform: translateY(-686%) translateX(37%) !important;
+    }
+
+    .home-story-para {
+        margin-inline: 4rem;
+        font-size: 1.3rem;
+    }
+
+    .story-boxes {
+        margin-left: 8.8rem;
+    }
+
+
+    .we-are-better-left {
+        padding-left: .5rem;
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            font-family: var(--sansitaSwashed);
+        }
+
+        p {
+            font-family: var(--expletusSans);
+            padding-block: .8rem;
+            padding-inline-end: .5rem;
+            font-size: 1.07rem;
+        }
+    }
+
+    .we-are-better-right {
+        img {
+            height: 13rem;
+            border-radius: 5px;
+        }
+    }
+}
+
+@media (min-width: 1034px) {
+
+    .home-hero-section {
+        height: 105svh;
+        margin-top: -5rem;
+    }
+
+    .home-hero-title {
+        font-size: 3rem;
+        transform: translateY(9rem) translateX(3rem);
+    }
+
+    .home-hero-image {
+        transform: translateY(-13%) translateX(74%) rotate(-15deg);
+    }
+
+    .home-hero-subtitle {
+        transform: translateY(9.2rem) translateX(3rem);
+    }
+
+    .home-hero-text {
+        padding-right: 2rem;
+        font-size: 1.2rem;
+        transform: translateY(-440%) translateX(3rem);
+        width: 29rem;
+    }
+
+    .home-hero-button {
+        transform: translateY(-686%) translateX(37%) !important;
+    }
+
+
+
+
+    .home-story-title{
+        font-size: 2.4rem;
+        margin-bottom: 1rem;
+    }
+
+    .home-story-para {
+        margin-inline: 4rem;
+        font-size: 1.3rem;
+    }
+
+    .story-boxes-title{
+        font-size: 1.6rem;
+    }
+
+    .story-boxes {
+        margin-left: 2rem;
+        gap: 0rem;
+        max-width: 70rem;
+
+        div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5rem;
+
+            div{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: .3rem;
+
+                h4{
+                    font-size: 1.06rem;
+                }
+
+                p{
+                    font-size: .8rem;
+                }
+            }
+        }
+    }
+
+    .story-leaf {
+        height: 3.9rem;
+    }
+    .story-rabbit {
+        height: 3.5rem;
+        margin-top: .8rem;
+    }
+    .story-hand {
+        height: 2.3rem;
+        margin-top: 1.8rem;
+    }
+    .story-bag {
+        height: 3.9rem;
+        margin-top: .2rem;
+    }
+
+
+
+    .popular-products-section {
+        height: 60svh;
+    }
+
+    .popular-products-section-title{
+        font-size: 2.5rem;
+    }
+
+
+
+    .we-are-better-left {
+        h2 {
+            font-size: 1.9rem;
+        }
+        p{
+            font-size: 1.2rem;
+        }
+    }
+
+
+
+    .reviews-section {
+        h1 {
+            font-size: 2rem;
+        }
+    }
+
+    .reviews-carousel-wrapper {
+        width: 30rem;
+    }
+
+    .reviews-carousel-item {
+        p {
+            font-size: 1.2rem;
+        }
     }
 }
