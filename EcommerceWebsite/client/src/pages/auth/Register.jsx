@@ -11,6 +11,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import dayjs from 'dayjs';
+import { useTheme } from "../../theme/theme";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -25,6 +26,7 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 function Register() {
+  const theme = useTheme()
   const navigate = useNavigate();
   const [dateOfBirth, setDateOfBirth] = useState(dayjs('01-january-2000'));
   const readyFormData = new FormData();
@@ -101,7 +103,7 @@ function Register() {
   return (
     <>
       <Box
-        variant={"div"} sx={{ height: "100vh", paddingTop: "6rem", background: "var(--linearGradient1)", }} >
+        variant={"div"} sx={{ height: "100vh", paddingTop: "6rem", background: theme.background, }} >
         <FlexCenter sx={{ display: "flex", flexDirection: "column" }} >
           <Typography variant="h1" sx={{ fontSize: "2.5rem", fontWeight: "700", }} >
             Create Account

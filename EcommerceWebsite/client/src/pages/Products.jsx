@@ -16,12 +16,14 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Grid from '@mui/material/Unstable_Grid2';
 import Skeleton from '@mui/material/Skeleton';
+import { useTheme } from '../theme/theme.js';
 
 
 
 function Products() {
     const navigate = useNavigate()
     const [products, setProducts] = useState([])
+    const theme = useTheme()
 
     const getAllProducts = async () => {
         try {
@@ -80,15 +82,15 @@ function Products() {
     }, [])
 
     return (
-        <Box sx={{paddingTop: '3rem', minHeight: '70svh'}}>
-            <Typography variant='h1' sx={{ fontSize: '2.5rem', paddingTop: '3rem', textAlign: 'center', fontWeight: '500' }}>All Products</Typography>
+        <Box sx={{paddingTop: '3rem', minHeight: '70svh', backgroundColor: theme.background}}>
+            <Typography variant='h1' sx={{ fontSize: '2.5rem', fontFamily: 'var(--sansitaSwashed)', paddingTop: '3rem', textAlign: 'center', fontWeight: '500', color: theme.heading }}>All Products</Typography>
             <Box sx={{ flexGrow: 1, padding: '1rem' }}>
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                     {products.map((product) => (
                         <Grid xs={2} sm={4} md={4}
                             key={product?._id}
                         >
-                            {product ? (<Card sx={{ maxWidth: 345, height: 330, position: 'relative' }} productid={product._id} onClick={openProductPage}>
+                            {product ? (<Card sx={{ maxWidth: 345, height: 330, position: 'relative', backgroundColor: theme.card }} productid={product._id} onClick={openProductPage}>
                                 <CardActionArea>
                                     <CardMedia
                                         component="img"
@@ -109,13 +111,13 @@ function Products() {
                                     <Typography sx={{ marginRight: '.5rem' }}>
                                         ${product.price}
                                     </Typography>
-                                    <IconButton onClick={addItemToCart} sx={{ backgroundColor: 'greenyellow'}} value={JSON.stringify(product)} >
-                                        <ShoppingCartIcon sx={{ fontSize: '1.3rem', position: 'sticky', bottom: '0' }} />
+                                    <IconButton onClick={addItemToCart} sx={{ backgroundColor: theme.background}} value={JSON.stringify(product)} >
+                                        <ShoppingCartIcon sx={{ fontSize: '1.3rem', position: 'sticky', bottom: '0', color: theme.heading }} />
                                     </IconButton>
                                     <IconButton sx={{
-                                        backgroundColor: 'greenyellow'
+                                        backgroundColor: theme.background
                                     }} value={product._id} >
-                                        <FavoriteBorderIcon sx={{ fontSize: '1.3rem', position: 'sticky', bottom: '0' }} />
+                                        <FavoriteBorderIcon sx={{ fontSize: '1.3rem', position: 'sticky', bottom: '0', color: theme.heading }} />
                                     </IconButton>
                                 </CardActions>
                             </Card>) : (<Skeleton animation='wave' variant="rectangular" width={190} height={300} sx={{

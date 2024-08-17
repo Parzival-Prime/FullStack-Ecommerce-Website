@@ -68,16 +68,21 @@ function App() {
       } else {
         dispatch(setIsAdminFalse())
       }
+
+    } else {
+      dispatch(setIsLoggedInFalse())
+      if ((localStorage.getItem('user'))) {
+        localStorage.removeItem('user')
+      }
     }
   }
-
 
   useEffect(() => {
     checkCookieAndSetState()
   }, [])
   return (
     <>
-      <Toaster style={{ zIndex: 1000 }} />
+      <Toaster style={{ zIndex: 10000 }} />
       <BrowserRouter>
         <Routes>
           <Route path="" element={<Layout />}>
@@ -118,7 +123,7 @@ function App() {
                 <Settings />
               </ProtectedRoute>}
             />
-            <Route path="/myOrders" element={
+            <Route path="/orders" element={
               <ProtectedRoute>
                 <Orders />
               </ProtectedRoute>

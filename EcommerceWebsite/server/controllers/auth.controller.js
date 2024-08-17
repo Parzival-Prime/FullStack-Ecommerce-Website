@@ -456,6 +456,12 @@ export const InsertTransactionInOrder = async (data) => {
 export const getAllOrders = async (req, res) => {
     try {
         const allOrders = await User.findOne({ email: req.user.email }, { orders: 1 })
+
+        return res.status(200).send({
+            success: true,
+            message: 'All Orders fetched Successfully',
+            allOrders
+        })
     } catch (error) {
         console.log(error)
         return res.status(400).send({

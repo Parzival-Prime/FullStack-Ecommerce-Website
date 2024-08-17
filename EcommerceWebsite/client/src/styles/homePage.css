@@ -68,7 +68,7 @@
 .home-story-title {
     font-weight: 350;
     font-size: 1.8rem;
-    color: var(--goldenText);
+    color: var(--golden);
     font-family: var(--sansitaSwashed);
 }
 
@@ -113,24 +113,24 @@
 
 
 .story-leaf {
-    fill: var(--goldenText);
+    fill: var(--golden);
     height: 3.4rem;
 }
 
 .story-hand {
-    fill: var(--goldenText);
+    fill: var(--golden);
     height: 1.5rem;
     margin-top: 1.7rem;
 }
 
 .story-rabbit {
-    fill: var(--goldenText) !important;
+    fill: var(--golden) !important;
     height: 2.7rem;
     margin-top: 2rem;
 }
 
 .story-bag {
-    fill: var(--goldenText) !important;
+    fill: var(--golden) !important;
     height: 2.7rem;
     margin-top: 1.9rem;
 }
@@ -231,7 +231,7 @@
 }
 
 .reviews-carousel-item{
-    background-color: var(--greybgc);
+    background-color: var(--grey);
     padding: 1rem;
     border-radius: 5px;
     /* width: 19rem !important; */

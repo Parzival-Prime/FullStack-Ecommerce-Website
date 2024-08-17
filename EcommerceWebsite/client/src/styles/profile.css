@@ -2,14 +2,12 @@
     padding: 2rem;
     padding-top: 8rem;
     min-height: 100svh;
-    /* background-color: var(--oceanDark); */
-    /* color: aqua; */
 }
 
 .profile-image-container {
     border-radius: 50%;
-    height: 12rem;
-    width: 12rem;
+    height: 13rem;
+    width: 13rem;
     overflow: clip;
     display: flex;
     justify-content: center;
@@ -23,7 +21,7 @@
 .edit-profile {
     padding: .1rem .9rem;
     display: inline-block;
-    border: 1px solid var(--greybgc);
+    border: 1px solid;
     border-radius: .9rem;
     transform: translate(220%, -50%);
 }

@@ -13,12 +13,12 @@ import CreateCategory from '../../components/CreateCategory'
 import { axiosInstance } from "../../App";
 import { setShowPreviewFalse, setShowPreviewTrue } from "../../features/counter/counterSlice.js";
 import { useDispatch } from "react-redux";
+import { useTheme } from "../../theme/theme.js";
 
 
 function CreateProduct() {
-
+  const theme = useTheme()
   const dispatch = useDispatch()
-
   const [uploadedImage, setUploadedImage] = useState(null);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -91,7 +91,7 @@ function CreateProduct() {
 
   return (
     <Box
-      sx={{ height: "100vh", background: "var(--linearGradient1)", padding: "15px", paddingTop: '3rem' }}
+      sx={{ height: "100vh", background: theme.background, padding: "15px", paddingTop: '3rem' }}
     >
       <Typography
         variant="h1"
@@ -100,7 +100,8 @@ function CreateProduct() {
           fontWeight: "400",
           textAlign: "center",
           marginTop: "3rem",
-          color: "var(--linearGradient1)",
+          color: theme.heading,
+          fontFamily: 'var(--sansitaSwashed)'
         }}
       >
         Create Product
@@ -128,7 +129,26 @@ function CreateProduct() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               sx={{
-                color: "var(--darkColor)",
+                '& .MuiInputBase-input': {
+                  color: theme.heading, // Text color
+                },
+                '& .MuiInputLabel-root': {
+                  color: theme.heading, // Label color
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: theme.heading, // Label color
+                },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: theme.heading, // Border color
+                  },
+                  '&:hover fieldset': {
+                    borderColor: theme.heading, // Border color on hover
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: theme.heading, // Border color when focused
+                  },
+                },
               }}
             />
             <CreateCategory categories={categories} category={category} setCategory={setCategory} />
@@ -138,8 +158,30 @@ function CreateProduct() {
               onChange={(e) => setPrice(e.target.value)}
               InputProps={{
                 startAdornment: (
-                  <InputAdornment position="start">$</InputAdornment>
+                  <InputAdornment position="start" sx={{color: theme.heading}}>$</InputAdornment>
                 ),
+              }}
+              sx={{
+                '& .MuiInputBase-input': {
+                  color: theme.heading, // Text color
+                },
+                '& .MuiInputLabel-root': {
+                  color: theme.heading, // Label color
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: theme.heading, // Label color
+                },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: theme.heading, // Border color
+                  },
+                  '&:hover fieldset': {
+                    borderColor: theme.heading, // Border color on hover
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: theme.heading, // Border color when focused
+                  },
+                },
               }}
             />
             <TextField
@@ -147,6 +189,28 @@ function CreateProduct() {
               required
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
+              sx={{
+                '& .MuiInputBase-input': {
+                  color: theme.heading, // Text color
+                },
+                '& .MuiInputLabel-root': {
+                  color: theme.heading, // Label color
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: theme.heading, // Label color
+                },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: theme.heading, // Border color
+                  },
+                  '&:hover fieldset': {
+                    borderColor: theme.heading, // Border color on hover
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: theme.heading, // Border color when focused
+                  },
+                },
+              }}
             />
             <TextField
               label="Description"
@@ -155,9 +219,31 @@ function CreateProduct() {
               required
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              sx={{
+                '& .MuiInputBase-input': {
+                  color: theme.heading, // Text color
+                },
+                '& .MuiInputLabel-root': {
+                  color: theme.heading, // Label color
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: theme.heading, // Label color
+                },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: theme.heading, // Border color
+                  },
+                  '&:hover fieldset': {
+                    borderColor: theme.heading, // Border color on hover
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: theme.heading, // Border color when focused
+                  },
+                },
+              }}
             />
             <ImageUploadPreview onImageChange={handleImageChange} />
-            <Button type="submit" variant="contained">
+            <Button type="submit" variant="contained" sx={{backgroundColor: theme.heading, color: theme.background}}>
               Submit
             </Button>
           </FormControl>

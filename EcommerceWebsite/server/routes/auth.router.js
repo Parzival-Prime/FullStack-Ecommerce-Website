@@ -34,7 +34,7 @@ router.route('/add-to-cart').post(verifyJWT, addToCartController)
 
 router.route('/update-cart').post(verifyJWT, updateCartController)
 
-router.route('/get-all-Orders').get(verifyJWT, getAllOrders)
+router.route('/get-all-orders').get(verifyJWT, getAllOrders)
 
 router.route('/get-dashboard-data').get(getDashboardData)
 

@@ -10,10 +10,11 @@ import {
   OutlinedInput
 } from "@mui/material";
 import AddCategory from "./AddCategory";
+import { useTheme } from '../theme/theme.js'
 
 function CreateCategory({ categories, category, setCategory }) {
   const [open, setOpen] = useState(false);
-
+  const theme = useTheme()
   const handleChange = (e) => {
     setCategory(e.target.value);
   };
@@ -30,7 +31,7 @@ function CreateCategory({ categories, category, setCategory }) {
     <>
       <Box>
         <FormControl sx={{ width: 330 }}>
-          <InputLabel id="select">Category</InputLabel>
+          <InputLabel id="select" style={{color: theme.heading}}>Category</InputLabel>
           <Select
             labelId="select"
             id="select-id"
@@ -46,7 +47,28 @@ function CreateCategory({ categories, category, setCategory }) {
                 },
               },
             }}
-            input={<OutlinedInput id="select-id" label="Select" />}
+            input={<OutlinedInput id="select-id" label="Select" sx={{
+              '& .MuiInputBase-outlined-input': {
+                color: theme.heading, // Text color
+              },
+              '& .MuiInputLabel-root': {
+                color: theme.heading, // Label color
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: theme.heading, // Label color
+              },
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: theme.heading, // Border color
+                },
+                '&:hover fieldset': {
+                  borderColor: theme.heading, // Border color on hover
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: theme.heading, // Border color when focused
+                },
+              },
+            }} />}
           >
             <MenuItem
               sx={{

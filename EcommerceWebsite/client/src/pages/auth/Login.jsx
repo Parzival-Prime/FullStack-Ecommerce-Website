@@ -51,10 +51,8 @@ function Login() {
       dispatch(setIsLoggedInFalse())
     }
     if ((getCookie('isAdmin'))[1] !== undefined) {
-      console.log('inside admin true')
       dispatch(setIsAdminTrue())
     } else {
-      console.log('inside admin false')
       dispatch(setIsAdminFalse())
     }
   }

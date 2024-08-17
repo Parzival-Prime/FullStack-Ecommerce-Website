@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useSelector } from "react-redux";
+import {useTheme} from '../theme/theme.js'
 
 const ImageUploadPreview = ({  onImageChange }) => {
-
+  const theme = useTheme()
   const showPreview = useSelector((state)=>state.counter.showPreview)
 
   const [preview, setPreview] = useState("");
@@ -40,6 +41,7 @@ const ImageUploadPreview = ({  onImageChange }) => {
         component="label"
         endIcon={<CloudUploadIcon/>}
         onClick={handleUploadClick}
+        sx={{backgroundColor: theme.heading, color: theme.background}}
       >
         Upload Image
       </Button>
@@ -64,7 +66,7 @@ const ImageUploadPreview = ({  onImageChange }) => {
           />
         </Box>
       ) : (
-        <Typography variant="body1" sx={{ mt: 2 }}>
+        <Typography variant="body1" sx={{ mt: 2, color: theme.heading }}>
           No image selected
         </Typography>
       )}

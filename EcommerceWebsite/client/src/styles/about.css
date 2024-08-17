@@ -1,14 +1,11 @@
 .about-container {
     /* height: 85vh; */
     overflow: hidden;
-    background-color: var(--greenCream);
     padding-top: 5rem;
 }
 
 .about-box {
     position: relative;
-    background-color: var(--darkColor);
-    color: var(--textColor);
     min-height: 30rem;
     padding: 2rem 3rem 0 3rem;
     margin-top: 2rem;

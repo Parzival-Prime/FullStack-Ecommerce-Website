@@ -1,0 +1,13 @@
+.orders{
+    padding-top: 6rem;
+    min-height: 80svh;
+    max-height: 140svh;
+}
+
+.orders-title{
+    margin-bottom: 2rem;
+    margin-left: 1rem;
+    font-size: 2.2rem;
+    font-weight: 600;
+    font-family: var(--sansitaSwashed);
+}

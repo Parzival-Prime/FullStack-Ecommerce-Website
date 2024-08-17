@@ -2,8 +2,7 @@
     position: fixed;
     padding: 10px;
     background-color: var(--forestDark);
-    color: var(--textColor);
-    z-index: 1100;
+    z-index: 11000;
     width: 100%;
 
     .toolbar {
@@ -44,7 +43,7 @@
 
 .nav-item {
     text-decoration: none;
-    color: var(--textColor);
+    color: var(--white);
     width: 13rem;
     height: 2rem;
 }
@@ -72,3 +71,13 @@
     }
 }
 
+
+.avatar-container{
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background-color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

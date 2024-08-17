@@ -1,7 +1,6 @@
 .contact-us{
     min-height: 80svh;
     max-height: 100svh;
-    background-color: var(--oceanDark);
     color: black;
     padding: 3rem;
     padding-top: 7rem;
@@ -11,7 +10,6 @@
     font-family: var(--sansitaSwashed);
     font-size: 3rem;
     font-weight: 400;
-    color: var(--blueDarkCream);
 }
 
 .contact-line{
@@ -36,8 +34,6 @@
     padding-left: .9rem;
     font-size: 1.1rem;
     font-family: var(--expletusSans);
-    background-color: var(--blueDarkCream);
-    color: white;
     border: none;
     border-radius: 5px;
 }

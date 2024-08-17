@@ -9,14 +9,28 @@ import Avatar from '@mui/material/Avatar';
 import Backdrop from '@mui/material/Backdrop';
 import { useSelector, useDispatch } from "react-redux";
 import { setIsAdminFalse, setIsLoggedInFalse } from "../features/counter/counterSlice";
-import { RiArrowLeftSFill, RiHome2Line, RiShoppingBagLine, RiUserLine, RiLogoutBoxLine, RiTeamLine, RiShoppingCart2Line, RiCustomerServiceLine, RiArchiveLine, RiLoginBoxLine, RiDashboardLine, RiFunctionAddLine, RiSettings5Line } from '@remixicon/react'
-
+import {
+  RiArrowLeftSFill,
+  RiHome2Line,
+  RiShoppingBagLine,
+  RiUserLine,
+  RiLogoutBoxLine,
+  RiTeamLine,
+  RiShoppingCart2Line,
+  RiCustomerServiceLine,
+  RiArchiveLine,
+  RiLoginBoxLine,
+  RiDashboardLine,
+  RiFunctionAddLine,
+  RiSettings5Line
+} from '@remixicon/react'
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
 import toast from "react-hot-toast";
 import { axiosInstance } from "../App";
+import { useTheme } from "../theme/theme";
 
 
 function Header() {
@@ -24,11 +38,11 @@ function Header() {
   const isAdmin = useSelector((state) => state.counter.isAdmin)
   const [profileImage, setProfileImage] = useState('')
   const [name, setName] = useState('')
-
   const isLoggedIn = useSelector((state) => state.counter.isLoggedIn)
   const dispatch = useDispatch()
   const navRef = useRef();
   const navigate = useNavigate();
+  const theme = useTheme()
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open2 = Boolean(anchorEl);
@@ -88,14 +102,14 @@ function Header() {
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     setNameAndProfile()
   }, [isLoggedIn])
 
   return (
     <>
 
-      <nav className="navbar">
+      <nav className="navbar" style={{color: theme.white}}>
         <div className="toolbar">
           <FlexCenter
             sx={{ fontSize: ".9rem", fontFamily: "Playwrite BE VLG" }}
@@ -197,7 +211,7 @@ function Header() {
                 >
                   <li className="nav-li nav-item">
                     <div className="nav-your-account">
-                      <RiArrowLeftSFill /><Avatar alt='Avatar' src={profileImage} />
+                      <RiArrowLeftSFill /><div className="avatar-container"><Avatar alt='Avatar' src={profileImage} /></div>
                       <p>{name}</p>
                     </div>
                   </li>
@@ -225,7 +239,7 @@ function Header() {
                   }}
                 >
                   <MenuItem onClick={(e) => { handleClose(e); handleNavLinkClick(e); navigate('/profile') }} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiUserLine />Profile</MenuItem>
-                  <MenuItem onClick={(e) => handleClose(e)} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiArchiveLine />Orders</MenuItem>
+                  <MenuItem onClick={(e) => { handleClose(e); handleNavLinkClick(e); navigate('/orders') }} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiArchiveLine />Orders</MenuItem>
                   <MenuItem onClick={(e) => { handleClose(e); handleNavLinkClick(e); navigate('/settings') }} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiSettings5Line />Settings</MenuItem>
                   <MenuItem
                     onClick={handleLogOut}

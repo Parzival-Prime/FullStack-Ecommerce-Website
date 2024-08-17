@@ -11,6 +11,7 @@ import SendIcon from '@mui/icons-material/Send';
 import toast from 'react-hot-toast'
 import { axiosInstance } from '../App'
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { useTheme } from '../theme/theme.js'
 
 const StyledTextField = styled(TextField)({
   marginBottom: '1rem',
@@ -26,6 +27,7 @@ const formDataToJson = (formData) => {
 };
 
 function Profile() {
+  const theme = useTheme()
   const [userData, setUserData] = useState({})
   const [localData, setLocalData] = useState({})
   const [isPopUpOpen, setIsPopUpOpen] = useState(false)
@@ -56,7 +58,7 @@ function Profile() {
   const getUserData = () => {
     try {
       const gotData = JSON.parse(localStorage.getItem('user')) || {}
-      if(gotData){
+      if (gotData) {
         setLocalData(gotData)
         setUserData(gotData.value)
       }
@@ -96,7 +98,7 @@ function Profile() {
     formData.append('address', address)
     formData.append('pincode', pincode)
     formData.append('phone', phone)
-    if(file){
+    if (file) {
       formData.append('file', file)
     } else {
       formData.append('profileImage', userData.profileImage)
@@ -116,7 +118,7 @@ function Profile() {
       if (data?.success) {
         console.log("Data Updated Successfully")
         console.log(data.user)
-        const newlocalData = {"expiry": localData.expiry, "value": data.user}
+        const newlocalData = { "expiry": localData.expiry, "value": data.user }
         localStorage.removeItem('user')
         localStorage.setItem('user', JSON.stringify(newlocalData))
         window.location.reload()
@@ -141,142 +143,265 @@ function Profile() {
   return (
     <>
       {userData ? (<>
-          <div style={{ height: '90svh', width: '100%', position: 'relative' }}>
-            {!isPopUpOpen ?
-              (<div className="profile-container">
-                <div className="profile-upper">
-                  <div className="profile-image-container">
-                    <img src={userData.profileImage} alt="Profile Image" className="profile-image" />
-                  </div>
-                  <div className="edit-profile" onClick={handlePopUpToggle}>Edit profile</div>
-                  <div className="profile-name">{userData.name || 'No name available'}</div>
-                  <div className="profile-email">{userData.email || 'No email available'}</div>
-                  <div className="profile-dateofbirth">
-                    <RiCake2Line />{userData.dateOfBirth ? convertDateFormat(userData.dateOfBirth) : 'Date of Birth not available'}
-                  </div>
-                  <div className="profile-joinedOn"><RiCalendar2Line />{createdAt}</div>
+        <div style={{ height: '90svh', width: '100%', position: 'relative', backgroundColor: theme.background, color: theme.heading }}>
+          {!isPopUpOpen ?
+            (<div className="profile-container">
+              <div className="profile-upper">
+                <div className="profile-image-container" style={{ backgroundColor: theme.heading }}>
+                  <img src={userData.profileImage} alt="Profile Image" className="profile-image" />
                 </div>
-                <div className="profile-lower">
-                  <h4 className="profile-lower-address-title">Your Address: </h4>
-                  <div className="profile-address">{userData.address || 'No address available'}
-                    <div className="profile-pincode">Pincode - {userData.pincode || '123456'}</div>
+                <div className="edit-profile" style={{ borderColor: theme.heading }} onClick={handlePopUpToggle}>Edit profile</div>
+                <div className="profile-name">{userData.name || 'No name available'}</div>
+                <div className="profile-email">{userData.email || 'No email available'}</div>
+                <div className="profile-dateofbirth">
+                  <RiCake2Line />{userData.dateOfBirth ? convertDateFormat(userData.dateOfBirth) : 'Date of Birth not available'}
+                </div>
+                <div className="profile-joinedOn"><RiCalendar2Line />{createdAt}</div>
+              </div>
+              <div className="profile-lower">
+                <h4 className="profile-lower-address-title">Your Address: </h4>
+                <div className="profile-address">{userData.address || 'No address available'}
+                  <div className="profile-pincode">Pincode - {userData.pincode || '123456'}</div>
+                </div>
+                <h4 className="profile-lower-phoneNumber-title">Your Phone Number: </h4>
+                <div className="profile-phoneNumber">{userData.phone}</div>
+              </div>
+            </div>)
+            : (<>
+              <div className="profile-edit-popup-backdrop" onClick={handlePopUpToggle}></div>
+              <div className="profile-edit-popup-container" style={{ backgroundColor: theme.background, color: theme.heading }}>
+                <div className="profile-edit-popup-goback-container" ref={gobackRef} onClick={handlePopUpToggle}><RiArrowLeftLine /></div>
+                <FlexCenter className="profile-edit-popup-upper">
+
+                  <div
+                    htmlFor="profile-Image-update"
+                    onClick={handleFlexCenterClick} className="profile-edit-popup-image-container" style={{ backgroundColor: theme.heading }} >
+                    <img
+                      src={file ? URL.createObjectURL(file) : userData.profileImage}
+                      alt="Popup profile Image"
+                      className='profile-edit-poup-image'
+                    />
                   </div>
-                  <h4 className="profile-lower-phoneNumber-title">Your Phone Number: </h4>
-                  <div className="profile-phoneNumber">{userData.phone}</div>
-                </div>
-              </div>)
-              : (<>
-                <div className="profile-edit-popup-backdrop" onClick={handlePopUpToggle}></div>
-                <div className="profile-edit-popup-container">
-                  <div className="profile-edit-popup-goback-container" ref={gobackRef} onClick={handlePopUpToggle}><RiArrowLeftLine /></div>
-                  <FlexCenter className="profile-edit-popup-upper">
 
-                    <div
-                      htmlFor="profile-Image-update"
-                      onClick={handleFlexCenterClick} className="profile-edit-popup-image-container" >
-                      <img
-                        src={file ? URL.createObjectURL(file) : userData.profileImage}
-                        alt="Popup profile Image"
-                        className='profile-edit-poup-image'
-                      />
-                    </div>
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    id="profile-Image-update"
+                    style={{ display: 'none' }}
+                    onChange={handleImageChange}
+                  />
 
-                    <input
-                      type="file"
-                      ref={fileInputRef}
-                      id="profile-Image-update"
-                      style={{ display: 'none' }}
-                      onChange={handleImageChange}
-                    />
-
-{/* {console.log(dateOfBirth)} */}
-                    <TextField
-                      label="Name"
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.currentTarget.value)}
-                      size='small'
-                      sx={{
-                        marginBottom: '1rem',
-                        width: '90%'
-                      }}
-                    />
-                    <TextField
-                      label="Email"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.currentTarget.value)}
-                      size='small'
-                      sx={{
-                        marginBottom: '1rem',
-                        width: '90%'
-                      }}
-                    />
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker
-                        label="Date of Birth"
-                        type="number"
-                        value={dateOfBirth}
-                        onChange={(newValue) => setDateOfBirth(newValue)}
-                        slots={{
-                          textField: (params) => (
-                            <StyledTextField
-                              {...params}
-                              sx={{
-                                '& .date-picker-margin': {
-                                  marginBottom: '1rem',
-                                  width: '90%'
-                                }
-                              }}
-                            />
-                          ),
-                        }}
-                      />
-                    </LocalizationProvider>
-                  </FlexCenter>
-
-                  <FlexCenter className="profile-edit-popup-lower">
-                    <TextField
-                      label="Address"
+                  {/* {console.log(dateOfBirth)} */}
+                  <TextField
+                    label="Name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.currentTarget.value)}
+                    size='small'
+                    sx={{
+                      marginBottom: '1rem',
+                      width: '90%',
+                      '& .MuiInputBase-input': {
+                        color: theme.heading, // Text color
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: theme.heading, // Label color
+                      },
+                      '& .MuiInputLabel-root.Mui-focused': {
+                        color: theme.heading, // Label color
+                      },
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: theme.heading, // Border color
+                        },
+                        '&:hover fieldset': {
+                          borderColor: theme.heading, // Border color on hover
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: theme.heading, // Border color when focused
+                        },
+                      },
+                    }}
+                  />
+                  <TextField
+                    label="Email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.currentTarget.value)}
+                    size='small'
+                    sx={{
+                      marginBottom: '1rem',
+                      width: '90%',
+                      '& .MuiInputBase-input': {
+                        color: theme.heading, // Text color
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: theme.heading, // Label color
+                      },
+                      '& .MuiInputLabel-root.Mui-focused': {
+                        color: theme.heading, // Label color
+                      },
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: theme.heading, // Border color
+                        },
+                        '&:hover fieldset': {
+                          borderColor: theme.heading, // Border color on hover
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: theme.heading, // Border color when focused
+                        },
+                      },
+                    }}
+                  />
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      label="Date of Birth"
                       type="number"
-                      multiline
-                      maxRows={3}
-                      value={address}
-                      onChange={(e) => setAddress(e.currentTarget.value)}
-                      size='large'
-                      sx={{
-                        marginBottom: '1rem',
-                        width: '90%'
+                      value={dateOfBirth}
+                      onChange={(newValue) => setDateOfBirth(newValue)}
+                      slots={{
+                        textField: (params) => (
+                          <StyledTextField
+                            {...params}
+                            sx={{
+                              '& .date-picker-margin': {
+                                marginBottom: '1rem',
+                                width: '90%'
+                              },
+                              '& .MuiInputBase-input': {
+                                color: theme.heading, // Text color
+                              },
+                              '& .MuiInputLabel-root': {
+                                color: theme.heading, // Label color
+                              },
+                              '& .MuiInputLabel-root.Mui-focused': {
+                                color: theme.heading, // Label color
+                              },
+                              '& .MuiOutlinedInput-root': {
+                                '& fieldset': {
+                                  borderColor: theme.heading, // Border color
+                                },
+                                '&:hover fieldset': {
+                                  borderColor: theme.heading, // Border color on hover
+                                },
+                                '&.Mui-focused fieldset': {
+                                  borderColor: theme.heading, // Border color when focused
+                                },
+                              },
+                            }}
+                          />
+                        ),
                       }}
                     />
-                    <TextField
-                      label="Pincode"
-                      type="number"
-                      value={pincode}
-                      onChange={(e) => setPincode(e.currentTarget.value)}
-                      size='small'
-                      sx={{
-                        marginBottom: '1rem',
-                        width: '90%'
-                      }}
-                    />
-                    <TextField
-                      label="Phone Number"
-                      type="number"
-                      value={phone}
-                      onChange={(e) => setPhone(e.currentTarget.value)}
-                      size='small'
-                      sx={{
-                        marginBottom: '2rem',
-                        width: '90%'
-                      }}
-                    />
-                    <Button variant="contained" endIcon={<SendIcon />} onClick={makeFormData}>Update</Button>
-                  </FlexCenter>
-                </div>
-              </>)}
-          </div>
-        </>) : (<p style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>Loading...</p>)}
+                  </LocalizationProvider>
+                </FlexCenter>
+
+                <FlexCenter className="profile-edit-popup-lower">
+                  <TextField
+                    label="Address"
+                    type="number"
+                    multiline
+                    maxRows={3}
+                    value={address}
+                    onChange={(e) => setAddress(e.currentTarget.value)}
+                    size='large'
+                    sx={{
+                      marginBottom: '1rem',
+                      width: '90%',
+                      '& .MuiInputBase-input': {
+                        color: theme.heading, // Text color
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: theme.heading, // Label color
+                      },
+                      '& .MuiInputLabel-root.Mui-focused': {
+                        color: theme.heading, // Label color
+                      },
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: theme.heading, // Border color
+                        },
+                        '&:hover fieldset': {
+                          borderColor: theme.heading, // Border color on hover
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: theme.heading, // Border color when focused
+                        },
+                      },
+                    }}
+                  />
+                  <TextField
+                    label="Pincode"
+                    type="number"
+                    value={pincode}
+                    onChange={(e) => setPincode(e.currentTarget.value)}
+                    size='small'
+                    sx={{
+                      marginBottom: '1rem',
+                      width: '90%',
+                      '& .MuiInputBase-input': {
+                        color: theme.heading, // Text color
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: theme.heading, // Label color
+                      },
+                      '& .MuiInputLabel-root.Mui-focused': {
+                        color: theme.heading, // Label color
+                      },
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: theme.heading, // Border color
+                        },
+                        '&:hover fieldset': {
+                          borderColor: theme.heading, // Border color on hover
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: theme.heading, // Border color when focused
+                        },
+                      },
+                    }}
+                  />
+                  <TextField
+                    label="Phone Number"
+                    type="number"
+                    value={phone}
+                    onChange={(e) => setPhone(e.currentTarget.value)}
+                    size='small'
+                    sx={{
+                      marginBottom: '1rem',
+                      width: '90%',
+                      '& .MuiInputBase-input': {
+                        color: theme.heading, // Text color
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: theme.heading, // Label color
+                      },
+                      '& .MuiInputLabel-root.Mui-focused': {
+                        color: theme.heading, // Label color
+                      },
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: theme.heading, // Border color
+                        },
+                        '&:hover fieldset': {
+                          borderColor: theme.heading, // Border color on hover
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: theme.heading, // Border color when focused
+                        },
+                      },
+                    }}
+                  />
+                  <Button variant="contained" endIcon={<SendIcon />} onClick={makeFormData} sx={{
+                    backgroundColor: theme.heading,
+                    color: theme.background
+                  }}>Update</Button>
+                </FlexCenter>
+              </div>
+            </>)}
+        </div>
+      </>) : (<p style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Loading...</p>)}
     </>
   )
 }

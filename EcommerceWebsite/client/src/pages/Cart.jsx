@@ -9,6 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import FlexCenter from '../components/FlexCenter';
 import { useSelector } from 'react-redux';
+import { useTheme } from '../theme/theme';
 
 
 function Cart() {
@@ -21,6 +22,7 @@ function Cart() {
   const [selectedItems, setSelectedItems] = useState([])
   const [subtotal, setSubtotal] = useState(0)
   const [totalItemsSelected, setTotalItemsSelected] = useState(0)
+  const theme = useTheme()
 
   const getCartItemsfromDB = async () => {
     try {
@@ -164,13 +166,13 @@ function Cart() {
   }
   return (
     <>
-      <div className="cart-container">
-        <h1 className="cart-title">
+      <div className="cart-container" style={{backgroundColor: theme.background}}>
+        <h1 className="cart-title" style={{color: theme.heading}}>
           My Cart
         </h1>
 
         <div className="cart-list-section">
-          {cartItems.length > 0 ? (<><h5 className='cart-list-title'>My Cart List</h5>
+          {cartItems.length > 0 ? (<><h5 className='cart-list-title' style={{color: theme.heading}}>My Cart List</h5>
 
             <div className="cart-list-container">
               {!isLoading ? (
@@ -215,13 +217,13 @@ function Cart() {
               </Stack>)}
             </div>
             <FlexCenter className="proceed-button-container">
-              <div className="cart-Subtotal">Subtotal &nbsp;<span>${subtotal}</span></div>
-              <button className="proceed-button" onClick={handleCheckout}>Proceed to Buy ({totalItemsSelected} items)</button>
+              <div className="cart-Subtotal" style={{color: theme.heading}}>Subtotal: &nbsp;<span>${subtotal}</span></div>
+              <button className="proceed-button" style={{backgroundColor: theme.button, color: theme.background}} onClick={handleCheckout}>Proceed to Buy ({totalItemsSelected} items)</button>
             </FlexCenter>
           </>) : (
             <div className='empty-cart'>
-              <h2>Your Cart Is Empty</h2>
-              <button onClick={()=>navigate('/products')}>Fill Your Cart</button>
+              <h2 style={{color: theme.heading}}>Your Cart Is Empty</h2>
+              <button style={{color: theme.background, backgroundColor: theme.heading}} onClick={()=>navigate('/products')}>Fill Your Cart</button>
             </div>
           )}
         </div>

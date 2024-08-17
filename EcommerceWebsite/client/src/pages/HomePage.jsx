@@ -25,7 +25,7 @@ function HomePage() {
           <p className="http://res.cloudinary.com/dro8qbk8j/image/upload/v1723342616/xhvtjqhy2vlfutgdqun2.png">Embrace Nature’s Best for Your Hair & Skin</p>
           <img src="\homePage\temphd.png" alt="Image" className="home-hero-image" />
           <p className="home-hero-text">Nourish your hair and skin with our range of all-natural, high-quality products. Crafted with care, inspired by nature.</p>
-          <button className="home-hero-button" onClick={()=>navigate('/products')}>Explore Products</button>
+          <button className="home-hero-button" onClick={() => navigate('/products')}>Explore Products</button>
         </section>
 
         {/* ================= Our Story Section ==================== */}
@@ -72,7 +72,6 @@ function HomePage() {
               <h4>Natural & Organic</h4>
               <p>Mother Nature knows best</p>
             </div>
-
           </div>
         </section >
 
