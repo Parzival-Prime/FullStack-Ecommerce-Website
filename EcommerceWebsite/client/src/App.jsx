@@ -77,7 +77,23 @@ function App() {
     }
   }
 
+
+  async function checkServerHealth() {
+    try {
+      const response = await fetch('/health');
+      if (response.ok) {
+        console.log('Server is healthy');
+      } else {
+        console.error('Server health check failed');
+      }
+    } catch (error) {
+      console.error('Error during health check:', error);
+    }
+  }
+
+
   useEffect(() => {
+    checkServerHealth();
     checkCookieAndSetState()
   }, [])
   return (
