@@ -29,7 +29,7 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 // Creating axios Instance
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8080",
-  withCredentials: true,
+  withCredentials: true
 });
 
 axiosInstance.defaults.headers.common["Content-Type"] = "application/json";
