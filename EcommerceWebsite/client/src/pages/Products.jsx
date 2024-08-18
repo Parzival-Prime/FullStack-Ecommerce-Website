@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { axiosInstance } from '../App'
+import { axiosInstance } from '../baseurl.js'
 import { useNavigate } from 'react-router';
 import toast from 'react-hot-toast'
 import {

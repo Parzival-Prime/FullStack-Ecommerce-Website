@@ -3,7 +3,7 @@ import '../styles/settings.css'
 import Switch from '@mui/material/Switch';
 import { RiSettings5Line } from '@remixicon/react'
 import { TextField, Button } from '@mui/material';
-import { axiosInstance } from '../App';
+import { axiosInstance } from '../baseurl.js';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { toggleTheme } from '../features/counter/counterSlice';

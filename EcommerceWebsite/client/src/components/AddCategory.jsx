@@ -8,7 +8,7 @@ import {
   Button,
 } from "@mui/material";
 import toast from "react-hot-toast";
-import { axiosInstance } from "../App";
+import { axiosInstance } from "../baseurl.js";
 
 export default function AddCategory({ open, handleClose }) {
   const [name, setName] = useState("");

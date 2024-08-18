@@ -29,7 +29,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
 import toast from "react-hot-toast";
-import { axiosInstance } from "../App";
+import { axiosInstance } from "../baseurl.js";
 import { useTheme } from "../theme/theme";
 
 

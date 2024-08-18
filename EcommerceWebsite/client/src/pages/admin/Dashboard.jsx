@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import '../../styles/dashboard.css'
-import { axiosInstance } from '../../App'
+import { axiosInstance } from '../../baseurl.js'
 import ApexCharts from 'react-apexcharts'
 import { ResponsiveChoropleth } from '@nivo/geo'
 import { geoCopiedData } from './geoApi.js'

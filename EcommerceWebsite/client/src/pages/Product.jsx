@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../styles/product.css'
 import toast from 'react-hot-toast';
 import { useLocation } from 'react-router';
-import { axiosInstance } from '../App';
+import { axiosInstance } from '../baseurl.js';
 import { ButtonGroup, IconButton } from '@mui/material'
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';

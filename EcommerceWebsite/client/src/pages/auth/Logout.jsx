@@ -1,5 +1,5 @@
 import React from 'react'
-import { axiosInstance } from '../../App'
+import { axiosInstance } from '../../baseurl.js'
 import toast from 'react-hot-toast'
 import { Button } from '@mui/material'
 import { useNavigate } from 'react-router'

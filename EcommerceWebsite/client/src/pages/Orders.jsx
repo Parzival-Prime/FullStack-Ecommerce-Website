@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import '../styles/orders.css'
 import toast from 'react-hot-toast'
 import { DataGrid } from '@mui/x-data-grid'
-import { axiosInstance } from '../App'
+import { axiosInstance } from '../baseurl.js'
 import { useTheme } from '../theme/theme'
 
 const ordersTableStruct = [

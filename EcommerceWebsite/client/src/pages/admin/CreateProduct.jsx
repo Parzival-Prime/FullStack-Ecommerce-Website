@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import ImageUploadPreview from "../../components/ImageUploadPreview";
 import CreateCategory from '../../components/CreateCategory'
-import { axiosInstance } from "../../App";
+import { axiosInstance } from "../../baseurl.js";
 import { setShowPreviewFalse, setShowPreviewTrue } from "../../features/counter/counterSlice.js";
 import { useDispatch } from "react-redux";
 import { useTheme } from "../../theme/theme.js";

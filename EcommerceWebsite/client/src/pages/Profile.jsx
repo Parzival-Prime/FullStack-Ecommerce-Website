@@ -9,7 +9,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import dayjs from 'dayjs';
 import SendIcon from '@mui/icons-material/Send';
 import toast from 'react-hot-toast'
-import { axiosInstance } from '../App'
+import { axiosInstance } from '../baseurl.js'
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { useTheme } from '../theme/theme.js'
 

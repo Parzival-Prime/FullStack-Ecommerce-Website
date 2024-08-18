@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
-import { axiosInstance } from '../App'
+import { axiosInstance } from '../baseurl.js'
 import '../styles/payment-success.css'
 
 const getQueryParams = () => {

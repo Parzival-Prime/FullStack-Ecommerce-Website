@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState, useMemo } from 'react'
 import { useNavigate, useLocation } from 'react-router';
 import '../styles/cart.css'
 import toast from 'react-hot-toast'
-import { axiosInstance } from '../App';
+import { axiosInstance } from '../baseurl.js';
 import { Typography, Checkbox, ButtonGroup, Skeleton, Stack } from '@mui/material'
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';

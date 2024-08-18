@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { axiosInstance } from '../App'
+import { axiosInstance } from '../baseurl.js'
 import '../styles/contact.css'
 import toast from 'react-hot-toast'
 import { TextField } from '@mui/material'
