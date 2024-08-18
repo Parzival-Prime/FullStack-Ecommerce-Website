@@ -9,233 +9,206 @@ import FormControl from "@mui/material/FormControl";
 import "../../styles/login.css";
 import { axiosInstance } from "../../baseurl.js";
 import { useDispatch } from "react-redux";
-import { setIsLoggedInTrue, setIsLoggedInFalse, setIsAdminTrue, setIsAdminFalse } from '../../features/counter/counterSlice.js'
-import {useTheme} from '../../theme/theme.js'
+import {
+  setIsLoggedInTrue,
+  setIsLoggedInFalse,
+  setIsAdminTrue,
+  setIsAdminFalse,
+} from "../../features/counter/counterSlice.js";
+import { useTheme } from "../../theme/theme.js";
 
 axios.defaults.withCredentials = true;
 
 function Login() {
-  const theme = useTheme()
-  const dispatch = useDispatch()
+  const theme = useTheme();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation()
-  const [answer, setAnswer] = useState('')
-  const [newPassword, setNewPassword] = useState('')
-  const [isPopupOpen, setIsPopupOpen] = useState(false)
+  const location = useLocation();
+  const [answer, setAnswer] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { from } = location.state || "/"
-
+  const { from } = location.state || "/";
 
   const handlePopupClose = () => {
-    setIsPopupOpen(false)
-  }
-
+    setIsPopupOpen(false);
+  };
 
   const setItemWithExpiry = (key, value, expiryInHours) => {
-    const now = new Date()
-    const expiry = new Date(now.getTime() + expiryInHours * 60 * 60 * 1000)
+    const now = new Date();
+    const expiry = new Date(now.getTime() + expiryInHours * 60 * 60 * 1000);
     const item = {
-      value: value,
-      expiry: expiry.getTime()
-    }
-    localStorage.setItem(key, JSON.stringify(item))
-  }
+      value,
+      expiry: expiry.getTime(),
+    };
+    localStorage.setItem(key, JSON.stringify(item));
+  };
 
   const getCookie = (name) => {
-    const cookies = document.cookie.split(';')
-    const cookieValue = cookies.map((cookie) => {
-      if (((cookie.split('='))[0]).trim() === name) {
-        return ((cookie.split('='))[1]).trim()
-      }
-    })
-    // console.log(cookieValue)
-    return cookieValue
-  }
+    const cookies = document.cookie.split(";");
+    return cookies
+      .map((cookie) => {
+        const [key, value] = cookie.split("=");
+        if (key.trim() === name) {
+          return value.trim();
+        }
+        return undefined;
+      })
+      .find((value) => value !== undefined);
+  };
 
   const checkCookieAndSetState = () => {
-    if ((getCookie('isLoggedIn'))[0] !== undefined) {
-      dispatch(setIsLoggedInTrue())
+    const isLoggedIn = getCookie("isLoggedIn");
+    const isAdmin = getCookie("isAdmin");
+
+    if (isLoggedIn) {
+      dispatch(setIsLoggedInTrue());
     } else {
-      dispatch(setIsLoggedInFalse())
+      dispatch(setIsLoggedInFalse());
     }
-    if ((getCookie('isAdmin'))[1] !== undefined) {
-      dispatch(setIsAdminTrue())
+
+    if (isAdmin) {
+      dispatch(setIsAdminTrue());
     } else {
-      dispatch(setIsAdminFalse())
+      dispatch(setIsAdminFalse());
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { data } = await axiosInstance.post(`/api/v1/auth/login`, { email, password });
+    try {
+      const { data } = await axiosInstance.post(`/api/v1/auth/login`, { email, password });
 
-    if (data?.success) {
-      navigate(from)
-      setItemWithExpiry('user', data.user, 24)
-      checkCookieAndSetState() // checking accessAndisAdmin Tokens and setting States in Store
-      navigate(from || '/');
-      toast.success('User LoggedIn successfully!')
-      setEmail("");
-      setPassword("");
+      if (data?.success) {
+        setItemWithExpiry("user", data.user, 24);
+        checkCookieAndSetState();
+        navigate(from || "/");
+        toast.success("User Logged In successfully!");
+        setEmail("");
+        setPassword("");
+      }
+    } catch (error) {
+      toast.error("Login failed. Please check your credentials.");
     }
   };
 
   return (
     <>
-      <div className="login-container" style={{backgroundColor: theme.background, color: theme.heading}}>
+      <div className="login-container" style={{ backgroundColor: theme.background, color: theme.heading }}>
         <div>
-          <FlexCenter
-            sx={{ display: 'flex', flexDirection: "column", marginBottom: "3rem", gap: "5px" }}
-          >
-            <h1>SignIn</h1>
-            <div>Hi, Welcome back you've been missed</div>
+          <FlexCenter sx={{ display: "flex", flexDirection: "column", marginBottom: "3rem", gap: "5px" }}>
+            <h1>Sign In</h1>
+            <div>Hi, Welcome back! You've been missed.</div>
           </FlexCenter>
 
-          <FormControl sx={{ gap: "1rem", display: 'flex' }} onSubmit={handleSubmit}>
+          <FormControl sx={{ gap: "1rem", display: "flex" }} onSubmit={handleSubmit}>
             <TextField
               label="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               variant="outlined"
-              required={true}
+              required
               sx={{
-                '& .MuiInputBase-input': {
-                  color: theme.heading, // Text color
+                "& .MuiInputBase-input": { color: theme.heading },
+                "& .MuiInputLabel-root": { color: theme.heading },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": { borderColor: theme.heading },
+                  "&:hover fieldset": { borderColor: theme.heading },
+                  "&.Mui-focused fieldset": { borderColor: theme.heading },
                 },
-                '& .MuiInputLabel-root': {
-                  color: theme.heading, // Label color
-                },
-                '& .MuiInputLabel-root.Mui-focused': {
-                  color: theme.heading, // Label color
-                },
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderColor: theme.heading, // Border color
-                  },
-                  '&:hover fieldset': {
-                    borderColor: theme.heading, // Border color on hover
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: theme.heading, // Border color when focused
-                  },
-                },
-                // maxWidth: 100
               }}
             />
             <TextField
               label="Password"
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               variant="outlined"
-              required={true}
+              required
               sx={{
-                '& .MuiInputBase-input': {
-                  color: theme.heading, // Text color
+                "& .MuiInputBase-input": { color: theme.heading },
+                "& .MuiInputLabel-root": { color: theme.heading },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": { borderColor: theme.heading },
+                  "&:hover fieldset": { borderColor: theme.heading },
+                  "&.Mui-focused fieldset": { borderColor: theme.heading },
                 },
-                '& .MuiInputLabel-root': {
-                  color: theme.heading, // Label color
-                },
-                '& .MuiInputLabel-root.Mui-focused': {
-                  color: theme.heading, // Label color
-                },
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderColor: theme.heading, // Border color
-                  },
-                  '&:hover fieldset': {
-                    borderColor: theme.heading, // Border color on hover
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: theme.heading, // Border color when focused
-                  },
-                },
-                // maxWidth: 100
               }}
             />
-            <span className="forgot" onClick={() => setIsPopupOpen(true)} >
+            <span className="forgot" onClick={() => setIsPopupOpen(true)}>
               Forgot Password?
             </span>
 
             <Button
               variant="contained"
-              sx={{ marginTop: "2rem", marginBottom: "3rem", backgroundColor: theme.heading,
-                color: theme.background }}
+              sx={{ marginTop: "2rem", marginBottom: "3rem", backgroundColor: theme.heading, color: theme.background }}
               onClick={handleSubmit}
             >
               Sign In
             </Button>
           </FormControl>
-          <p className="login-No-Account">Don't have account? &nbsp;
-            <span className="registerPage-link" onClick={() => navigate('/register')}>Create One</span>
+          <p className="login-No-Account">
+            Don't have an account?&nbsp;
+            <span className="registerPage-link" onClick={() => navigate("/register")}>
+              Create One
+            </span>
           </p>
         </div>
-
       </div>
-      {isPopupOpen && (<div className="login-popup"
-      style={{ backgroundColor: theme.background, color: theme.heading }}
-      >
-        {/* <div> */}
-        <h2 className="login-popup-title">Change Password</h2>
-        <div className="login-popup-body">
-          <p className="login-popup-question">What is your pet's name?</p>
-          <TextField label="Your Pet's Name" onChange={(e) => setAnswer(e.target.value)} size='small'
-            sx={{
-              '& .MuiInputBase-input': {
-                color: theme.heading, // Text color
-              },
-              '& .MuiInputLabel-root': {
-                color: theme.heading, // Label color
-              },
-              '& .MuiInputLabel-root.Mui-focused': {
-                color: theme.heading, // Label color
-              },
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: theme.heading, // Border color
+
+      {isPopupOpen && (
+        <div className="login-popup" style={{ backgroundColor: theme.background, color: theme.heading }}>
+          <h2 className="login-popup-title">Change Password</h2>
+          <div className="login-popup-body">
+            <p className="login-popup-question">What is your pet's name?</p>
+            <TextField
+              label="Your Pet's Name"
+              onChange={(e) => setAnswer(e.target.value)}
+              size="small"
+              sx={{
+                "& .MuiInputBase-input": { color: theme.heading },
+                "& .MuiInputLabel-root": { color: theme.heading },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": { borderColor: theme.heading },
+                  "&:hover fieldset": { borderColor: theme.heading },
+                  "&.Mui-focused fieldset": { borderColor: theme.heading },
                 },
-                '&:hover fieldset': {
-                  borderColor: theme.heading, // Border color on hover
+              }}
+            />
+            <TextField
+              label="Your New Password"
+              type="password"
+              onChange={(e) => setNewPassword(e.target.value)}
+              size="small"
+              sx={{
+                "& .MuiInputBase-input": { color: theme.heading },
+                "& .MuiInputLabel-root": { color: theme.heading },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": { borderColor: theme.heading },
+                  "&:hover fieldset": { borderColor: theme.heading },
+                  "&.Mui-focused fieldset": { borderColor: theme.heading },
                 },
-                '&.Mui-focused fieldset': {
-                  borderColor: theme.heading, // Border color when focused
-                },
-              },
-            }}
-          />
-          <TextField label="Your New Password" onChange={(e) => setNewPassword(e.target.value)} size='small'
-            sx={{
-              '& .MuiInputBase-input': {
-                color: theme.heading, // Text color
-              },
-              '& .MuiInputLabel-root': {
-                color: theme.heading, // Label color
-              },
-              '& .MuiInputLabel-root.Mui-focused': {
-                color: theme.heading, // Label color
-              },
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: theme.heading, // Border color
-                },
-                '&:hover fieldset': {
-                  borderColor: theme.heading, // Border color on hover
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: theme.heading, // Border color when focused
-                },
-              },
-            }}
-          />
-          <Button variant="contained" onClick={() => { handleSubmit(); handlePopupClose() }} size={'small'}
-          sx={{ backgroundColor: theme.heading, color: theme.background }}
-          >Change</Button>
+              }}
+            />
+            <Button
+              variant="contained"
+              onClick={() => {
+                handleSubmit();
+                handlePopupClose();
+              }}
+              size="small"
+              sx={{ backgroundColor: theme.heading, color: theme.background }}
+            >
+              Change
+            </Button>
+          </div>
         </div>
-        {/* </div> */}
-      </div>)}
-      {isPopupOpen && (<div className="login-backdrop" onClick={handlePopupClose}></div>)}
+      )}
+
+      {isPopupOpen && <div className="login-backdrop" onClick={handlePopupClose}></div>}
     </>
   );
 }

@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router';
 import 'swiper/css'
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { axiosInstance } from '../baseurl.js'
 import '../styles/homePage.css'
 import '../styles/home-scroller.css'
 import toast from 'react-hot-toast'

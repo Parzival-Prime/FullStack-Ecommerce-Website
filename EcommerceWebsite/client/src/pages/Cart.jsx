@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState, useMemo } from 'react'
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router';
-import '../styles/cart.css'
-import toast from 'react-hot-toast'
+import '../styles/cart.css';
+import toast from 'react-hot-toast';
 import { axiosInstance } from '../baseurl.js';
-import { Typography, Checkbox, ButtonGroup, Skeleton, Stack } from '@mui/material'
+import { Typography, Checkbox, ButtonGroup, Skeleton, Stack } from '@mui/material';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -11,172 +11,132 @@ import FlexCenter from '../components/FlexCenter';
 import { useSelector } from 'react-redux';
 import { useTheme } from '../theme/theme';
 
-
 function Cart() {
-  const isLoggedIn = useSelector((state) => state.counter.isLoggedIn)
-  const navigate = useNavigate()
-  const location = useLocation()
-  const [isLoading, setIsLoading] = useState(false)
-  const [cartItems, setCartItems] = useState([])
-  const [products, setProducts] = useState([])
-  const [selectedItems, setSelectedItems] = useState([])
-  const [subtotal, setSubtotal] = useState(0)
-  const [totalItemsSelected, setTotalItemsSelected] = useState(0)
-  const theme = useTheme()
+  const isLoggedIn = useSelector((state) => state.counter.isLoggedIn);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const theme = useTheme();
 
-  const getCartItemsfromDB = async () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [subtotal, setSubtotal] = useState(0);
+  const [totalItemsSelected, setTotalItemsSelected] = useState(0);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  const updateScreenWidth = () => setScreenWidth(window.innerWidth);
+
+  const getCartItemsFromDB = useCallback(async () => {
     try {
-      setIsLoading(true)
-      const { data } = await axiosInstance.get('/api/v1/auth/get-cart')
-      if (data?.success) {
-        if (data.cart.length > 0) {
-          const productIdsArray = data.cart.map((item) => (item.productId))
-          const res = await axiosInstance.post('/api/v1/product/get-cart-items', productIdsArray)
-          if (res?.data?.success) {
-            setCartItems(data.cart)
-            setSelectedItems(data.cart)
-            setProducts(res.data.fetchedProducts)
-            setIsLoading(false)
-          }
+      setIsLoading(true);
+      const { data } = await axiosInstance.get('/api/v1/auth/get-cart');
+      if (data?.success && data.cart.length > 0) {
+        const productIdsArray = data.cart.map((item) => item.productId);
+        const res = await axiosInstance.post('/api/v1/product/get-cart-items', productIdsArray);
+        if (res?.data?.success) {
+          setCartItems(data.cart);
+          setSelectedItems(data.cart);
+          setProducts(res.data.fetchedProducts);
         }
       }
     } catch (error) {
-      console.log(error)
-      toast.error('something went wrong while getting cart items')
+      toast.error('Something went wrong while getting cart items');
+      console.error('Error fetching cart items:', error);
+    } finally {
+      setIsLoading(false);
     }
-  }
+  }, []);
 
-  const updateCart = async (ucart) => {
+  const updateCart = useCallback(async (updatedCart) => {
     try {
-      await axiosInstance.post('/api/v1/auth/update-cart', ucart)
-
+      await axiosInstance.post('/api/v1/auth/update-cart', updatedCart);
     } catch (error) {
-      toast.error('Something went wrong in updating cart')
-      console.log('Error in UpdateCart: ', error)
+      toast.error('Something went wrong updating the cart');
+      console.error('Error updating cart:', error);
     }
-  }
+  }, []);
 
-  const deleteItemFromCart = (e) => {
-    e.stopPropagation()
-    const currentProductId = e.currentTarget.value
-    const updatedCart = cartItems.filter((product) => (product.productId !== currentProductId))
-    const updatedProductsState = products.filter((product) => (product._id !== currentProductId))
-    setCartItems(updatedCart)
-    setProducts(updatedProductsState)
-    setSelectedItems(updatedCart)
-    updateCart(updatedCart)
-  }
+  const handleItemQuantityChange = useCallback((productId, change) => {
+    const updatedCart = cartItems.map((item) =>
+      item.productId === productId ? { ...item, quantity: item.quantity + change } : item
+    );
+    setCartItems(updatedCart);
+    setSelectedItems(updatedCart.filter((item) => item.productId === productId));
+    updateCart(updatedCart);
+  }, [cartItems, updateCart]);
 
-  const displayQuantity = (Id) => {
-    const product = cartItems.find(item => item.productId === Id)
-    if (product) return product.quantity
-  }
+  const deleteItemFromCart = useCallback((productId) => {
+    const updatedCart = cartItems.filter((item) => item.productId !== productId);
+    setCartItems(updatedCart);
+    setSelectedItems(updatedCart);
+    setProducts(products.filter((product) => product._id !== productId));
+    updateCart(updatedCart);
+  }, [cartItems, products, updateCart]);
 
-  const decrementProductQuantity = useCallback((e) => {
-    e.stopPropagation()
-    const currentProductId = e.currentTarget.value
-    const updatedCart = cartItems.map((item) => (
-      (item.productId === currentProductId) ? { ...item, quantity: item.quantity - 1 } : item
-    ))
-    if (selectedItems.some((item) => item.productId === currentProductId)) {
-      const newArray = selectedItems.map((item) => (item.productId === currentProductId) ? { ...item, quantity: item.quantity - 1 } : item)
-      setSelectedItems(newArray)
+  const openProductPage = async (productId) => {
+    try {
+      const { data } = await axiosInstance.post(`/api/v1/product/get-product/${productId}`);
+      if (data?.success) {
+        toast.success('Product Fetched Successfully');
+        navigate('/product', { state: data.productDetails });
+      }
+    } catch (error) {
+      console.error('Error fetching product details:', error);
     }
-    setCartItems(updatedCart)
-    updateCart(updatedCart)
-  }, [cartItems])
+  };
 
-  const incrementProductQuantity = useCallback((e) => {
-    e.stopPropagation()
-    const currentProductId = e.currentTarget.value
-    const updatedCart = cartItems.map((item) => (
-      (item.productId === currentProductId) ? { ...item, quantity: item.quantity + 1 } : item
-    ))
-    if (selectedItems.some((item) => item.productId === currentProductId)) {
-      const newArray = selectedItems.map((item) => (item.productId === currentProductId) ? { ...item, quantity: item.quantity + 1 } : item)
-      setSelectedItems(newArray)
-    }
-    setCartItems(updatedCart)
-    updateCart(updatedCart)
-  }, [cartItems])
+  const handleSelect = useCallback((productId) => {
+    setSelectedItems((prev) => {
+      const isItemPresent = prev.some((item) => item.productId === productId);
+      if (isItemPresent) {
+        return prev.filter((item) => item.productId !== productId);
+      }
+      return [...prev, cartItems.find((item) => item.productId === productId)];
+    });
+  }, [cartItems]);
 
-  const openProductPage = async (e) => {
-    e.stopPropagation()
-    const productid = e.currentTarget.getAttribute('productid')
-
-    const { data } = await axiosInstance.post(`/api/v1/product/get-product/${productid}`)
-    if (data?.success) {
-      toast.success('Product Fetched Successfully')
-      navigate('/product', { state: data.productDetails })
-    }
-  }
-
-  const handleSelect = useCallback((e) => {
-    const checkedProductId = e.target.value
-
-    const isItemPresent = selectedItems.find((item) => (item.productId === checkedProductId))
-
-    if (isItemPresent) {
-      const filteredArray = selectedItems.filter((item) => (item.productId !== checkedProductId))
-      setSelectedItems(filteredArray)
-      return
-    }
-
-    const checkedItem = cartItems.filter((item) => (item.productId === checkedProductId))
-    setSelectedItems((prev) => prev.concat(checkedItem))
-  }, [selectedItems])
-
-  const calcTotal = ()=>{
-      let total = 0;
-      let totalItems = 0
-      selectedItems.forEach((item) => {
-        total += (item.price * item.quantity)
-        totalItems += item.quantity
-      })
-      setSubtotal(total.toFixed(2))
-      setTotalItemsSelected(totalItems)
-  }
+  const calcTotal = useCallback(() => {
+    let total = 0;
+    let totalItems = 0;
+    selectedItems.forEach((item) => {
+      total += item.price * item.quantity;
+      totalItems += item.quantity;
+    });
+    setSubtotal(total.toFixed(2));
+    setTotalItemsSelected(totalItems);
+  }, [selectedItems]);
 
   const handleCheckout = async () => {
     try {
-      // console.log(selectedItems)
-      const { data } = await axiosInstance.post(`/api/v1/payment/create-checkout-session`, { selectedItems, subtotal })
-
+      const { data } = await axiosInstance.post('/api/v1/payment/create-checkout-session', { selectedItems, subtotal });
       if (data?.success) {
-        console.log("data.sessionURL: ", data.sessionURL)
-        window.location = data.sessionURL
+        window.location = data.sessionURL;
       }
     } catch (error) {
-      console.log(error)
-      console.log('Something went wrong in handle Checkout')
+      console.error('Error during checkout:', error);
     }
-  }
-
-  const [screenWidth, setScreenWidth] = useState(0)
-
-  const updateScreenWidth = ()=>{
-    const swidth = window.innerWidth
-    // console.log(swidth)
-    setScreenWidth(swidth)
-  }
+  };
 
   useEffect(() => {
-    calcTotal()
-  }, [selectedItems])
+    if (!isLoggedIn) {
+      navigate('/login', { state: { from: location.pathname } });
+    }
+  }, [isLoggedIn, navigate, location.pathname]);
 
   useEffect(() => {
-    getCartItemsfromDB()
-  }, [])
+    getCartItemsFromDB();
+  }, [getCartItemsFromDB]);
 
   useEffect(() => {
-    updateScreenWidth(); // Set initial dimensions
-    window.addEventListener('resize', updateScreenWidth); // Update on resize
+    calcTotal();
+  }, [calcTotal, selectedItems]);
+
+  useEffect(() => {
+    window.addEventListener('resize', updateScreenWidth);
     return () => window.removeEventListener('resize', updateScreenWidth);
-  }, []);
-
-  if (!isLoggedIn) {
-    return navigate('/login', { state: { from: location.pathname } })
-  }
+  }, [updateScreenWidth]);
+  
   return (
     <>
       <div className="cart-container" style={{backgroundColor: theme.background}}>
