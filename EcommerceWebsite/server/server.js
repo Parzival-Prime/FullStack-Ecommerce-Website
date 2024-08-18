@@ -8,6 +8,11 @@ dotenv.config()
 //connect Database
 connectDB()
 
+// HealthCheck endpoint config
+app.get('/health', (req, res) => {
+    res.status(200).send('OK');
+});
+
 //PORT
 const PORT = process.env.PORT
 
