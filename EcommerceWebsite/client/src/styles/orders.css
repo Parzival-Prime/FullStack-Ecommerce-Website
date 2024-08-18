@@ -1,7 +1,6 @@
 .orders{
     padding-top: 6rem;
-    min-height: 80svh;
-    max-height: 140svh;
+    max-height: 200svh;
 }
 
 .orders-title{

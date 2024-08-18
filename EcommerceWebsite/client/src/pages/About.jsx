@@ -10,9 +10,9 @@ function About() {
       <div className="about-container" style={{backgroundColor: theme.background2}}>
         <div className="about-box" style={{backgroundColor: theme.background, color: theme.heading}}>
           <Typography variant="h1" sx={{
-            fontSize: '3rem', fontWeight: '500'
+            fontSize: '3rem', fontWeight: '500', fontFamily: 'var(--sansitaSwashed)', marginBottom: '1rem'
           }} className="about-title">About Us</Typography>
-          <p className="about-text">
+          <p className="about-text" style={{color: theme.heading2}}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi
             mollitia saepe ipsum voluptas incidunt expedita accusamus nostrum
             reiciendis quod nobis optio distinctio, consectetur earum maxime,

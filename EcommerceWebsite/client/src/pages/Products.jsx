@@ -83,41 +83,72 @@ function Products() {
 
     return (
         <Box sx={{paddingTop: '3rem', minHeight: '70svh', backgroundColor: theme.background}}>
-            <Typography variant='h1' sx={{ fontSize: '2.5rem', fontFamily: 'var(--sansitaSwashed)', paddingTop: '3rem', textAlign: 'center', fontWeight: '500', color: theme.heading }}>All Products</Typography>
+            <Typography variant='h1' sx={{ fontSize: '2.5rem', fontFamily: 'var(--sansitaSwashed)', paddingTop: '3rem', textAlign: 'center', marginBottom: '1rem', fontWeight: '500', color: theme.heading, '@media(min-width: 550px)':{
+                fontSize: '3.2rem', marginBottom: '2rem'
+            } }}>All Products</Typography>
             <Box sx={{ flexGrow: 1, padding: '1rem' }}>
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                     {products.map((product) => (
                         <Grid xs={2} sm={4} md={4}
                             key={product?._id}
                         >
-                            {product ? (<Card sx={{ maxWidth: 345, height: 330, position: 'relative', backgroundColor: theme.card }} productid={product._id} onClick={openProductPage}>
+                            {product ? (<Card sx={{ maxWidth: 345, position: 'relative', backgroundColor: theme.card }} productid={product._id} onClick={openProductPage}>
                                 <CardActionArea>
                                     <CardMedia
                                         component="img"
-                                        height="140"
+                                        // height="240"
                                         image={product.image}
                                         alt="Product Image"
+                                        sx={{
+                                            maxHeight: 320,
+                                            // maxWidth: 200
+                                        }}
                                     />
                                     <CardContent sx={{ height: 140, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                                        <Typography gutterBottom variant="h5" sx={{ fontSize: '1rem', fontWeight: '500' }}>
+                                        <Typography gutterBottom variant="h5" sx={{ fontSize: '1rem', fontWeight: '600' ,
+                                            '@media(min-width: 550px)':{
+                                                fontSize: '1.6rem'
+                                            }
+                                        }}>
                                             {product.name}
                                         </Typography>
-                                        <Typography variant="body2" color="text.secondary">
+                                        <Typography variant="body2" color="text.secondary" sx={{
+                                            '@media(min-width: 550px)':{
+                                                fontSize: '1.2rem'
+                                            }
+                                        }}>
                                             {product.description.substring(0, 50)} ....
                                         </Typography>
                                     </CardContent>
                                 </CardActionArea>
                                 <CardActions sx={{ display: 'flex', justifyContent: 'end', position: 'sticky', bottom: '0' }}>
-                                    <Typography sx={{ marginRight: '.5rem' }}>
+                                    <Typography sx={{ marginRight: '.1rem', fontWeight: 700, fontFamily: 'var(--sansitaSwashed)', '@media(min-width: 550px)':{
+                                                fontSize: '1.5rem',
+                                                marginRight: '1.8rem'
+                                            } }}>
                                         ${product.price}
                                     </Typography>
                                     <IconButton onClick={addItemToCart} sx={{ backgroundColor: theme.background}} value={JSON.stringify(product)} >
-                                        <ShoppingCartIcon sx={{ fontSize: '1.3rem', position: 'sticky', bottom: '0', color: theme.heading }} />
+                                        <ShoppingCartIcon sx={{ fontSize: '.8rem', position: 'sticky', bottom: '0', color: theme.heading ,
+                                            '@media(min-width: 400px)':{
+                                                fontSize: '1.3rem'
+                                            },
+                                            '@media(min-width: 550px)':{
+                                                fontSize: '2rem'
+                                            }
+                                            }} />
                                     </IconButton>
                                     <IconButton sx={{
                                         backgroundColor: theme.background
                                     }} value={product._id} >
-                                        <FavoriteBorderIcon sx={{ fontSize: '1.3rem', position: 'sticky', bottom: '0', color: theme.heading }} />
+                                        <FavoriteBorderIcon sx={{ fontSize: '.8rem', position: 'sticky', bottom: '0', color: theme.heading ,
+                                            '@media(min-width: 400px)':{
+                                                fontSize: '1.3rem'
+                                            },
+                                            '@media(min-width: 550px)':{
+                                                fontSize: '2rem'
+                                            }
+                                        }} />
                                     </IconButton>
                                 </CardActions>
                             </Card>) : (<Skeleton animation='wave' variant="rectangular" width={190} height={300} sx={{

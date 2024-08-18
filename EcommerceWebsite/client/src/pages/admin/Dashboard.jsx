@@ -207,12 +207,12 @@ function Dashboard() {
 
       <div className="dashboard-tsales-revenue-box">
         <div>
-          <div className="tRevenue">Total Revenue: {' '}${parseFloat(totalRevenue / 100).toFixed(2)}</div>
-          <div className="tSales">Total Sales: {totalSales}</div>
+          <div className="tRevenue">Total Revenue: {' '}<span style={{color: theme.heading2}}>${parseFloat(totalRevenue / 100).toFixed(2)}</span></div>
+          <div className="tSales">Total Sales: <span style={{color: theme.heading2}}>{totalSales}</span></div>
         </div>
         <div>
-          <div className="total-users-count">Total Users:{' '} {totalUsersCount}</div>
-          <div className="total-products-count">Total Products:{' '} {totalProductsCount}</div>
+          <div className="total-users-count">Total Users:{' '} <span style={{color: theme.heading2}}>{totalUsersCount}</span></div>
+          <div className="total-products-count">Total Products:{' '} <span style={{color: theme.heading2}}>{totalProductsCount}</span></div>
         </div>
       </div>
 

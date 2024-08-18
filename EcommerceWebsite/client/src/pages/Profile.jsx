@@ -143,7 +143,7 @@ function Profile() {
   return (
     <>
       {userData ? (<>
-        <div style={{ height: '90svh', width: '100%', position: 'relative', backgroundColor: theme.background, color: theme.heading }}>
+        <div style={{ width: '100%', position: 'relative', backgroundColor: theme.background, color: theme.heading }}>
           {!isPopUpOpen ?
             (<div className="profile-container">
               <div className="profile-upper">
@@ -152,7 +152,7 @@ function Profile() {
                 </div>
                 <div className="edit-profile" style={{ borderColor: theme.heading }} onClick={handlePopUpToggle}>Edit profile</div>
                 <div className="profile-name">{userData.name || 'No name available'}</div>
-                <div className="profile-email">{userData.email || 'No email available'}</div>
+                <div className="profile-email" style={{color: theme.heading2}}>{userData.email || 'No email available'}</div>
                 <div className="profile-dateofbirth">
                   <RiCake2Line />{userData.dateOfBirth ? convertDateFormat(userData.dateOfBirth) : 'Date of Birth not available'}
                 </div>
@@ -160,11 +160,11 @@ function Profile() {
               </div>
               <div className="profile-lower">
                 <h4 className="profile-lower-address-title">Your Address: </h4>
-                <div className="profile-address">{userData.address || 'No address available'}
+                <div className="profile-address" style={{color: theme.heading2}}>{userData.address || 'No address available'}
                   <div className="profile-pincode">Pincode - {userData.pincode || '123456'}</div>
                 </div>
                 <h4 className="profile-lower-phoneNumber-title">Your Phone Number: </h4>
-                <div className="profile-phoneNumber">{userData.phone}</div>
+                <div className="profile-phoneNumber" style={{color: theme.heading2}}>{userData.phone}</div>
               </div>
             </div>)
             : (<>

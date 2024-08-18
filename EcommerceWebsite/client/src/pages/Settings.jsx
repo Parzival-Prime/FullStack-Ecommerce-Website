@@ -81,6 +81,9 @@ function Settings() {
                     borderColor: theme.heading, // Border color when focused
                   },
                 },
+                '@media (max-width: 320px)': {
+                  width: '12rem'
+                }
               }} />
             <TextField label="Your New Password" onChange={(e) => SetPassword(e.target.value)} size='small'
               sx={{
@@ -103,13 +106,16 @@ function Settings() {
                   '&.Mui-focused fieldset': {
                     borderColor: theme.heading, // Border color when focused
                   },
+                  '@media (max-width: 320px)': {
+                    width: '12rem'
+                  }
                 },
               }} />
             <Button variant="contained" onClick={() => { handleSubmit(); handlePopupClose() }} size={'small'} sx={{ backgroundColor: theme.heading, color: theme.background }}>Change</Button>
           </div>
         </div>)}
+        {isPopupOpen && (<div className="settings-backdrop" onClick={handlePopupClose}></div>)}
       </div>
-      {isPopupOpen && (<div className="settings-backdrop" onClick={handlePopupClose}></div>)}
     </div>
   )
 }

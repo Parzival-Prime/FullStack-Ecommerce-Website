@@ -141,3 +141,49 @@
     flex-direction: column;
 }
 
+
+@media (min-width: 900px){
+    .profile-container{
+        display: flex;
+        gap: 17rem;
+        height: 120svh;
+        margin-left: 8rem;
+    }
+
+    .profile-upper{
+        font-size: 1.3rem;
+    }
+
+    .profile-name{
+        font-size: 1.8rem;
+    }
+    .profile-email{
+        font-size: 1.2rem;
+    }
+
+    .edit-profile{
+        transform: translateX(3rem) translateY(16rem);
+    }
+
+    .profile-lower{
+        font-size: 1.3rem;
+    }
+
+    .profile-edit-popup-backdrop{
+        min-height: 150svh;
+    }
+
+    .profile-edit-popup-container{
+        top: 6.5rem;
+        left: 6rem;
+        position: absolute;
+        height: 120svh;
+        width: 85%;
+        border-radius: 10px;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        padding: 2rem;
+        padding-inline: 6rem;
+    }
+}

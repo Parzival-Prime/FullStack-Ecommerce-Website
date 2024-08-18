@@ -15,7 +15,7 @@
     --white: #ffff;
     --golden: rgb(255, 195, 0);
     --grey: rgba(245, 245, 245, 0.87);
-    --darkGrey: #9b9b9b;
+    --darkGrey: #d8d8d8;
     --bluegrey: rgba(220, 238, 235, 0.897);
     --cream: rgba(255, 251, 216, 0.993);
     --darkPink1: #fb2080;
@@ -414,7 +414,7 @@
     --logoFontWeight: 400;
     --mainFontWeight: 300;
     --max-width: 100%;
-    --min-width: 320px;
+    --min-width: 0px;
     --linearGradient1: linear-gradient(34deg, rgba(0, 25, 117, 1) 0%, rgba(3, 144, 87, 1) 84%);
 }
 
@@ -422,5 +422,10 @@ body {
     font-family: var(--mainFont);
     max-width: var(--max-width);
     min-width: var(--min-width);
-    overflow: auto;
+    scrollbar-width: none;
 }
+
+/* body ::-webkit-scrollbar {
+    width: '14px'
+} */
+

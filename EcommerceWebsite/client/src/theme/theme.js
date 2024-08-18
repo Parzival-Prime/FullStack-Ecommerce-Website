@@ -9,7 +9,7 @@ export const useTheme = ()=>{
         background2: 'var(--greanandcreambrighter1)',
         button: 'var(--greenandcream6)',
         heading: 'var(--greenandcream6)',
-        heading2: 'var(--darkGrey)',
+        heading2: 'var(--black)',
         golden: 'var(--golden)',
         card: 'var(--bluegrey)',
         white: 'var(--white)',

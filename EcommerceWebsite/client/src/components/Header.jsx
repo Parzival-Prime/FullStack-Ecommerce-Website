@@ -112,37 +112,18 @@ function Header() {
       <nav className="navbar" style={{color: theme.white}}>
         <div className="toolbar">
           <FlexCenter
-            sx={{ fontSize: ".9rem", fontFamily: "Playwrite BE VLG" }}
+            sx={{ fontSize: "1.2rem", fontFamily: "var(--sansitaSwashed)" }}
           >
             <Box variant="span" sx={{ display: 'flex', alignSelf: 'start' }}>Whispering</Box>
             <Box variant="span" sx={{ display: 'flex', alignSelf: 'end' }}>Willow</Box>
           </FlexCenter>
 
 
-          {/* row list */}
-          {/* <ul className="row-nav-list">
-            <li className="item item1">
-              <Link to='/'>Home</Link>
-            </li>
-            <li className="item item2">
-              <Link to='/'>Search</Link>
-            </li>
-            <li className="item item3">
-              <Link to='/'>Toggler</Link>
-            </li>
-            <li className="item item4">
-              <Link to='/'>User</Link>
-            </li>
-            <li className="item item5">
-              <Link to='/'>Cart</Link>
-            </li>
-          </ul> */}
-
           {/* column-list */}
           <FlexCenter sx={{ gap: "1.5rem" }}>
-            <IconButton onClick={() => navigate("/search")}>
+            {/* <IconButton onClick={() => navigate("/search")}>
               <SearchIcon sx={{ color: "white", fontSize: "2rem" }} />
-            </IconButton>
+            </IconButton> */}
             <IconButton onClick={toggleNavMenu}>
               <MenuIcon
                 sx={{
@@ -233,9 +214,19 @@ function Header() {
                       backgroundColor: 'var(--oceanDark)',
                       borderRadius: '6px',
                       width: '9rem',
-                      height: '11rem'
-                      // maxHeight: '12rem',
-                    }
+                      height: '11rem',
+                      '::-webkit-scrollbar':{
+                        width: '4px'
+                      },
+                      '::-webkit-scrollbar-track': {
+                        backgroundColor: '#f1f1f1',
+                        borderRadius: '10px'
+                      },
+                      '::-webkit-scrollbar-thumb':{
+                        backgroundColor: theme.background,
+                        borderRadius: '10px'
+                      }
+                    },
                   }}
                 >
                   <MenuItem onClick={(e) => { handleClose(e); handleNavLinkClick(e); navigate('/profile') }} sx={{ fontSize: '1.25rem', gap: '.8rem' }}><RiUserLine />Profile</MenuItem>

@@ -152,6 +152,13 @@ function Cart() {
     }
   }
 
+  const [screenWidth, setScreenWidth] = useState(0)
+
+  const updateScreenWidth = ()=>{
+    const swidth = window.innerWidth
+    // console.log(swidth)
+    setScreenWidth(swidth)
+  }
 
   useEffect(() => {
     calcTotal()
@@ -160,6 +167,12 @@ function Cart() {
   useEffect(() => {
     getCartItemsfromDB()
   }, [])
+
+  useEffect(() => {
+    updateScreenWidth(); // Set initial dimensions
+    window.addEventListener('resize', updateScreenWidth); // Update on resize
+    return () => window.removeEventListener('resize', updateScreenWidth);
+  }, []);
 
   if (!isLoggedIn) {
     return navigate('/login', { state: { from: location.pathname } })
@@ -172,7 +185,7 @@ function Cart() {
         </h1>
 
         <div className="cart-list-section">
-          {cartItems.length > 0 ? (<><h5 className='cart-list-title' style={{color: theme.heading}}>My Cart List</h5>
+          {cartItems.length > 0 ? (<>
 
             <div className="cart-list-container">
               {!isLoading ? (
@@ -184,23 +197,27 @@ function Cart() {
                       <ButtonGroup className="cart-quantity-box" variant="contained" aria-label="Basic button group">
                         {displayQuantity(product._id) > 1 ? (
                           <button className="cart-quantity-decrement" value={product._id} onClick={decrementProductQuantity}>
-                            <RemoveIcon />
+                            <RemoveIcon fontSize='small' />
                           </button>
                         ) : (
                           <button className="cart-quantity-decrement" value={product._id} onClick={deleteItemFromCart} >
-                            <DeleteOutlineIcon />
+                            <DeleteOutlineIcon fontSize='small' />
                           </button>
                         )}
                         <button className="cart-quantity-value"><span>{displayQuantity(product._id)}</span></button>
                         <button className="cart-quantity-increment" value={product._id} onClick={incrementProductQuantity}>
-                          <AddIcon />
+                          <AddIcon fontSize='small' />
                         </button>
                       </ButtonGroup>
                     </div>
 
                     <div className="cart-item-right" productid={product._id} onClick={openProductPage}>
                       <Typography className='cart-item-title'>{product.name.substring(0, 18)}{product.name.length > 18 ? '...' : ''}</Typography>
-                      <Typography className='cart-item-description'>{product.description.substring(0, 90)}{product.description.length > 90 ? '...' : ''}</Typography>
+                      <Typography className='cart-item-description'>{screenWidth < 340 ? 
+                      (`${product.description.substring(0, 60)} ${product.description.length > 60 ? '...' : ''}`) 
+                      : 
+                      (`${product.description.substring(0, 90)} ${product.description.length > 90 ? '...' : ''}`) }
+                      </Typography>
                       <Typography className='cart-item-price'>${product.price}</Typography>
                       {(product.quantity > 0) && (<Typography className='cart-item-quantity-check'>In stock</Typography>)}
                       <Typography className='cart-item-replacement'>7 Days Replacement</Typography>
@@ -217,8 +234,18 @@ function Cart() {
               </Stack>)}
             </div>
             <FlexCenter className="proceed-button-container">
-              <div className="cart-Subtotal" style={{color: theme.heading}}>Subtotal: &nbsp;<span>${subtotal}</span></div>
-              <button className="proceed-button" style={{backgroundColor: theme.button, color: theme.background}} onClick={handleCheckout}>Proceed to Buy ({totalItemsSelected} items)</button>
+              <div className="cart-Subtotal" 
+              style={{color: theme.heading}}>
+                Subtotal: &nbsp;<span>${subtotal}</span>
+              </div>
+              <button className="proceed-button"
+               style={{
+                backgroundColor: theme.button, 
+                color: theme.background
+                }} 
+                onClick={handleCheckout}>
+                Proceed to Buy ({totalItemsSelected} items)
+                </button>
             </FlexCenter>
           </>) : (
             <div className='empty-cart'>

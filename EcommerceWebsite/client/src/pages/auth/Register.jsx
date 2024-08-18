@@ -103,9 +103,9 @@ function Register() {
   return (
     <>
       <Box
-        variant={"div"} sx={{ height: "100vh", paddingTop: "6rem", background: theme.background, }} >
+        variant={"div"} sx={{ paddingBlock: "6rem", background: theme.background, color: theme.heading }} >
         <FlexCenter sx={{ display: "flex", flexDirection: "column" }} >
-          <Typography variant="h1" sx={{ fontSize: "2.5rem", fontWeight: "700", }} >
+          <Typography variant="h1" sx={{ fontSize: "2.5rem", fontWeight: "700", fontFamily: 'var(--sansitaSwashed)' }} >
             Create Account
           </Typography>
           <Typography variant="p" sx={{ fontSize: ".85rem", color: "var(--subTextColor)", fontWeight: "var(--logoFontWeight)", }} >
@@ -129,8 +129,29 @@ function Register() {
                 onChange={handleChange}
                 variant="outlined"
                 type="text"
-                color="warning"
-                focused
+                // size="small"
+                sx={{
+                  '& .MuiInputBase-input': {
+                    color: theme.heading, // Text color
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: theme.heading, // Label color
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: theme.heading, // Label color
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: theme.heading, // Border color
+                    },
+                    '&:hover fieldset': {
+                      borderColor: theme.heading, // Border color on hover
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: theme.heading, // Border color when focused
+                    },
+                  },
+                }}
               />
               <TextField
                 label="Email"
@@ -139,8 +160,28 @@ function Register() {
                 onChange={handleChange}
                 variant="outlined"
                 type="email"
-                color="warning"
-                focused
+                sx={{
+                  '& .MuiInputBase-input': {
+                    color: theme.heading, // Text color
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: theme.heading, // Label color
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: theme.heading, // Label color
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: theme.heading, // Border color
+                    },
+                    '&:hover fieldset': {
+                      borderColor: theme.heading, // Border color on hover
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: theme.heading, // Border color when focused
+                    },
+                  },
+                }}
               />
               <TextField
                 label="Password"
@@ -149,8 +190,28 @@ function Register() {
                 onChange={handleChange}
                 variant="outlined"
                 type="password"
-                color="warning"
-                focused
+                sx={{
+                  '& .MuiInputBase-input': {
+                    color: theme.heading, // Text color
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: theme.heading, // Label color
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: theme.heading, // Label color
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: theme.heading, // Border color
+                    },
+                    '&:hover fieldset': {
+                      borderColor: theme.heading, // Border color on hover
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: theme.heading, // Border color when focused
+                    },
+                  },
+                }}
               />
               <TextField
                 label="Phone"
@@ -159,8 +220,28 @@ function Register() {
                 onChange={handleChange}
                 variant="outlined"
                 type="number"
-                color="warning"
-                focused
+                sx={{
+                  '& .MuiInputBase-input': {
+                    color: theme.heading, // Text color
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: theme.heading, // Label color
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: theme.heading, // Label color
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: theme.heading, // Border color
+                    },
+                    '&:hover fieldset': {
+                      borderColor: theme.heading, // Border color on hover
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: theme.heading, // Border color when focused
+                    },
+                  },
+                }}
               />
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -174,25 +255,24 @@ function Register() {
                       <TextField
                         {...params}
                         sx={{
-                          '& .MuiInputBase-root': {
-                            '&.Mui-focused': {
-                              borderColor: orange[700], // Color for the focused state
-                            },
+                          '& .MuiInputBase-input': {
+                            color: theme.heading, // Text color
                           },
                           '& .MuiInputLabel-root': {
-                            '&.Mui-focused': {
-                              color: orange[700], // Color for the label in focused state
-                            },
+                            color: theme.heading, // Label color
+                          },
+                          '& .MuiInputLabel-root.Mui-focused': {
+                            color: theme.heading, // Label color
                           },
                           '& .MuiOutlinedInput-root': {
                             '& fieldset': {
-                              borderColor: orange[700], // Default color for the border
+                              borderColor: theme.heading, // Border color
                             },
                             '&:hover fieldset': {
-                              borderColor: orange[700], // Hover color
+                              borderColor: theme.heading, // Border color on hover
                             },
                             '&.Mui-focused fieldset': {
-                              borderColor: orange[700], // Color when focused
+                              borderColor: theme.heading, // Border color when focused
                             },
                           },
                         }}
@@ -211,8 +291,28 @@ function Register() {
                 onChange={handleChange}
                 variant="outlined"
                 type="text"
-                color="warning"
-                focused
+                sx={{
+                  '& .MuiInputBase-input': {
+                    color: theme.heading, // Text color
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: theme.heading, // Label color
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: theme.heading, // Label color
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: theme.heading, // Border color
+                    },
+                    '&:hover fieldset': {
+                      borderColor: theme.heading, // Border color on hover
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: theme.heading, // Border color when focused
+                    },
+                  },
+                }}
               />
               <TextField
                 label="Pincode"
@@ -221,8 +321,28 @@ function Register() {
                 onChange={handleChange}
                 variant="outlined"
                 type="number"
-                color="warning"
-                focused
+                sx={{
+                  '& .MuiInputBase-input': {
+                    color: theme.heading, // Text color
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: theme.heading, // Label color
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: theme.heading, // Label color
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: theme.heading, // Border color
+                    },
+                    '&:hover fieldset': {
+                      borderColor: theme.heading, // Border color on hover
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: theme.heading, // Border color when focused
+                    },
+                  },
+                }}
               />
               <TextField
                 label="Name of your Pet"
@@ -231,18 +351,45 @@ function Register() {
                 onChange={handleChange}
                 variant="outlined"
                 type="text"
-                color="warning"
-                focused
+                sx={{
+                  '& .MuiInputBase-input': {
+                    color: theme.heading, // Text color
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: theme.heading, // Label color
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: theme.heading, // Label color
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: theme.heading, // Border color
+                    },
+                    '&:hover fieldset': {
+                      borderColor: theme.heading, // Border color on hover
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: theme.heading, // Border color when focused
+                    },
+                  },
+                }}
               />
               <Button
                 component="label"
                 variant="contained"
                 startIcon={<CloudUploadIcon />}
+                sx={{
+                  backgroundColor: theme.heading,
+                  color: theme.background
+                }}
               >
                 Upload file
                 <VisuallyHiddenInput type="file" onChange={handleFileUpload} />
               </Button>
-              <Button type="submit" variant="outlined" color="warning">
+              <Button type="submit" variant="contained" sx={{
+                  backgroundColor: theme.heading,
+                  color: theme.background
+                }}>
                 Submit
               </Button>
             </FormControl>

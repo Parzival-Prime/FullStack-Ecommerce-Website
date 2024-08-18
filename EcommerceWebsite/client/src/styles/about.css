@@ -60,3 +60,22 @@
         left: -18px;
     }
 }
+
+@media (min-width: 770px){
+    .about-box {
+        padding-right: 10rem;
+
+        p {
+            font-size: 1.1rem;
+        }
+    }
+}
+
+@media (min-width: 900px){
+    .about-box{
+        margin-left: 12rem;
+        padding-left: 5rem;
+        padding-top: 4rem;
+    }
+
+}

@@ -130,13 +130,13 @@ function CreateProduct() {
               onChange={(e) => setName(e.target.value)}
               sx={{
                 '& .MuiInputBase-input': {
-                  color: theme.heading, // Text color
+                  color: theme.heading2, // Text color
                 },
                 '& .MuiInputLabel-root': {
-                  color: theme.heading, // Label color
+                  color: theme.heading2, // Label color
                 },
                 '& .MuiInputLabel-root.Mui-focused': {
-                  color: theme.heading, // Label color
+                  color: theme.heading2, // Label color
                 },
                 '& .MuiOutlinedInput-root': {
                   '& fieldset': {
@@ -167,13 +167,13 @@ function CreateProduct() {
               }}
               sx={{
                 '& .MuiInputBase-input': {
-                  color: theme.heading, // Text color
+                  color: theme.heading2, // Text color
                 },
                 '& .MuiInputLabel-root': {
-                  color: theme.heading, // Label color
+                  color: theme.heading2, // Label color
                 },
                 '& .MuiInputLabel-root.Mui-focused': {
-                  color: theme.heading, // Label color
+                  color: theme.heading2, // Label color
                 },
                 '& .MuiOutlinedInput-root': {
                   '& fieldset': {
@@ -199,13 +199,13 @@ function CreateProduct() {
               onChange={(e) => setQuantity(e.target.value)}
               sx={{
                 '& .MuiInputBase-input': {
-                  color: theme.heading, // Text color
+                  color: theme.heading2, // Text color
                 },
                 '& .MuiInputLabel-root': {
-                  color: theme.heading, // Label color
+                  color: theme.heading2, // Label color
                 },
                 '& .MuiInputLabel-root.Mui-focused': {
-                  color: theme.heading, // Label color
+                  color: theme.heading2, // Label color
                 },
                 '& .MuiOutlinedInput-root': {
                   '& fieldset': {
@@ -233,13 +233,13 @@ function CreateProduct() {
               onChange={(e) => setDescription(e.target.value)}
               sx={{
                 '& .MuiInputBase-input': {
-                  color: theme.heading, // Text color
+                  color: theme.heading2, // Text color
                 },
                 '& .MuiInputLabel-root': {
-                  color: theme.heading, // Label color
+                  color: theme.heading2, // Label color
                 },
                 '& .MuiInputLabel-root.Mui-focused': {
-                  color: theme.heading, // Label color
+                  color: theme.heading2, // Label color
                 },
                 '& .MuiOutlinedInput-root': {
                   '& fieldset': {

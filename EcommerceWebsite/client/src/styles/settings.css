@@ -1,10 +1,10 @@
-.settings{
-    min-height: 60svh;
+.settings {
+    min-height: 100svh;
     padding-top: 6rem;
     position: relative;
 }
 
-.settings-heading{
+.settings-heading {
     display: flex;
     align-items: center;
     gap: .5rem;
@@ -13,12 +13,12 @@
     font-family: var(--sansitaSwashed);
 }
 
-.settings-body{
+.settings-body {
     margin-block: 3rem;
     margin-inline: 1.5rem;
 }
 
-.toggle-theme{
+.toggle-theme {
     margin-bottom: 1.5rem;
     font-size: 1.2rem;
     font-weight: 500;
@@ -26,11 +26,11 @@
     display: flex;
 }
 
-.theme-toggle-button{
-    margin-left: 10rem;
+.theme-toggle-button {
+    margin-left: 4rem;
 }
 
-.change-password{
+.change-password {
     font-size: 1.2rem;
     font-weight: 500;
     font-family: var(--expletusSans);
@@ -40,29 +40,30 @@
         padding: .5rem .7rem;
         border-radius: 9px;
         border: none;
+        margin-block: 1rem;
     }
 }
 
 
-.settings-popup{
+.settings-popup {
     position: absolute;
     z-index: 1;
-    top: 7rem;
-    left: 4rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     height: 25rem;
     width: 20rem;
     border-radius: 10px;
-    background-color: white;
 }
 
-.settings-popup-title{
+.settings-popup-title {
     padding-top: .6rem;
     padding-left: .7rem;
     font-size: 1.6rem;
     font-weight: 500;
 }
 
-.settings-popup-body{
+.settings-popup-body {
     margin-top: 2rem;
     display: flex;
     flex-direction: column;
@@ -71,17 +72,32 @@
     gap: 1.3rem;
 }
 
-.settings-popup-question{
+.settings-popup-question {
     margin-left: -1rem;
     font-size: 1.1rem;
 }
 
 
-.settings-backdrop{
+.settings-backdrop {
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.575);
+}
+
+@media (max-width: 320px) {
+    .settings-popup {
+        height: 18rem;
+        width: 14rem;
+    }
+
+    .settings-popup-title {
+        font-size: 1.2rem;
+    }
+
+    .settings-popup-question {
+        font-size: .9rem;
+    }
 }

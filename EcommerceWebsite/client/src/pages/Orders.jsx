@@ -6,7 +6,7 @@ import { axiosInstance } from '../App'
 import { useTheme } from '../theme/theme'
 
 const ordersTableStruct = [
-  {field: 'id', headerName: 'BillId', width: 160, cellClassName: 'text-color'},
+  {field: 'id', headerName: 'BillId', width: 300, cellClassName: 'text-color'},
   {field: 'orderDate', headerName: 'Date', width: 130, cellClassName: 'text-color'},
   {field: 'totalAmount', headerName: 'TotalAmount', width: 130, cellClassName: 'text-color'}
 ]
