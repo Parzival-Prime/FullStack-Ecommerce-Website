@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { lazy } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination } from 'swiper/modules';
 import { useNavigate } from 'react-router';
@@ -7,9 +7,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import '../styles/homePage.css'
 import '../styles/home-scroller.css'
-import toast from 'react-hot-toast'
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+const ArrowBackIosIcon = lazy(()=>import('@mui/icons-material/ArrowBackIos'))
+const ArrowForwardIosIcon = lazy(()=>import('@mui/icons-material/ArrowForwardIos'))
 
 function HomePage() {
   const navigate = useNavigate()
@@ -22,7 +21,7 @@ function HomePage() {
         <section className="home-hero-section">
           <h1 className="home-hero-title">Whispering Willow</h1>
           <p className="home-hero-subtitle">Embrace Nature’s Best for Your Hair & Skin</p>
-          <img src="http://res.cloudinary.com/dro8qbk8j/image/upload/v1723342616/xhvtjqhy2vlfutgdqun2.png" alt="Image" className="home-hero-image" />
+          <img src="http://res.cloudinary.com/dro8qbk8j/image/upload/v1723342616/xhvtjqhy2vlfutgdqun2.png" alt="Image" className="home-hero-image" loading="lazy" />
           <p className="home-hero-text">Nourish your hair and skin with our range of all-natural, high-quality products. Crafted with care, inspired by nature.</p>
           <button className="home-hero-button" onClick={() => navigate('/products')}>Explore Products</button>
         </section>

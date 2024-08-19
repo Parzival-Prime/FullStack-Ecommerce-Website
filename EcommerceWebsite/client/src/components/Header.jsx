@@ -1,8 +1,7 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState, useCallback, lazy } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/header.css";
 import {
-  Menu as MenuIcon,
   Avatar,
   IconButton,
   Box,
@@ -12,7 +11,7 @@ import {
   MenuItem,
   Fade,
 } from "@mui/material";
-import FlexCenter from "./FlexCenter";
+const FlexCenter = lazy(()=>import("./FlexCenter"))
 import { useSelector, useDispatch } from "react-redux";
 import {
   setIsAdminFalse,
@@ -32,10 +31,11 @@ import {
   RiDashboardLine,
   RiFunctionAddLine,
   RiSettings5Line,
+  RiMenuLine
 } from "@remixicon/react";
 import toast from "react-hot-toast";
 import { axiosInstance } from "../baseurl.js";
-import { useTheme } from "../theme/theme";
+import { useTheme } from "../theme/theme.js";
 
 function Header() {
   const [open, setOpen] = useState(false);
@@ -124,7 +124,7 @@ function Header() {
           </FlexCenter>
           <FlexCenter sx={{ gap: "1.5rem" }}>
             <IconButton onClick={toggleNavMenu}>
-              <MenuIcon sx={{ color: "white", fontSize: "2rem" }} />
+              <RiMenuLine style={{ color: "white", fontSize: "2rem" }} />
             </IconButton>
           </FlexCenter>
         </div>

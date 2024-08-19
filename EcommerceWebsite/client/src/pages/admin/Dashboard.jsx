@@ -5,7 +5,6 @@ import { axiosInstance } from '../../baseurl.js';
 import { scaleQuantize } from 'd3-scale';
 import { useTheme } from '../../theme/theme.js';
 import { debounce } from 'lodash';
-
 const ApexCharts = lazy(() => import('react-apexcharts'));
 const ResponsiveChoropleth = lazy(() => import('@nivo/geo').then(module => ({ default: module.ResponsiveChoropleth })));
 const DataGrid = lazy(() => import('@mui/x-data-grid'));
@@ -93,7 +92,7 @@ function Dashboard() {
     setGeoData(lok);
   };
 
-  const getDashboardData = async () => {
+  const getDashboardData = debounce(async () => {
     try {
       const { data } = await axiosInstance.get('/api/v1/auth/get-dashboard-data');
       if (data?.success) {
@@ -119,7 +118,7 @@ function Dashboard() {
       console.error('Error fetching dashboard data:', error);
       toast.error("Couldn't fetch Dashboard Data. Please try again later.");
     }
-  };
+  }, 300)
 
   const updateDimensions = debounce(() => {
     const screenWidth = window.innerWidth;
@@ -257,48 +256,54 @@ function Dashboard() {
       </div>
       <div className="top-products">
         <h2 className="top-products-heading">Top Five most Sold Products:</h2>
-        <DataGrid
-          columns={productTableStruct}
-          rows={topFiveProducts}
-          // pageSize={4}
-          getRowId={(row) => row._id}
-          sx={{
-            '& .text-color': {
-              color: theme.heading,
-            }
-          }}
-          disableColumnMenu
-        />
+        <Suspense fallback={<div>Loading...</div>}>
+          <DataGrid
+            columns={productTableStruct}
+            rows={topFiveProducts}
+            // pageSize={4}
+            getRowId={(row) => row._id}
+            sx={{
+              '& .text-color': {
+                color: theme.heading,
+              }
+            }}
+            disableColumnMenu
+          />
+        </Suspense>
       </div>
       <div className="top-customers">
         <h2 className="top-customers-heading">Top Five Customers:</h2>
-        <DataGrid
-          columns={topUserTableStruct}
-          rows={topFiveCustomers}
-          pageSize={5}
-          getRowId={(row) => row._id}
-          sx={{
-            '& .text-color': {
-              color: theme.heading,
-            }
-          }}
-          disableColumnMenu
-        />
+        <Suspense fallback={<div>Loading...</div>}>
+          <DataGrid
+            columns={topUserTableStruct}
+            rows={topFiveCustomers}
+            pageSize={5}
+            getRowId={(row) => row._id}
+            sx={{
+              '& .text-color': {
+                color: theme.heading,
+              }
+            }}
+            disableColumnMenu
+          />
+        </Suspense>
       </div>
       <div className="all-customers">
         <h2 className="all-customers-heading">All Customers:</h2>
-        <DataGrid
-          columns={allUsersTableStruct}
-          rows={allUsers}
-          pageSize={5}
-          getRowId={(row) => row.email}
-          sx={{
-            '& .text-color': {
-              color: theme.heading,
-            }
-          }}
-          disableColumnMenu
-        />
+        <Suspense fallback={<div>Loading...</div>}>
+          <DataGrid
+            columns={allUsersTableStruct}
+            rows={allUsers}
+            pageSize={5}
+            getRowId={(row) => row.email}
+            sx={{
+              '& .text-color': {
+                color: theme.heading,
+              }
+            }}
+            disableColumnMenu
+          />
+        </Suspense>
       </div>
     </div>
   )
