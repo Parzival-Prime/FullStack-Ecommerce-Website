@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Creating axios Instance
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: "https://walrus-app-8crlr.ondigitalocean.app/",
     withCredentials: true
   });
   
