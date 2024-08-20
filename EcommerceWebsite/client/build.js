@@ -11,7 +11,6 @@ esbuild.build({
     platform: 'browser',            // Target platform
     jsxFactory: 'React.createElement', // JSX factory
     jsxFragment: 'React.Fragment',
-    external: ['react', 'react-dom', '@reduxjs/toolkit'], // Externalize dependencies
     loader: {
         '.js': 'jsx',
     }, 
