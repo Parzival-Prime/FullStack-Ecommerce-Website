@@ -119,12 +119,6 @@ function Cart() {
   };
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      navigate('/login', { state: { from: location.pathname } });
-    }
-  }, [isLoggedIn, navigate, location.pathname]);
-
-  useEffect(() => {
     getCartItemsFromDB();
   }, [getCartItemsFromDB]);
 
@@ -136,11 +130,16 @@ function Cart() {
     window.addEventListener('resize', updateScreenWidth);
     return () => window.removeEventListener('resize', updateScreenWidth);
   }, [updateScreenWidth]);
-  
+
+
+  if (!isLoggedIn) {
+    navigate('/login', { state: { from: location.pathname } });
+  }
+
   return (
     <>
-      <div className="cart-container" style={{backgroundColor: theme.background}}>
-        <h1 className="cart-title" style={{color: theme.heading}}>
+      <div className="cart-container" style={{ backgroundColor: theme.background }}>
+        <h1 className="cart-title" style={{ color: theme.heading }}>
           My Cart
         </h1>
 
@@ -173,10 +172,10 @@ function Cart() {
 
                     <div className="cart-item-right" productid={product._id} onClick={openProductPage}>
                       <Typography className='cart-item-title'>{product.name.substring(0, 18)}{product.name.length > 18 ? '...' : ''}</Typography>
-                      <Typography className='cart-item-description'>{screenWidth < 340 ? 
-                      (`${product.description.substring(0, 60)} ${product.description.length > 60 ? '...' : ''}`) 
-                      : 
-                      (`${product.description.substring(0, 90)} ${product.description.length > 90 ? '...' : ''}`) }
+                      <Typography className='cart-item-description'>{screenWidth < 340 ?
+                        (`${product.description.substring(0, 60)} ${product.description.length > 60 ? '...' : ''}`)
+                        :
+                        (`${product.description.substring(0, 90)} ${product.description.length > 90 ? '...' : ''}`)}
                       </Typography>
                       <Typography className='cart-item-price'>${product.price}</Typography>
                       {(product.quantity > 0) && (<Typography className='cart-item-quantity-check'>In stock</Typography>)}
@@ -194,23 +193,23 @@ function Cart() {
               </Stack>)}
             </div>
             <FlexCenter className="proceed-button-container">
-              <div className="cart-Subtotal" 
-              style={{color: theme.heading}}>
+              <div className="cart-Subtotal"
+                style={{ color: theme.heading }}>
                 Subtotal: &nbsp;<span>${subtotal}</span>
               </div>
               <button className="proceed-button"
-               style={{
-                backgroundColor: theme.button, 
-                color: theme.background
-                }} 
+                style={{
+                  backgroundColor: theme.button,
+                  color: theme.background
+                }}
                 onClick={handleCheckout}>
                 Proceed to Buy ({totalItemsSelected} items)
-                </button>
+              </button>
             </FlexCenter>
           </>) : (
             <div className='empty-cart'>
-              <h2 style={{color: theme.heading}}>Your Cart Is Empty</h2>
-              <button style={{color: theme.background, backgroundColor: theme.heading}} onClick={()=>navigate('/products')}>Fill Your Cart</button>
+              <h2 style={{ color: theme.heading }}>Your Cart Is Empty</h2>
+              <button style={{ color: theme.background, backgroundColor: theme.heading }} onClick={() => navigate('/products')}>Fill Your Cart</button>
             </div>
           )}
         </div>

@@ -14,7 +14,7 @@
 }
 
 .column-nav-list {
-    z-index: 1;
+    z-index: 2;
     background-color: var(--forestDark);
     font-family: var(--mainFont);
     padding: 5px;
@@ -83,4 +83,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+
+.header-backdrop{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.445);
 }
