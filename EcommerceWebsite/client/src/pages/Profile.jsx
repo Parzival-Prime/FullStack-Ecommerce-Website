@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import '../styles/profile.css'
-import { RiCake2Line, RiCalendar2Line, RiArrowGoBackFill, RiArrowLeftLine } from '@remixicon/react'
+import { RiCake2Line, RiCalendar2Line, RiArrowLeftLine, RiSendPlaneFill as SendIcon } from '@remixicon/react'
 import { Button, TextField, styled } from '@mui/material'
 import FlexCenter from '../components/FlexCenter'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import dayjs from 'dayjs';
-import SendIcon from '@mui/icons-material/Send';
 import toast from 'react-hot-toast'
 import { axiosInstance } from '../baseurl.js'
 import customParseFormat from 'dayjs/plugin/customParseFormat';

@@ -4,12 +4,7 @@ import toast from 'react-hot-toast';
 import { useLocation } from 'react-router';
 import { axiosInstance } from '../baseurl.js';
 import { ButtonGroup, IconButton } from '@mui/material'
-import RemoveIcon from '@mui/icons-material/Remove';
-import AddIcon from '@mui/icons-material/Add';
-import LocalMallIcon from '@mui/icons-material/LocalMall';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import { RiAddLine as AddIcon, RiSubtractLine as RemoveIcon, RiShoppingCart2Line as LocalMallIcon, RiArrowLeftLine as ArrowBackIosIcon, RiHeartFill as FavoriteIcon, RiHeartLine as FavoriteBorderIcon } from '@remixicon/react'
 
 // const product = {
 //     "_id": "6698ae34f7adb10563f682c4",
@@ -52,14 +47,14 @@ function Product() {
         const productId = e.currentTarget.getAttribute('product-id')
 
         const { data } = await axiosInstance.post('/api/v1/auth/add-to-cart', { productId, quantity })
-        
+
         if (data?.success) {
             console.log('Item added to cart')
             toast.success('Item added to Cart')
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getProduct()
     }, [])
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useMemo, lazy, Suspense } from 'react';
 import { axiosInstance } from '../baseurl.js';
 import { useNavigate } from 'react-router';
 import toast from 'react-hot-toast';
@@ -11,8 +11,7 @@ import {
     IconButton,
     Typography
 } from '@mui/material';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { RiShoppingCart2Line as ShoppingCartIcon, RiHeartLine as FavoriteBorderIcon } from '@remixicon/react'
 import Grid from '@mui/material/Unstable_Grid2';
 import Skeleton from '@mui/material/Skeleton';
 import { useTheme } from '../theme/theme.js';
@@ -20,70 +19,58 @@ import { useTheme } from '../theme/theme.js';
 const CardMedia = lazy(() => import('@mui/material/CardMedia'));
 
 function Products() {
-    const navigate = useNavigate();
-    const [products, setProducts] = useState([]);
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
-    const theme = useTheme();
-
-    const getAllProducts = useCallback(async () => {
+    const navigate = useNavigate()
+    const [products, setProducts] = useState([])
+    const theme = useTheme()
+    
+    const getAllProducts = async () => {
         try {
-            const { data } = await axiosInstance.get('/api/v1/product/get-all-products');
-
+            const { data } = await axiosInstance.get('/api/v1/product/get-all-products')
             if (data?.success) {
-                setProducts(data.products);
-                toast.success('All Products fetched successfully!');
+                setProducts(data.products)
+                toast.success('All Products fetched successfully!')
             }
         } catch (error) {
-            console.log(error);
-            toast.error('Something went wrong in getting All Products');
+            console.log(error)
+            toast.error('Something went wrong in getting All Products')
         }
-    }, []);
-
-    const addItemToCart = useCallback(async (e) => {
-        e.stopPropagation();
-        const currentItem = JSON.parse(e.currentTarget.value);
-        let quantity = 1;
-
-        if (user?.value?.cart?.length) {
-            const cartItemIndex = user.value.cart.findIndex(item => item.productId === currentItem._id);
+    }
+    const addItemToCart = async (e) => {
+        e.stopPropagation()
+        const currentItem = JSON.parse(e.currentTarget.value)
+        let user = JSON.parse(localStorage.getItem('user'))
+        let quantity;
+        if (user?.value?.cart?.length !== 0) {
+            const cartItemIndex = user.value.cart.findIndex(item => item.productId === currentItem._id)
             if (cartItemIndex !== -1) {
-                quantity = user.value.cart[cartItemIndex].quantity + 1;
+                quantity = user.value.cart[cartItemIndex].quantity += 1
             }
         }
-
         try {
-            const { data } = await axiosInstance.post('/api/v1/auth/add-to-cart', {
-                productId: currentItem._id,
-                quantity,
-                price: currentItem.price,
-                name: currentItem.name
-            });
-
+            const { data } = await axiosInstance.post('/api/v1/auth/add-to-cart', { productId: currentItem._id, quantity, price: currentItem.price, name: currentItem.name })
             if (data?.success) {
-                toast.success('Item Added to cart successfully!');
-                setUser(data.result);
-                localStorage.setItem('user', JSON.stringify({ ...user, value: data.result }));
+                toast.success('Item Added to cart successfully!')
+                localStorage.removeItem('user')
+                user.value = data.result
+                localStorage.setItem('user', JSON.stringify(user))
             }
         } catch (error) {
-            console.log(error);
-            toast.error('Something went wrong while adding item to cart');
+            console.log(error)
+            toast.error('something went wrong in addToCartItem function')
         }
-    }, [user]);
-
-    const openProductPage = useCallback(async (e) => {
-        e.stopPropagation();
-        const productId = e.currentTarget.getAttribute('productid');
-
-        const { data } = await axiosInstance.get(`/api/v1/product/get-product/${productId}`);
+    }
+    const openProductPage = async (e) => {
+        e.stopPropagation()
+        const productid = e.currentTarget.getAttribute('productid')
+        const { data } = await axiosInstance.post(`/api/v1/product/get-product/${productid}`)
         if (data?.success) {
-            toast.success('Product Fetched Successfully');
-            navigate('/product', { state: data.productDetails });
+            toast.success('Product Fetched Successfully')
+            navigate('/product', { state: data.productDetails })
         }
-    }, [navigate]);
-
+    }
     useEffect(() => {
-        getAllProducts();
-    }, [getAllProducts]);
+        getAllProducts()
+    }, [])
 
     const productItems = useMemo(() => products.map((product) => (
         <Grid xs={2} sm={4} md={4} key={product?._id}>

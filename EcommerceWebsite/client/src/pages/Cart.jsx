@@ -1,141 +1,167 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router';
-import '../styles/cart.css';
-import toast from 'react-hot-toast';
+import '../styles/cart.css'
+import toast from 'react-hot-toast'
 import { axiosInstance } from '../baseurl.js';
-import { Typography, Checkbox, ButtonGroup, Skeleton, Stack } from '@mui/material';
-import RemoveIcon from '@mui/icons-material/Remove';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { Typography, Checkbox, ButtonGroup, Skeleton, Stack } from '@mui/material'
+import { RiAddLine as AddIcon, RiSubtractLine as RemoveIcon, RiDeleteBin7Line as DeleteOutlineIcon } from '@remixicon/react'
 import FlexCenter from '../components/FlexCenter';
 import { useSelector } from 'react-redux';
 import { useTheme } from '../theme/theme';
 
+
 function Cart() {
-  const isLoggedIn = useSelector((state) => state.counter.isLoggedIn);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const theme = useTheme();
+  const isLoggedIn = useSelector((state) => state.counter.isLoggedIn)
+  const navigate = useNavigate()
+  const location = useLocation()
+  const [isLoading, setIsLoading] = useState(false)
+  const [cartItems, setCartItems] = useState([])
+  const [products, setProducts] = useState([])
+  const [selectedItems, setSelectedItems] = useState([])
+  const [subtotal, setSubtotal] = useState(0)
+  const [totalItemsSelected, setTotalItemsSelected] = useState(0)
+  const theme = useTheme()
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [subtotal, setSubtotal] = useState(0);
-  const [totalItemsSelected, setTotalItemsSelected] = useState(0);
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-
-  const updateScreenWidth = () => setScreenWidth(window.innerWidth);
-
-  const getCartItemsFromDB = useCallback(async () => {
+  const getCartItemsfromDB = async () => {
     try {
-      setIsLoading(true);
-      const { data } = await axiosInstance.get('/api/v1/auth/get-cart');
-      if (data?.success && data.cart.length > 0) {
-        const productIdsArray = data.cart.map((item) => item.productId);
-        const res = await axiosInstance.post('/api/v1/product/get-cart-items', productIdsArray);
-        if (res?.data?.success) {
-          setCartItems(data.cart);
-          setSelectedItems(data.cart);
-          setProducts(res.data.fetchedProducts);
+      setIsLoading(true)
+      const { data } = await axiosInstance.get('/api/v1/auth/get-cart')
+      if (data?.success) {
+        if (data.cart.length > 0) {
+          const productIdsArray = data.cart.map((item) => (item.productId))
+          const res = await axiosInstance.post('/api/v1/product/get-cart-items', productIdsArray)
+          if (res?.data?.success) {
+            setCartItems(data.cart)
+            setSelectedItems(data.cart)
+            setProducts(res.data.fetchedProducts)
+            setIsLoading(false)
+          }
         }
       }
     } catch (error) {
-      toast.error('Something went wrong while getting cart items');
-      console.error('Error fetching cart items:', error);
-    } finally {
-      setIsLoading(false);
+      console.log(error)
+      toast.error('something went wrong while getting cart items')
     }
-  }, []);
+  }
 
-  const updateCart = useCallback(async (updatedCart) => {
+  const updateCart = async (ucart) => {
     try {
-      await axiosInstance.post('/api/v1/auth/update-cart', updatedCart);
+      await axiosInstance.post('/api/v1/auth/update-cart', ucart)
+
     } catch (error) {
-      toast.error('Something went wrong updating the cart');
-      console.error('Error updating cart:', error);
+      toast.error('Something went wrong in updating cart')
+      console.log('Error in UpdateCart: ', error)
     }
-  }, []);
+  }
 
-  const handleItemQuantityChange = useCallback((productId, change) => {
-    const updatedCart = cartItems.map((item) =>
-      item.productId === productId ? { ...item, quantity: item.quantity + change } : item
-    );
-    setCartItems(updatedCart);
-    setSelectedItems(updatedCart.filter((item) => item.productId === productId));
-    updateCart(updatedCart);
-  }, [cartItems, updateCart]);
+  const deleteItemFromCart = (e) => {
+    e.stopPropagation()
+    const currentProductId = e.currentTarget.value
+    const updatedCart = cartItems.filter((product) => (product.productId !== currentProductId))
+    const updatedProductsState = products.filter((product) => (product._id !== currentProductId))
+    setCartItems(updatedCart)
+    setProducts(updatedProductsState)
+    setSelectedItems(updatedCart)
+    updateCart(updatedCart)
+  }
 
-  const deleteItemFromCart = useCallback((productId) => {
-    const updatedCart = cartItems.filter((item) => item.productId !== productId);
-    setCartItems(updatedCart);
-    setSelectedItems(updatedCart);
-    setProducts(products.filter((product) => product._id !== productId));
-    updateCart(updatedCart);
-  }, [cartItems, products, updateCart]);
+  const displayQuantity = (Id) => {
+    const product = cartItems.find(item => item.productId === Id)
+    if (product) return product.quantity
+  }
 
-  const openProductPage = async (productId) => {
-    try {
-      const { data } = await axiosInstance.post(`/api/v1/product/get-product/${productId}`);
-      if (data?.success) {
-        toast.success('Product Fetched Successfully');
-        navigate('/product', { state: data.productDetails });
-      }
-    } catch (error) {
-      console.error('Error fetching product details:', error);
+  const decrementProductQuantity = useCallback((e) => {
+    e.stopPropagation()
+    const currentProductId = e.currentTarget.value
+    const updatedCart = cartItems.map((item) => (
+      (item.productId === currentProductId) ? { ...item, quantity: item.quantity - 1 } : item
+    ))
+    if (selectedItems.some((item) => item.productId === currentProductId)) {
+      const newArray = selectedItems.map((item) => (item.productId === currentProductId) ? { ...item, quantity: item.quantity - 1 } : item)
+      setSelectedItems(newArray)
     }
-  };
+    setCartItems(updatedCart)
+    updateCart(updatedCart)
+  }, [cartItems])
 
-  const handleSelect = useCallback((productId) => {
-    setSelectedItems((prev) => {
-      const isItemPresent = prev.some((item) => item.productId === productId);
-      if (isItemPresent) {
-        return prev.filter((item) => item.productId !== productId);
-      }
-      return [...prev, cartItems.find((item) => item.productId === productId)];
-    });
-  }, [cartItems]);
+  const incrementProductQuantity = useCallback((e) => {
+    e.stopPropagation()
+    const currentProductId = e.currentTarget.value
+    const updatedCart = cartItems.map((item) => (
+      (item.productId === currentProductId) ? { ...item, quantity: item.quantity + 1 } : item
+    ))
+    if (selectedItems.some((item) => item.productId === currentProductId)) {
+      const newArray = selectedItems.map((item) => (item.productId === currentProductId) ? { ...item, quantity: item.quantity + 1 } : item)
+      setSelectedItems(newArray)
+    }
+    setCartItems(updatedCart)
+    updateCart(updatedCart)
+  }, [cartItems])
 
-  const calcTotal = useCallback(() => {
+  const openProductPage = async (e) => {
+    e.stopPropagation()
+    const productid = e.currentTarget.getAttribute('productid')
+
+    const { data } = await axiosInstance.post(`/api/v1/product/get-product/${productid}`)
+    if (data?.success) {
+      toast.success('Product Fetched Successfully')
+      navigate('/product', { state: data.productDetails })
+    }
+  }
+
+  const handleSelect = useCallback((e) => {
+    const checkedProductId = e.target.value
+
+    const isItemPresent = selectedItems.find((item) => (item.productId === checkedProductId))
+
+    if (isItemPresent) {
+      const filteredArray = selectedItems.filter((item) => (item.productId !== checkedProductId))
+      setSelectedItems(filteredArray)
+      return
+    }
+
+    const checkedItem = cartItems.filter((item) => (item.productId === checkedProductId))
+    setSelectedItems((prev) => prev.concat(checkedItem))
+  }, [selectedItems])
+
+  const calcTotal = () => {
     let total = 0;
-    let totalItems = 0;
+    let totalItems = 0
     selectedItems.forEach((item) => {
-      total += item.price * item.quantity;
-      totalItems += item.quantity;
-    });
-    setSubtotal(total.toFixed(2));
-    setTotalItemsSelected(totalItems);
-  }, [selectedItems]);
+      total += (item.price * item.quantity)
+      totalItems += item.quantity
+    })
+    setSubtotal(total.toFixed(2))
+    setTotalItemsSelected(totalItems)
+  }
 
   const handleCheckout = async () => {
     try {
-      const { data } = await axiosInstance.post('/api/v1/payment/create-checkout-session', { selectedItems, subtotal });
+      // console.log(selectedItems)
+      const { data } = await axiosInstance.post(`/api/v1/payment/create-checkout-session`, { selectedItems, subtotal })
+
       if (data?.success) {
-        window.location = data.sessionURL;
+        console.log("data.sessionURL: ", data.sessionURL)
+        window.location = data.sessionURL
       }
     } catch (error) {
-      console.error('Error during checkout:', error);
+      console.log(error)
+      console.log('Something went wrong in handle Checkout')
     }
-  };
-
-  useEffect(() => {
-    getCartItemsFromDB();
-  }, [getCartItemsFromDB]);
-
-  useEffect(() => {
-    calcTotal();
-  }, [calcTotal, selectedItems]);
-
-  useEffect(() => {
-    window.addEventListener('resize', updateScreenWidth);
-    return () => window.removeEventListener('resize', updateScreenWidth);
-  }, [updateScreenWidth]);
-
-
-  if (!isLoggedIn) {
-    navigate('/login', { state: { from: location.pathname } });
   }
 
+
+  useEffect(() => {
+    calcTotal()
+  }, [selectedItems])
+
+  useEffect(() => {
+    getCartItemsfromDB()
+  }, [])
+
+  if (!isLoggedIn) {
+    return navigate('/login', { state: { from: location.pathname } })
+  }
   return (
     <>
       <div className="cart-container" style={{ backgroundColor: theme.background }}>
@@ -144,7 +170,7 @@ function Cart() {
         </h1>
 
         <div className="cart-list-section">
-          {cartItems.length > 0 ? (<>
+          {cartItems.length > 0 ? (<><h5 className='cart-list-title' style={{ color: theme.heading }}>My Cart List</h5>
 
             <div className="cart-list-container">
               {!isLoading ? (
@@ -156,27 +182,23 @@ function Cart() {
                       <ButtonGroup className="cart-quantity-box" variant="contained" aria-label="Basic button group">
                         {displayQuantity(product._id) > 1 ? (
                           <button className="cart-quantity-decrement" value={product._id} onClick={decrementProductQuantity}>
-                            <RemoveIcon fontSize='small' />
+                            <RemoveIcon />
                           </button>
                         ) : (
                           <button className="cart-quantity-decrement" value={product._id} onClick={deleteItemFromCart} >
-                            <DeleteOutlineIcon fontSize='small' />
+                            <DeleteOutlineIcon />
                           </button>
                         )}
                         <button className="cart-quantity-value"><span>{displayQuantity(product._id)}</span></button>
                         <button className="cart-quantity-increment" value={product._id} onClick={incrementProductQuantity}>
-                          <AddIcon fontSize='small' />
+                          <AddIcon />
                         </button>
                       </ButtonGroup>
                     </div>
 
                     <div className="cart-item-right" productid={product._id} onClick={openProductPage}>
                       <Typography className='cart-item-title'>{product.name.substring(0, 18)}{product.name.length > 18 ? '...' : ''}</Typography>
-                      <Typography className='cart-item-description'>{screenWidth < 340 ?
-                        (`${product.description.substring(0, 60)} ${product.description.length > 60 ? '...' : ''}`)
-                        :
-                        (`${product.description.substring(0, 90)} ${product.description.length > 90 ? '...' : ''}`)}
-                      </Typography>
+                      <Typography className='cart-item-description'>{product.description.substring(0, 90)}{product.description.length > 90 ? '...' : ''}</Typography>
                       <Typography className='cart-item-price'>${product.price}</Typography>
                       {(product.quantity > 0) && (<Typography className='cart-item-quantity-check'>In stock</Typography>)}
                       <Typography className='cart-item-replacement'>7 Days Replacement</Typography>
@@ -193,18 +215,8 @@ function Cart() {
               </Stack>)}
             </div>
             <FlexCenter className="proceed-button-container">
-              <div className="cart-Subtotal"
-                style={{ color: theme.heading }}>
-                Subtotal: &nbsp;<span>${subtotal}</span>
-              </div>
-              <button className="proceed-button"
-                style={{
-                  backgroundColor: theme.button,
-                  color: theme.background
-                }}
-                onClick={handleCheckout}>
-                Proceed to Buy ({totalItemsSelected} items)
-              </button>
+              <div className="cart-Subtotal" style={{ color: theme.heading }}>Subtotal: &nbsp;<span>${subtotal}</span></div>
+              <button className="proceed-button" style={{ backgroundColor: theme.button, color: theme.background }} onClick={handleCheckout}>Proceed to Buy ({totalItemsSelected} items)</button>
             </FlexCenter>
           </>) : (
             <div className='empty-cart'>
@@ -219,5 +231,3 @@ function Cart() {
 }
 
 export default Cart
-
-

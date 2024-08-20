@@ -1,46 +1,63 @@
-import React, { useEffect, useState, useMemo, lazy, Suspense } from 'react';
-import toast from 'react-hot-toast';
-import '../../styles/dashboard.css';
-import { axiosInstance } from '../../baseurl.js';
-import { scaleQuantize } from 'd3-scale';
-import { useTheme } from '../../theme/theme.js';
-import { debounce } from 'lodash';
-const ApexCharts = lazy(() => import('react-apexcharts'));
-const ResponsiveChoropleth = lazy(() => import('@nivo/geo').then(module => ({ default: module.ResponsiveChoropleth })));
-const DataGrid = lazy(() => import('@mui/x-data-grid'));
+import React, { useEffect, useState, Suspense, lazy } from 'react'
+import toast from 'react-hot-toast'
+import '../../styles/dashboard.css'
+import { axiosInstance } from '../../baseurl.js'
+// const ApexCharts = lazy(() => import('react-apexcharts'));
+// const ResponsiveChoropleth = lazy(() => import('@nivo/geo').then(module => ({ default: module.ResponsiveChoropleth })));
+// const DataGrid = lazy(() => import('@mui/x-data-grid'));
+import ApexCharts from 'react-apexcharts'
+import { ResponsiveChoropleth } from '@nivo/geo'
+import { DataGrid } from '@mui/x-data-grid'
+import { geoCopiedData } from './geoApi.js'
+import { scaleQuantize } from 'd3-scale'
+import { useTheme } from '../../theme/theme.js'
+
 
 function Dashboard() {
-  const theme = useTheme();
-  const [dashboardData, setDashboardData] = useState({
-    totalSales: 0,
-    totalRevenue: 0,
-    totalProductsCount: 0,
-    totalUsersCount: 0,
-    topFiveProducts: [],
-    topFiveCustomers: [],
-    productsSoldEachMonth: [],
-    ordersPlacedInCountries: [],
-  });
-  const [geoData, setGeoData] = useState([]);
-  const [dimensions, setDimensions] = useState({ width: 300, height: 200, scale: 0 });
-
-  const year = 2024;
+  const theme = useTheme()
+  const [topUserTableStruct, setTopUserTableStruct] = useState([
+    { field: 'name', headerName: 'Name', width: 170, cellClassName: 'text-color' },
+    { field: 'totalSpent', headerName: 'TotalSpent', width: 150, cellClassName: 'text-color' }
+  ])
+  const [allUsersTableStruct, setAllUsersTableStruct] = useState([
+    { field: 'name', headerName: 'Name', width: 130, cellClassName: 'text-color' },
+    { field: 'email', headerName: 'Email', width: 220, cellClassName: 'text-color' },
+    { field: 'joinedAt', headerName: 'JoinedAt', width: 120, cellClassName: 'text-color' }
+  ])
+  const [productTableStruct, setProductTableStruct] = useState([
+    { field: '_id', headerName: 'Product', width: 230, cellClassName: 'text-color' },
+    { field: 'totalSold', headerName: 'TotalSold', width: 130, cellClassName: 'text-color' }
+  ])
+  const [totalSales, setTotalSales] = useState(0)
+  const [totalRevenue, setTotalRevenue] = useState(0)
+  const [totalProductsCount, setTotalProductsCount] = useState(0)
+  const [totalUsersCount, setTotalUsersCount] = useState(0)
+  const [allUsers, setAllUsers] = useState([])
+  const [topFiveProducts, setTopFiveProducts] = useState([])
+  const [topFiveCustomers, setTopFiveCustomers] = useState([])
+  const [productsSoldEachMonth, setProductsSoldEachMonth] = useState([])
+  const [ordersPlacedInCountries, setOrdersPlacedInCountries] = useState([])
+  const [geoData, setGeoData] = useState([])
+  const year = 2024
 
   const colorScale = scaleQuantize()
     .domain([0, 100])
     .range([theme.color1, theme.color2, theme.color3, theme.color4]);
 
-  const monthdata = useMemo(() => {
-    const data = new Array(12).fill(1); // Default to 1
-    dashboardData.productsSoldEachMonth.forEach(item => {
+  const monthdata = new Array()
+  for (let i = 0; i < 12; i++) {
+    let found = 0
+    productsSoldEachMonth.forEach(item => {
       if (item.year === year) {
-        if (item.month >= 0 && item.month < 12) {
-          data[item.month] = item.totalProductsSold;
+        if (item.month === i) {
+          monthdata.push(item.totalProductsSold)
+          found = 1
+          return
         }
       }
-    });
-    return data;
-  }, [dashboardData.productsSoldEachMonth, year]);
+    })
+    if (found === 0) monthdata.push(1)
+  }
 
   const chartState = {
     options: {
@@ -82,97 +99,112 @@ function Dashboard() {
         data: monthdata
       }
     ]
-  };
+  }
 
   const GeoDatafunc = () => {
-    const lok = dashboardData.ordersPlacedInCountries.map(item => ({
-      "id": item.country,
-      "value": item.numberOfOrders
-    }));
-    setGeoData(lok);
-  };
+    const lok = []
+    ordersPlacedInCountries.forEach(item => {
+      lok.push({ "id": item.country, "value": item.numberOfOrders })
+    })
+    setGeoData(lok)
+  }
 
-  const getDashboardData = debounce(async () => {
+  const getDashboardData = async () => {
     try {
-      const { data } = await axiosInstance.get('/api/v1/auth/get-dashboard-data');
+      const { data } = await axiosInstance.get('/api/v1/auth/get-dashboard-data')
+
       if (data?.success) {
-        setDashboardData({
-          totalSales: data.totalSalesAndRevenue[0].totalSaleCount,
-          totalRevenue: data.totalSalesAndRevenue[0].totalRevenue,
-          totalProductsCount: data.totalUser_totalProducts_topFiveCustomers[0].totalProducts[0].count,
-          totalUsersCount: data.totalUser_totalProducts_topFiveCustomers[0].totalUsers[0].count,
-          topFiveCustomers: data.totalUser_totalProducts_topFiveCustomers[0].topCustomers.map(item => ({
-            _id: item._id,
-            name: item.name,
-            totalSpent: item.totalSpent / 100
-          })),
-          topFiveProducts: data.topFiveMostSoldProducts,
-          productsSoldEachMonth: data.productsSoldEachMonth,
-          ordersPlacedInCountries: data.OrdersPlacedInCountries
-        });
-        toast.success('Dashboard data fetched Successfully');
-      } else {
-        throw new Error('Data fetch failed');
+        const userstobeset = data.allUsers.map((item) => ({ name: item.name, email: item.email, joinedAt: ((item.createdAt).split('T'))[0] }))
+        setAllUsers(userstobeset)
+        setTotalRevenue(data.totalSalesAndRevenue[0].totalRevenue)
+        setTotalSales(data.totalSalesAndRevenue[0].totalSaleCount)
+        setTotalProductsCount(data.totalUser_totalProducts_topFiveCustomers[0].totalProducts[0].count)
+        setTotalUsersCount(data.totalUser_totalProducts_topFiveCustomers[0].totalUsers[0].count)
+        const topCustomers = data.totalUser_totalProducts_topFiveCustomers[0].topCustomers.map(item => ({ _id: item._id, name: item.name, totalSpent: (item.totalSpent) / 100 }))
+        setTopFiveCustomers(topCustomers)
+        setTopFiveProducts(data.topFiveMostSoldProducts)
+        setProductsSoldEachMonth(data.productsSoldEachMonth)
+        setOrdersPlacedInCountries(data.OrdersPlacedInCountries)
+        toast.success('Dashboard data fetched Successfully')
       }
     } catch (error) {
-      console.error('Error fetching dashboard data:', error);
-      toast.error("Couldn't fetch Dashboard Data. Please try again later.");
+      console.log(error)
+      toast.error("Couldn't fetch Dashboard Data")
     }
-  }, 300)
+  }
 
-  const updateDimensions = debounce(() => {
+  useEffect(() => {
+    getDashboardData()
+  }, [])
+
+  useEffect(() => {
+    GeoDatafunc()
+  }, [ordersPlacedInCountries])
+
+
+  const [dimensions, setDimensions] = useState({ width: 300, height: 200, scale: 0 });
+
+  const calculateScale = (width) => {
+    return width / 7;  // Adjust as necessary
+  };
+
+  const updateDimensions = () => {
     const screenWidth = window.innerWidth;
     let width, height;
+    // console.log(screenWidth)
     if (screenWidth < 200) {
       width = 300;
       height = 200;
-    } else if (screenWidth < 400) {
+    }
+    else if (400 > screenWidth > 300) {
       width = 350;
       height = 300;
-    } else if (screenWidth < 470) {
+    }
+    else if (screenWidth >= 400 && screenWidth < 470) {
       width = 400;
       height = 350;
-    } else if (screenWidth < 530) {
+    }
+    else if (screenWidth >= 470 && screenWidth < 530) {
       width = 450;
       height = 400;
-    } else if (screenWidth < 580) {
+    }
+    else if (screenWidth >= 530 && screenWidth < 580) {
       width = 500;
       height = 380;
-    } else if (screenWidth < 630) {
+    }
+    else if (screenWidth >= 580 && screenWidth < 630) {
       width = 550;
       height = 430;
-    } else if (screenWidth < 780) {
+    }
+    else if (screenWidth >= 630 && screenWidth < 780) {
       width = 620;
       height = 470;
-    } else if (screenWidth < 940) {
+    }
+    else if (screenWidth >= 780 && screenWidth < 940) {
       width = 780;
       height = 560;
-    } else if (screenWidth < 1020) {
+    }
+    else if (screenWidth >= 940 && screenWidth < 1020) {
       width = 940;
       height = 620;
-    } else {
+    }
+    else {
       width = 1020;
       height = 780;
     }
-    setDimensions({ width, height, scale: width / 7 });
-  }, 300);
+
+    const scale = calculateScale(width);  // Dynamically calculate scale
+    setDimensions({ width, height, scale });
+  };
 
   useEffect(() => {
-    getDashboardData();
+    updateDimensions(); // Set initial dimensions
+    window.addEventListener('resize', updateDimensions); // Update on resize
+    return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
-  useEffect(() => {
-    GeoDatafunc();
-  }, [dashboardData.ordersPlacedInCountries]);
-
-  useEffect(() => {
-    updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
-  }, [updateDimensions]);
-
   return (
-    <div className='dashboard-container' style={{ color: theme.heading, backgroundColor: theme.background }}>
+    <div style={{ paddingTop: '6rem', minHeight: '140svh', color: theme.heading, backgroundColor: theme.background, fontFamily: 'var(--sofiaSans)', marginBottom: '-3rem', paddingInline: '1.5rem' }}>
       <h1 className="dashboard-page-title" style={{ color: theme.heading }}>Dashboard</h1>
 
       <div className="dashboard-tsales-revenue-box">
@@ -200,7 +232,7 @@ function Dashboard() {
       </div>
       <div className="country-sales-chart">
         <h2 className="country-sales-chart-heading">Sales around the World:</h2>
-        {geoData.length ? (
+        {geoData ? (
           <div className="geo-chart small-chart">
             <Suspense fallback={<div>Loading...</div>}>
               <ResponsiveChoropleth

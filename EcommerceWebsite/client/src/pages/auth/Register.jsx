@@ -4,7 +4,7 @@ import FlexCenter from "../../components/FlexCenter";
 import { styled } from "@mui/material/styles";
 import toast from "react-hot-toast";
 import { Box, FormControl, Typography, Button, TextField } from "@mui/material";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { RiUploadCloud2Line as CloudUploadIcon } from "@remixicon/react";
 import { axiosInstance } from "../../baseurl.js";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";

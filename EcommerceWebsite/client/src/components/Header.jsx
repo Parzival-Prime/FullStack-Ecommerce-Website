@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback, lazy } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/header.css";
 import {
@@ -11,7 +11,7 @@ import {
   MenuItem,
   Fade,
 } from "@mui/material";
-const FlexCenter = lazy(() => import("./FlexCenter"))
+import FlexCenter from "./FlexCenter";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setIsAdminFalse,

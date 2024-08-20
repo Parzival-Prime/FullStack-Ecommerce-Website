@@ -7,8 +7,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import '../styles/homePage.css'
 import '../styles/home-scroller.css'
-const ArrowBackIosIcon = lazy(()=>import('@mui/icons-material/ArrowBackIos'))
-const ArrowForwardIosIcon = lazy(()=>import('@mui/icons-material/ArrowForwardIos'))
+import { RiArrowLeftSLine as ArrowBackIosIcon, RiArrowRightSLine as ArrowForwardIosIcon } from '@remixicon/react'
 
 function HomePage() {
   const navigate = useNavigate()
@@ -238,7 +237,7 @@ function HomePage() {
               : '#e2d3fa',
           }}>
             <div className="we-are-better-right" style={{ marginRight: '1.2rem' }}>
-              <img src="/homePage/newFolder1/lavenderSoap3.jpg" alt="" className='we-are-better-left-image'/>
+              <img src="/homePage/newFolder1/lavenderSoap3.jpg" alt="" className='we-are-better-left-image' />
             </div>
             <div className="we-are-better-left">
               <h2>Sustainability Commitment</h2>

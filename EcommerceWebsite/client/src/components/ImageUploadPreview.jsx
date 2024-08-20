@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { RiUploadCloud2Line as CloudUploadIcon } from "@remixicon/react";
 import { useSelector } from "react-redux";
 import {useTheme} from '../theme/theme.js'
 

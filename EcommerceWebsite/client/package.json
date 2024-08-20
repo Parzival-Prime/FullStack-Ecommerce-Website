@@ -7,8 +7,15 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "cbuild": "node build.js"
   },
+  "sideEffects": [
+    "*.css",
+    "*.scss",
+    "*.redux",
+    "*.middleware.js"
+  ],
   "dependencies": {
     "@mui/icons-material": "^5.16.1",
     "@mui/material": "^5.16.1",
