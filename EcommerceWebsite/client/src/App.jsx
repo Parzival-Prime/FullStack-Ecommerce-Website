@@ -53,12 +53,6 @@ import PaymentSuccess from './pages/PaymentSuccess'
 
 
 function App() {
-  // if (process.env.NODE_ENV === 'production') {
-  //   if (typeof window.__REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined') {
-  //     window.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject = function () { };
-  //   }
-  // }
-
   const dispatch = useDispatch()
 
   const getCookie = (name) => {
@@ -75,21 +69,21 @@ function App() {
   const checkCookieAndSetState = () => {
     if (document.cookie) {
       if ((getCookie('isLoggedIn'))[0] !== undefined) {
-        console.log("App.jsx says: Logged In true")
+        // console.log("App.jsx says: Logged In true")
         dispatch(setIsLoggedInTrue())
       } else {
         dispatch(setIsLoggedInFalse())
-        console.log("App.jsx says: Logged In false")
+        // console.log("App.jsx says: Logged In false")
         if ((localStorage.getItem('user'))) {
           localStorage.removeItem('user')
         }
       }
 
       if ((getCookie('isAdmin'))[1] !== undefined) {
-        console.log("App.jsx says: Admin true")
+        // console.log("App.jsx says: Admin true")
         dispatch(setIsAdminTrue())
       } else {
-        console.log("App.jsx says: Admin true")
+        // console.log("App.jsx says: Admin true")
         dispatch(setIsAdminFalse())
       }
 
