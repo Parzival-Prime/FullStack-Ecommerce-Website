@@ -6,11 +6,9 @@ const options = {
     httpOnly: true,
     secure: true,
     path: "/",
-    sameSite: 'Strict'
 }
 const options2 = {
     path: "/",
-    sameSite: 'Strict'
 }
 
 

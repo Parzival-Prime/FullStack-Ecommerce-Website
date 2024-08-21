@@ -4,9 +4,6 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(() => {
   return {
     plugins: [react()],
-    optimizeDeps: {
-      include: ['react-redux']
-    },
     esbuild: {
       minify: true,
       jsxFactory: 'React.createElement',
