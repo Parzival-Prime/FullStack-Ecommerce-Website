@@ -63,6 +63,7 @@ function App() {
 
   const getCookie = (name) => {
     const cookies = document.cookie.split(';')
+    console.log("Consoling cookies from App.jsx: ", cookies)
     const cookieValue = cookies.map((cookie) => {
       if (((cookie.split('='))[0]).trim() === name) {
         return (cookie.split('='))[1]
