@@ -6,9 +6,11 @@ const options = {
     httpOnly: true,
     secure: true,
     path: "/",
+    sameSite: 'none'
 }
 const options2 = {
     path: "/",
+    sameSite: 'none'
 }
 
 
