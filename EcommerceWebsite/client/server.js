@@ -9,8 +9,8 @@ const app = express()
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Handle all other routes by sending index.html
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "index.html"));
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
 });
 
 const port = 8080;

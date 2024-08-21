@@ -170,7 +170,7 @@ function App() {
                 </ProtectedRoute>
               } />
             </Route>
-            <Route path="/*" element={<PageNotFound />} />
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter >
       {/* </Suspense> */}
