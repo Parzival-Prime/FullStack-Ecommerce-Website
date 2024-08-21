@@ -10,7 +10,8 @@ const options = {
 }
 const options2 = {
     path: "/",
-    sameSite: 'none'
+    sameSite: 'none',
+    secure: true,
 }
 
 
