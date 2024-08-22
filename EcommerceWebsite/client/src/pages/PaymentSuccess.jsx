@@ -12,9 +12,12 @@ function PaymentSuccess() {
     const [paymentDetails, setPaymentDetails] = useState({});
     const navigate = useNavigate();
 
+    console.log('inside payment success page')
+
     const fetchPaymentDetails = useCallback(async (sessionID) => {
         try {
             const { data } = await axiosInstance.post(`/api/v1/payment/get-payment-details`, { sessionID });
+            console.log("payment details at success page",data?.paymentDetails)
             return data?.paymentDetails;
         } catch (error) {
             console.error('Error fetching payment Details: ', error);

@@ -103,10 +103,10 @@ function Products() {
                             ${product.price}
                         </Typography>
                         <IconButton onClick={addItemToCart} sx={{ backgroundColor: theme.background }} value={JSON.stringify(product)}>
-                            <ShoppingCartIcon sx={{ fontSize: '.8rem', position: 'sticky', bottom: '0', color: theme.heading, '@media(min-width: 400px)': { fontSize: '1.3rem' }, '@media(min-width: 550px)': { fontSize: '2rem' } }} />
+                            <ShoppingCartIcon style={{ fontSize: '.8rem', position: 'sticky', bottom: '0', color: theme.heading, '@media(min-width: 400px)': { fontSize: '1.3rem' }, '@media(min-width: 550px)': { fontSize: '2rem' } }} />
                         </IconButton>
                         <IconButton sx={{ backgroundColor: theme.background }} value={product._id}>
-                            <FavoriteBorderIcon sx={{ fontSize: '.8rem', position: 'sticky', bottom: '0', color: theme.heading, '@media(min-width: 400px)': { fontSize: '1.3rem' }, '@media(min-width: 550px)': { fontSize: '2rem' } }} />
+                            <FavoriteBorderIcon style={{ fontSize: '.8rem', position: 'sticky', bottom: '0', color: theme.heading, '@media(min-width: 400px)': { fontSize: '1.3rem' }, '@media(min-width: 550px)': { fontSize: '2rem' } }} />
                         </IconButton>
                     </CardActions>
                 </Card>
