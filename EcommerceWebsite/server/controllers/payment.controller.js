@@ -33,6 +33,7 @@ export const paymentController = async (req, res) => {
             cancel_url: `${process.env.CLIENT_URL}/payment-cancel`
         })
         // console.log('below checkout session')
+        console.log("session in payment controller", session)
         console.log("successURL: ", session.url)
 
         return res.status(200).send({
