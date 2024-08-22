@@ -1,3 +1,10 @@
+.payment-success {
+    padding-top: 6rem;
+    min-height: 90svh;
+    display: flex;
+    flex-direction: column;
+}
+
 .payment-success-upper {
     display: flex;
     justify-content: center;
@@ -6,11 +13,11 @@
 
 }
 
-.payment-success-title{
+.payment-success-title {
     text-align: center;
 }
 
-.payment-success-upper-subtext-container{
+.payment-success-upper-subtext-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -32,19 +39,22 @@
 }
 
 
-.payment-success-mid{
+.payment-success-mid {
     display: flex;
     justify-content: center;
     flex-direction: column;
     margin: 1.5rem 2rem;
+    max-width: 40rem;
+    min-width: 30rem;
+    align-self: center;
 }
 
-.payment-success-mid-title{
+.payment-success-mid-title {
     align-self: center;
     margin: .3rem;
 }
 
-.payment-success-mid-product{
+.payment-success-mid-product {
     display: flex;
     justify-content: space-between;
     margin-block: .3rem;
@@ -55,22 +65,22 @@
 }
 
 
-.payment-success-mid-detail{
+.payment-success-mid-detail {
     margin-block-start: 1.3rem;
 }
 
-.payment-success-mid-detail-amount-paid{
+.payment-success-mid-detail-amount-paid {
     display: flex;
     justify-content: space-between;
 }
 
-.payment-success-mid-detail-payment-method{
+.payment-success-mid-detail-payment-method {
     display: flex;
     justify-content: space-between;
 }
 
 
-.payment-success-lower{
+.payment-success-lower {
     margin-top: 4rem;
     margin-bottom: 3rem;
     display: flex;

@@ -3,9 +3,10 @@ import { useNavigate, useLocation } from 'react-router';
 import '../styles/cart.css'
 import toast from 'react-hot-toast'
 import { axiosInstance } from '../baseurl.js';
-import { Typography, Checkbox, ButtonGroup, Skeleton, Stack } from '@mui/material'
+import { Typography, Checkbox, ButtonGroup} from '@mui/material'
 import { RiAddLine as AddIcon, RiSubtractLine as RemoveIcon, RiDeleteBin7Line as DeleteOutlineIcon } from '@remixicon/react'
 import FlexCenter from '../components/FlexCenter';
+import Loader from '../components/Loader'
 import { useSelector } from 'react-redux';
 import { useTheme } from '../theme/theme';
 
@@ -200,7 +201,7 @@ function Cart() {
                       <Typography className='cart-item-title'>{product.name.substring(0, 18)}{product.name.length > 18 ? '...' : ''}</Typography>
                       <Typography className='cart-item-description'>{product.description.substring(0, 90)}{product.description.length > 90 ? '...' : ''}</Typography>
                       <Typography className='cart-item-price'>${product.price}</Typography>
-                      {(product.quantity > 0) && (<Typography className='cart-item-quantity-check'>In stock</Typography>)}
+                      {(product.quantity > 0) ? (<Typography className='cart-item-in-stock'>In stock</Typography>) : (<Typography className='cart-item-out-of-stock'>Out of stock</Typography>)}
                       <Typography className='cart-item-replacement'>7 Days Replacement</Typography>
                       <div className="cart-item-right-buttons">
                         <button className="cart-button-delete" value={product._id} onClick={deleteItemFromCart}>Delete</button>
@@ -208,11 +209,7 @@ function Cart() {
                     </div>
                   </div>
                 ))
-              ) : (<Stack spacing={1}>
-                <Skeleton variant="rounded" animation='wave' className='cart-skeleton' />
-                <Skeleton variant="rounded" animation='wave' className='cart-skeleton' />
-                <Skeleton variant="rounded" animation='wave' className='cart-skeleton' />
-              </Stack>)}
+              ) : (<Loader/>)}
             </div>
             <FlexCenter className="proceed-button-container">
               <div className="cart-Subtotal" style={{ color: theme.heading }}>Subtotal: &nbsp;<span>${subtotal}</span></div>

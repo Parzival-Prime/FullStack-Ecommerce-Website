@@ -2,24 +2,21 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import { axiosInstance } from '../baseurl.js';
 import '../styles/payment-success.css';
+import Loader from '../components/Loader'
 
 const getQueryParams = () => {
-    console.log('window.location.search: ', window.location.search)
     const params = new URLSearchParams(window.location.search);
-    console.log('in paymentsuccess page session id: ', params)
     return { sessionID: params.get('session_id') };
 };
 
 function PaymentSuccess() {
     const [paymentDetails, setPaymentDetails] = useState({});
     const navigate = useNavigate();
-
-    console.log('inside payment success page')
+    const [isLoading, setIsLoading] = useState(false)
 
     const fetchPaymentDetails = useCallback(async (sessionID) => {
         try {
             const { data } = await axiosInstance.post(`/api/v1/payment/get-payment-details`, { sessionID });
-            console.log("payment details at success page", data?.paymentDetails)
             return data?.paymentDetails;
         } catch (error) {
             console.error('Error fetching payment Details: ', error);
@@ -30,10 +27,11 @@ function PaymentSuccess() {
     const displayPaymentDetails = useCallback(async () => {
         const { sessionID } = getQueryParams();
         if (sessionID) {
+            setIsLoading(true)
             const paymentDetails = await fetchPaymentDetails(sessionID);
             if (paymentDetails) {
                 setPaymentDetails(paymentDetails);
-
+                setIsLoading(false)
                 const { data } = await axiosInstance.get('/api/v1/auth/get-cart');
                 if (data?.success) {
                     const user = JSON.parse(localStorage.getItem('user'));
@@ -53,8 +51,8 @@ function PaymentSuccess() {
     }, [displayPaymentDetails]);
 
     return (
-        <div style={{ paddingTop: '6rem', minHeight: '90svh' }}>
-            {paymentDetails && (
+        <div className='payment-success'>
+            {!isLoading ? (
                 <>
                     <div className="payment-success-upper">
                         <div className="payment-success-image-container">
@@ -120,7 +118,8 @@ function PaymentSuccess() {
                         </button>
                     </div>
                 </>
-            )}
+            ) :
+                (<Loader />)}
         </div>
     );
 }

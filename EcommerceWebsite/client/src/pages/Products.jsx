@@ -15,6 +15,7 @@ import { RiShoppingCart2Line as ShoppingCartIcon, RiHeartLine as FavoriteBorderI
 import Grid from '@mui/material/Unstable_Grid2';
 import Skeleton from '@mui/material/Skeleton';
 import { useTheme } from '../theme/theme.js';
+import Loader from '../components/Loader';
 
 const CardMedia = lazy(() => import('@mui/material/CardMedia'));
 
@@ -22,8 +23,10 @@ function Products() {
     const navigate = useNavigate()
     const [products, setProducts] = useState([])
     const theme = useTheme()
-    
+    const [isLoading, setIsLoading] = useState(false)
+
     const getAllProducts = async () => {
+        setIsLoading(true)
         try {
             const { data } = await axiosInstance.get('/api/v1/product/get-all-products')
             if (data?.success) {
@@ -34,6 +37,7 @@ function Products() {
             console.log(error)
             toast.error('Something went wrong in getting All Products')
         }
+        setIsLoading(false)
     }
     const addItemToCart = async (e) => {
         e.stopPropagation()
@@ -74,7 +78,7 @@ function Products() {
 
     const productItems = useMemo(() => products.map((product) => (
         <Grid xs={2} sm={4} md={4} key={product?._id}>
-            {product ? (
+            {isLoading ? (
                 <Card
                     sx={{ maxWidth: 345, position: 'relative', backgroundColor: theme.card }}
                     productid={product._id}
@@ -117,16 +121,18 @@ function Products() {
     )), [products, openProductPage, addItemToCart, theme]);
 
     return (
-        <Box sx={{ paddingTop: '3rem', minHeight: '70svh', backgroundColor: theme.background }}>
-            <Typography variant="h1" sx={{ fontSize: '2.5rem', fontFamily: 'var(--sansitaSwashed)', paddingTop: '3rem', textAlign: 'center', marginBottom: '1rem', fontWeight: '500', color: theme.heading, '@media(min-width: 550px)': { fontSize: '3.2rem', marginBottom: '2rem' } }}>
-                All Products
-            </Typography>
-            <Box sx={{ flexGrow: 1, padding: '1rem' }}>
-                <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                    {productItems}
-                </Grid>
-            </Box>
-        </Box>
+        <>
+            {isLoading ? (<Box sx={{ paddingTop: '3rem', minHeight: '70svh', backgroundColor: theme.background }}>
+                <Typography variant="h1" sx={{ fontSize: '2.5rem', fontFamily: 'var(--sansitaSwashed)', paddingTop: '3rem', textAlign: 'center', marginBottom: '1rem', fontWeight: '500', color: theme.heading, '@media(min-width: 550px)': { fontSize: '3.2rem', marginBottom: '2rem' } }}>
+                    All Products
+                </Typography>
+                <Box sx={{ flexGrow: 1, padding: '1rem' }}>
+                    <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+                        {productItems}
+                    </Grid>
+                </Box>
+            </Box>) : (<Loader />)}
+        </>
     );
 }
 

@@ -56,7 +56,8 @@
 }
 
 .cart-item-image {
-    max-height: 10rem;
+    max-height: 8rem;
+    max-width: 8rem;
     border-radius: 15px;
     margin-bottom: 1rem;
 }
@@ -115,8 +116,11 @@
     font-weight: 700 !important;
 }
 
-.cart-item-quantity-check {
+.cart-item-in-stock {
     color: green !important;
+}
+.cart-item-out-of-stock {
+    color: var(--redAccent2);
 }
 
 .cart-item-replacement {
