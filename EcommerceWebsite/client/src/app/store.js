@@ -6,12 +6,16 @@ import storage from 'redux-persist/lib/storage'
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['setIsLoggedInTrue', 'setIsLoggedInFalse', 'setIsAdminFalse', 'setIsAdminTrue', 'toggleTheme',]
+    // whitelist: []
 }
 
 const persistedReducer = persistReducer(persistConfig, counterReducer)
 
-const store = configureStore(persistedReducer)
+const store = configureStore({
+    reducer: {
+        counter: persistedReducer, // Include the persisted reducer
+      },
+})
 
 const persistor = persistStore(store)
 
