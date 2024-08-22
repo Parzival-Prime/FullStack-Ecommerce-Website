@@ -491,7 +491,7 @@ export const getDashboardData = async (req, res) => {
                     name: { $first: "$name" },
                     email: { $first: "$email" },
                     totalSpent: { $sum: "$orders.totalAmount" },
-                    totalSales: { $sum: "$orders.products.quantity" }
+                    totalSales: { $sum: "$orders.products.units" }
                 }
             },
             {
