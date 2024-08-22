@@ -7,6 +7,7 @@ import { InsertTransactionInOrder } from './auth.controller.js'
 export const paymentController = async (req, res) => {
     try {
         const { selectedItems } = req.body
+        console.log('inside payment controller')
         const billID = generateUUID()
 
         const session = await stripe.checkout.sessions.create({
@@ -31,7 +32,7 @@ export const paymentController = async (req, res) => {
             success_url: `${process.env.CLIENT_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${process.env.CLIENT_URL}/payment-cancel`
         })
-
+        console.log('below checkout session')
         console.log("successURL: ",success_url)
 
         return res.status(200).send({
