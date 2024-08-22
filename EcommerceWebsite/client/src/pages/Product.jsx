@@ -5,6 +5,7 @@ import { useLocation } from 'react-router';
 import { axiosInstance } from '../baseurl.js';
 import { ButtonGroup, IconButton } from '@mui/material'
 import { RiAddLine as AddIcon, RiSubtractLine as RemoveIcon, RiShoppingCart2Line as LocalMallIcon, RiArrowLeftLine as ArrowBackIosIcon, RiHeartFill as FavoriteIcon, RiHeartLine as FavoriteBorderIcon } from '@remixicon/react'
+import { useTheme } from '../theme/theme.js';
 
 // const product = {
 //     "_id": "6698ae34f7adb10563f682c4",
@@ -26,6 +27,7 @@ function Product() {
     const [favroite, setFavroite] = useState(false)
     const [quantity, setQuantity] = useState(1)
     const [product, setProduct] = useState({})
+    const theme = useTheme()
 
     const getProduct = () => {
         setProduct(location.state)
@@ -73,18 +75,18 @@ function Product() {
                     {product.quantity > 0 ? (<div className="product-InStock">In Stock</div>) : (<div className='product-OutOfStock'>Out of Stock</div>)}
                     <div className="product-price">${product.price}</div>
                     <ButtonGroup className="product-quantity-box" variant="contained" aria-label="Basic button group">
-                        <button className="product-quantity-decrement" onClick={decrementProductQuantity}><RemoveIcon sx={{ fontSize: '1.5rem' }} /></button>
+                        <button className="product-quantity-decrement" onClick={decrementProductQuantity}><RemoveIcon style={{ fontSize: '1.5rem' }} /></button>
                         <button className="product-quantity-value"><span>{quantity}</span></button>
-                        <button className="product-quantity-increment" onClick={incrementProductQuantity}><AddIcon sx={{ fontSize: '1.5rem' }} /></button>
+                        <button className="product-quantity-increment" onClick={incrementProductQuantity}><AddIcon style={{ fontSize: '1.5rem' }} /></button>
                     </ButtonGroup>
                     <div className="product-bottom-buttons">
 
-                        <div className="product-wishlist-button" onClick={() => setFavroite(prev => !prev)}>{favroite ? (<FavoriteIcon sx={{ color: 'white', fontSize: '1.8rem' }} />) : (<FavoriteBorderIcon sx={{ color: 'white', fontSize: '1.8rem' }} />)}</div>
+                        <div className="product-wishlist-button" onClick={() => setFavroite(prev => !prev)}>{favroite ? (<FavoriteIcon sx={{ color: 'white', fontSize: '1.8rem' }} />) : (<FavoriteBorderIcon style={{ color: 'white', fontSize: '1.8rem' }} />)}</div>
 
                         <div className="product-add-to-cart-button" product-id={product._id} onClick={addToCart}>
                             <span className="product-add-to-cart-button-text">Add To Cart</span>
                             <IconButton className='product-add-to-cart-button-icon'>
-                                <LocalMallIcon sx={{ color: 'white' }} />
+                                <LocalMallIcon style={{ color: 'white' }} />
                             </IconButton>
                         </div>
 

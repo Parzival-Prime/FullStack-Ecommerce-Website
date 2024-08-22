@@ -151,14 +151,13 @@ function Dashboard() {
   const updateDimensions = () => {
     const screenWidth = window.innerWidth;
     let width, height;
-    // console.log(screenWidth)
     if (screenWidth < 200) {
       width = 300;
       height = 200;
     }
-    else if (400 > screenWidth > 300) {
-      width = 350;
-      height = 300;
+    else if (400 > screenWidth && screenWidth > 300) {
+      width = 285;
+      height = 290;
     }
     else if (screenWidth >= 400 && screenWidth < 470) {
       width = 400;
