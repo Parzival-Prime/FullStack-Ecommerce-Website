@@ -4,8 +4,9 @@ import { axiosInstance } from '../baseurl.js';
 import '../styles/payment-success.css';
 
 const getQueryParams = () => {
+    console.log('window.location.search: ', window.location.search)
     const params = new URLSearchParams(window.location.search);
-    console.log('session id: ', params)
+    console.log('in paymentsuccess page session id: ', params)
     return { sessionID: params.get('session_id') };
 };
 

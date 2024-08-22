@@ -55,6 +55,7 @@ export const getPaymentDetails = async (req, res) => {
     try {
         const { sessionID } = req.body
         console.log('inside getpayment details')
+        console.log("Session Id in getpayment details: ", sessionID)
         const session = await stripe.checkout.sessions.retrieve(sessionID)
         const lineItems = await stripe.checkout.sessions.listLineItems(sessionID)
 
