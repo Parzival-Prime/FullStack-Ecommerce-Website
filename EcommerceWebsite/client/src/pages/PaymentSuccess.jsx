@@ -5,6 +5,7 @@ import '../styles/payment-success.css';
 
 const getQueryParams = () => {
     const params = new URLSearchParams(window.location.search);
+    console.log('session id: ', params)
     return { sessionID: params.get('session_id') };
 };
 
@@ -17,7 +18,7 @@ function PaymentSuccess() {
     const fetchPaymentDetails = useCallback(async (sessionID) => {
         try {
             const { data } = await axiosInstance.post(`/api/v1/payment/get-payment-details`, { sessionID });
-            console.log("payment details at success page",data?.paymentDetails)
+            console.log("payment details at success page", data?.paymentDetails)
             return data?.paymentDetails;
         } catch (error) {
             console.error('Error fetching payment Details: ', error);
