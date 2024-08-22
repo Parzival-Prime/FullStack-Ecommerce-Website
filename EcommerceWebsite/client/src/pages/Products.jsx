@@ -106,7 +106,7 @@ function Products() {
                         <Typography sx={{ marginRight: '.1rem', fontWeight: 700, fontFamily: 'var(--sansitaSwashed)', '@media(min-width: 550px)': { fontSize: '1.5rem', marginRight: '1.8rem' } }}>
                             ${product.price}
                         </Typography>
-                        <IconButton onClick={addItemToCart} sx={{ backgroundColor: theme.background }} value={JSON.stringify(product)}>
+                        <IconButton onClick={addItemToCart} sx={{ backgroundColor: theme.background }} value={JSON.stringify(product)} disabled={product.quantity > 0 ? false : true}>
                             <ShoppingCartIcon style={{ fontSize: '.8rem', position: 'sticky', bottom: '0', color: theme.heading, '@media(min-width: 400px)': { fontSize: '1.3rem' }, '@media(min-width: 550px)': { fontSize: '2rem' } }} />
                         </IconButton>
                         <IconButton sx={{ backgroundColor: theme.background }} value={product._id}>
