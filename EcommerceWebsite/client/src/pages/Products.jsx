@@ -78,7 +78,7 @@ function Products() {
 
     const productItems = useMemo(() => products.map((product) => (
         <Grid xs={2} sm={4} md={4} key={product?._id}>
-            {isLoading ? (
+            {!isLoading ? (
                 <Card
                     sx={{ maxWidth: 345, position: 'relative', backgroundColor: theme.card }}
                     productid={product._id}
