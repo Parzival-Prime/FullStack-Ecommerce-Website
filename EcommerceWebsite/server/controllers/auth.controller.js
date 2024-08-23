@@ -43,17 +43,21 @@ export const registerController = async (req, res) => {
                 message: 'All fields are required'
             })
         }
-
+        console.log('auth controller reach1')
         const existingUser = await User.findOne({ email })
-
+        
         if (existingUser) return res.status(404).send({ success: false, message: 'User with this email already exists' })
-
+            console.log('auth controller reach2')
+        
         const ImageLocalPath = req.file?.path
-
+        
+        console.log('auth controller reach3')
         const profileImage = await uploadOnCloudinary(ImageLocalPath)
-
-
+        console.log('auth controller reach4')
+        
+        
         const user = await User.create({ name, email, password, phone, dateOfBirth, pincode, address, answer, profileImage: profileImage?.url })
+        console.log('auth controller reach5')
 
         const createdUser = await User.findOne(user._id).select('-password -refreshToken')
 

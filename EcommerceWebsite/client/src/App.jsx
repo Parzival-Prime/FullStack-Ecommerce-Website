@@ -44,7 +44,7 @@ import Profile from './pages/Profile'
 import Orders from './pages/Orders'
 import Settings from './pages/Settings'
 import PaymentSuccess from './pages/PaymentSuccess'
- 
+
 
 
 
@@ -57,7 +57,6 @@ function App() {
 
   const getCookie = (name) => {
     const cookies = document.cookie.split(';')
-    console.log("Consoling cookies from App.jsx: ", cookies)
     const cookieValue = cookies.map((cookie) => {
       if (((cookie.split('='))[0]).trim() === name) {
         return (cookie.split('='))[1]
@@ -69,21 +68,17 @@ function App() {
   const checkCookieAndSetState = () => {
     if (document.cookie) {
       if ((getCookie('isLoggedIn'))[0] !== undefined) {
-        // console.log("App.jsx says: Logged In true")
         dispatch(setIsLoggedInTrue())
       } else {
         dispatch(setIsLoggedInFalse())
-        // console.log("App.jsx says: Logged In false")
         if ((localStorage.getItem('user'))) {
           localStorage.removeItem('user')
         }
       }
 
       if ((getCookie('isAdmin'))[1] !== undefined) {
-        // console.log("App.jsx says: Admin true")
         dispatch(setIsAdminTrue())
       } else {
-        // console.log("App.jsx says: Admin true")
         dispatch(setIsAdminFalse())
       }
 
@@ -114,65 +109,65 @@ function App() {
     checkServerHealth();
     checkCookieAndSetState()
   }, [])
-  
+
   return (
     <>
       <Toaster style={{ zIndex: 10000 }} />
       {/* <Suspense fallback={<div>Loading...</div>}> */}
-        <BrowserRouter>
-          <Routes>
-            <Route path="" element={<Layout />}>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/policy" element={<Policy />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/product" element={<Product />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/create-product" element={
-                <ProtectedRoute>
-                  <AdminRoute>
-                    <CreateProduct />
-                  </AdminRoute>
-                </ProtectedRoute>
-              } />
-              <Route path="/cart" element={
-                <ProtectedRoute>
-                  <Cart />
-                </ProtectedRoute>
-              } />
-              <Route path="/profile" element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              } />
-              <Route path="/dashboard" element={
-                <ProtectedRoute>
-                  <AdminRoute>
-                    <Dashboard />
-                  </AdminRoute>
-                </ProtectedRoute>
-              } />
-              <Route path="/settings" element={
-                <ProtectedRoute>
-                  <Settings />
-                </ProtectedRoute>}
-              />
-              <Route path="/orders" element={
-                <ProtectedRoute>
-                  <Orders />
-                </ProtectedRoute>
-              } />
-              <Route path="/payment-success" element={
-                <ProtectedRoute>
-                  <PaymentSuccess />
-                </ProtectedRoute>
-              } />
-            </Route>
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
-        </BrowserRouter >
+      <BrowserRouter>
+        <Routes>
+          <Route path="" element={<Layout />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/policy" element={<Policy />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/product" element={<Product />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/create-product" element={
+              <ProtectedRoute>
+                <AdminRoute>
+                  <CreateProduct />
+                </AdminRoute>
+              </ProtectedRoute>
+            } />
+            <Route path="/cart" element={
+              <ProtectedRoute>
+                <Cart />
+              </ProtectedRoute>
+            } />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <AdminRoute>
+                  <Dashboard />
+                </AdminRoute>
+              </ProtectedRoute>
+            } />
+            <Route path="/settings" element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>}
+            />
+            <Route path="/orders" element={
+              <ProtectedRoute>
+                <Orders />
+              </ProtectedRoute>
+            } />
+            <Route path="/payment-success" element={
+              <ProtectedRoute>
+                <PaymentSuccess />
+              </ProtectedRoute>
+            } />
+          </Route>
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </BrowserRouter >
       {/* </Suspense> */}
     </>
   );

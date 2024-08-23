@@ -16,6 +16,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Skeleton from '@mui/material/Skeleton';
 import { useTheme } from '../theme/theme.js';
 import Loader from '../components/Loader';
+import { useSelector } from 'react-redux'
 
 const CardMedia = lazy(() => import('@mui/material/CardMedia'));
 
@@ -24,6 +25,7 @@ function Products() {
     const [products, setProducts] = useState([])
     const theme = useTheme()
     const [isLoading, setIsLoading] = useState(false)
+    const isLoggedIn = useSelector((state) => state.counter.isLoggedIn)
 
     const getAllProducts = async () => {
         setIsLoading(true)
@@ -41,6 +43,9 @@ function Products() {
     }
     const addItemToCart = async (e) => {
         e.stopPropagation()
+        if(!isLoggedIn){
+            navigate('/login')
+        }
         const currentItem = JSON.parse(e.currentTarget.value)
         let user = JSON.parse(localStorage.getItem('user'))
         let quantity;
@@ -60,7 +65,6 @@ function Products() {
             }
         } catch (error) {
             console.log(error)
-            toast.error('something went wrong in addToCartItem function')
         }
     }
     const openProductPage = async (e) => {

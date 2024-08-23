@@ -6,6 +6,8 @@ import { axiosInstance } from '../baseurl.js';
 import { ButtonGroup, IconButton } from '@mui/material'
 import { RiAddLine as AddIcon, RiSubtractLine as RemoveIcon, RiShoppingCart2Line as LocalMallIcon, RiArrowLeftLine as ArrowBackIosIcon, RiHeartFill as FavoriteIcon, RiHeartLine as FavoriteBorderIcon } from '@remixicon/react'
 import { useTheme } from '../theme/theme.js';
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router';
 
 // const product = {
 //     "_id": "6698ae34f7adb10563f682c4",
@@ -27,7 +29,9 @@ function Product() {
     const [favroite, setFavroite] = useState(false)
     const [quantity, setQuantity] = useState(1)
     const [product, setProduct] = useState({})
-    const theme = useTheme()
+    // const theme = useTheme()
+    const navigate = useNavigate()
+    const isLoggedIn = useSelector((state) => state.counter.isLoggedIn)
 
     const getProduct = () => {
         setProduct(location.state)
@@ -46,6 +50,9 @@ function Product() {
     }
 
     const addToCart = async (e) => {
+        if(!isLoggedIn){
+            navigate('/login')
+        }
         const productId = e.currentTarget.getAttribute('product-id')
 
         const { data } = await axiosInstance.post('/api/v1/auth/add-to-cart', { productId, quantity })

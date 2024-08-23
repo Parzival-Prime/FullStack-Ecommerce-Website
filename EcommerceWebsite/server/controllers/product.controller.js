@@ -11,11 +11,12 @@ export const createProductController = async (req, res) => {
         if ([name, description, price, category, quantity, rating].some((item) => (item?.trim() == "" ? true : false))) {
             return res.status(400).json({ success: false, message: "All fields are required" })
         }
-
+        console.log('Product Controller reach1')
         const ImageLocalPath = req.file?.path
         console.log('ImageLocalPath : ', ImageLocalPath)
-
+        console.log('Product Controller reach2')
         const image = await uploadOnCloudinary(ImageLocalPath)
+        console.log('Product Controller reach3')
 
         const createdProduct = await ProductModel.create({ name, slug: slugify(name), description, price, image: image?.url, category, quantity, rating })
 
