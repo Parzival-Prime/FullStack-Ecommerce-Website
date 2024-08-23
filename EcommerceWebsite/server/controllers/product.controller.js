@@ -1,7 +1,6 @@
 import slugify from 'slugify'
 import ProductModel from '../models/product.model.js'
 import { uploadOnCloudinary } from '../utils/cloudinary.js'
-import { ObjectId } from 'mongodb'
 
 export const createProductController = async (req, res) => {
     try {

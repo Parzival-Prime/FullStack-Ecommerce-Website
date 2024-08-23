@@ -50,8 +50,6 @@ export const registerController = async (req, res) => {
             console.log('auth controller reach2')
         
         const ImageLocalPath = req.file?.path
-        
-        console.log('auth controller reach3')
         const profileImage = await uploadOnCloudinary(ImageLocalPath)
         console.log('auth controller reach4')
         

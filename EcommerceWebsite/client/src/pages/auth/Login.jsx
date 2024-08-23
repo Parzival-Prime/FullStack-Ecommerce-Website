@@ -48,7 +48,6 @@ function Login() {
 
   const getCookie = (name) => {
     const cookies = document.cookie.split(";");
-    console.log("Cookies conoling from LoginPage: ",cookies)
     return cookies
       .map((cookie) => {
         const [key, value] = cookie.split("=");
