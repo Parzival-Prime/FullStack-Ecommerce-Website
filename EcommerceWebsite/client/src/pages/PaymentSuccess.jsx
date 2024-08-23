@@ -52,74 +52,72 @@ function PaymentSuccess() {
 
     return (
         <div className='payment-success'>
-            {!isLoading ? (
-                <>
-                    <div className="payment-success-upper">
-                        <div className="payment-success-image-container">
-                            <img src="/paymentSuccess/paymentSuccess.svg" alt="Success Image" className="payment-success-image" />
-                        </div>
-                        <div className="payment-success-upper-text-container">
-                            <h2 className="payment-success-title">Payment Success</h2>
-                            <div className="payment-success-upper-subtext-container">
-                                <span>Amount</span>
-                                <h3 className="payment-success-upper-subtext-bill-amount">
-                                    ${parseFloat(paymentDetails.totalAmount / 100).toFixed(2)}
-                                </h3>
-                                <div>
-                                    <div className="payment-success-upper-subtext-date">
-                                        Date: {paymentDetails.transactionDate}
-                                    </div>
-                                    <div className="payment-success-upper-subtext-billId">
-                                        Bill ID: {paymentDetails.billID}
-                                    </div>
+            <>
+                <div className="payment-success-upper">
+                    <div className="payment-success-image-container">
+                        <img src="/paymentSuccess/paymentSuccess.svg" alt="Success Image" className="payment-success-image" />
+                    </div>
+                    <div className="payment-success-upper-text-container">
+                        <h2 className="payment-success-title">Payment Success</h2>
+                        <div className="payment-success-upper-subtext-container">
+                            <span>Amount</span>
+                            <h3 className="payment-success-upper-subtext-bill-amount">
+                                ${parseFloat(paymentDetails.totalAmount / 100).toFixed(2)}
+                            </h3>
+                            <div>
+                                <div className="payment-success-upper-subtext-date">
+                                    Date: {paymentDetails.transactionDate}
+                                </div>
+                                <div className="payment-success-upper-subtext-billId">
+                                    Bill ID: {paymentDetails.billID}
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div className="payment-success-mid">
-                        <h3 className="payment-success-mid-title">Payment Details</h3>
-                        {paymentDetails?.lineItems?.data.map((item) => (
-                            <div className="payment-success-mid-product" key={item.id}>
-                                <h4 className="payment-success-mid-product-title">
-                                    {item.description} ({item.quantity})
-                                </h4>
-                                <span className="payment-success-mid-product-price">
-                                    ${parseFloat(item.price.unit_amount / 100).toFixed(2)}
-                                </span>
-                            </div>
-                        ))}
-                        <div className="payment-success-mid-detail">
-                            <div className="payment-success-mid-detail-amount-paid">
-                                <h3>Total</h3>
-                                <span>
-                                    ${parseFloat(paymentDetails.totalAmount / 100).toFixed(2)}
-                                </span>
-                            </div>
-                            <div className="payment-success-mid-detail-payment-method">
-                                <h3>Payment Method</h3>
-                                <span>{paymentDetails.paymentMethod}</span>
-                            </div>
+                <div className="payment-success-mid">
+                    <h3 className="payment-success-mid-title">Payment Details</h3>
+                    {paymentDetails?.lineItems?.data.map((item) => (
+                        <div className="payment-success-mid-product" key={item.id}>
+                            <h4 className="payment-success-mid-product-title">
+                                {item.description} ({item.quantity})
+                            </h4>
+                            <span className="payment-success-mid-product-price">
+                                ${parseFloat(item.price.unit_amount / 100).toFixed(2)}
+                            </span>
+                        </div>
+                    ))}
+                    <div className="payment-success-mid-detail">
+                        <div className="payment-success-mid-detail-amount-paid">
+                            <h3>Total</h3>
+                            <span>
+                                ${parseFloat(paymentDetails.totalAmount / 100).toFixed(2)}
+                            </span>
+                        </div>
+                        <div className="payment-success-mid-detail-payment-method">
+                            <h3>Payment Method</h3>
+                            <span>{paymentDetails.paymentMethod}</span>
                         </div>
                     </div>
+                </div>
 
-                    <div className="payment-success-lower">
-                        <button
-                            className="payment-success-lower-goback"
-                            onClick={() => navigate('/cart')}
-                        >
-                            Go Back
-                        </button>
-                        <button
-                            className="payment-success-lower-shopmore"
-                            onClick={() => navigate('/products')}
-                        >
-                            Shop More
-                        </button>
-                    </div>
-                </>
-            ) :
-                (<Loader />)}
+                <div className="payment-success-lower">
+                    <button
+                        className="payment-success-lower-goback"
+                        onClick={() => navigate('/cart')}
+                    >
+                        Go Back
+                    </button>
+                    <button
+                        className="payment-success-lower-shopmore"
+                        onClick={() => navigate('/products')}
+                    >
+                        Shop More
+                    </button>
+                </div>
+            </>
+            {isLoading && <Loader />}
         </div>
     );
 }

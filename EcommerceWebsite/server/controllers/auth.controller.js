@@ -21,60 +21,15 @@ const generateAccessAndRefreshToken = async (userId) => {
 
         const accessToken = await user.generateAccessToken()
         const refreshToken = await user.generateRefreshToken()
-
+        
         user.refreshToken = refreshToken
         await user.save({ validateBeforeSave: false })
-
+        
         return { accessToken, refreshToken }
     } catch (error) {
         console.log('Error occured in generating access and refresh token', error)
     }
 }
-
-export const registerController = async (req, res) => {
-    try {
-        const { name, email, password, phone, address, answer, dateOfBirth, pincode } = req.body
-
-        if (
-            !name || !email || !password || !phone || !address || !answer || !dateOfBirth || !pincode
-        ) {
-            return res.status(400).send({
-                success: false,
-                message: 'All fields are required'
-            })
-        }
-        console.log('auth controller reach1')
-        const existingUser = await User.findOne({ email })
-        
-        if (existingUser) return res.status(404).send({ success: false, message: 'User with this email already exists' })
-            console.log('auth controller reach2')
-        
-        const ImageLocalPath = req.file?.path
-        const profileImage = await uploadOnCloudinary(ImageLocalPath)
-        console.log('auth controller reach4')
-        
-        
-        const user = await User.create({ name, email, password, phone, dateOfBirth, pincode, address, answer, profileImage: profileImage?.url })
-        console.log('auth controller reach5')
-
-        const createdUser = await User.findOne(user._id).select('-password -refreshToken')
-
-        return res.status(201).send({
-            success: true,
-            message: 'User registered Successfully',
-            createdUser
-        })
-
-    } catch (error) {
-        console.log(error)
-        return res.status(400).send({
-            success: false,
-            message: 'Error occured in registerController',
-            error
-        })
-    }
-}
-
 
 
 export const loginController = async (req, res) => {
@@ -149,6 +104,56 @@ export const loginController = async (req, res) => {
         })
     }
 }
+
+
+export const registerController = async (req, res) => {
+    try {
+        const { name, email, password, phone, address, answer, dateOfBirth, pincode } = req.body
+
+        if (
+            !name || !email || !password || !phone || !address || !answer || !dateOfBirth || !pincode
+        ) {
+            return res.status(400).send({
+                success: false,
+                message: 'All fields are required'
+            })
+        }
+        // console.log('auth controller reach1')
+        const existingUser = await User.findOne({ email })
+        
+        if (existingUser) return res.status(404).send({ success: false, message: 'User with this email already exists' })
+            // console.log('auth controller reach2')
+        
+        const ImageLocalPath = req.file?.path
+        const profileImage = await uploadOnCloudinary(ImageLocalPath)
+        // console.log('auth controller reach4')
+        
+        
+        const user = await User.create({ name, email, password, phone, dateOfBirth, pincode, address, answer, profileImage: profileImage?.url })
+        // console.log('auth controller reach5')
+
+        // const createdUser = await User.findOne(user._id).select('-password -refreshToken')
+
+        req.body.email = email
+        req.body.password = password
+        console.log('before moving to login')
+        await loginController(req, res)
+        // return res.status(201).send({
+        //     success: true,
+        //     message: 'User registered Successfully',
+        //     createdUser
+        // })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(400).send({
+            success: false,
+            message: 'Error occured in registerController',
+            error
+        })
+    }
+}
+
 
 export const logoutController = async (req, res) => {
     try {

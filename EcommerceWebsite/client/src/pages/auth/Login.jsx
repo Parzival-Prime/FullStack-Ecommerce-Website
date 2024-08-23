@@ -65,17 +65,17 @@ function Login() {
 
     if (isLoggedIn) {
       dispatch(setIsLoggedInTrue());
-      console.log("Login.jsx says Logged In true")
+      // console.log("Login.jsx says Logged In true")
     } else {
       dispatch(setIsLoggedInFalse());
-      console.log("Login.jsx says Logged In false")
+      // console.log("Login.jsx says Logged In false")
     }
     
     if (isAdmin) {
-      console.log("Login.jsx says Admin true")
+      // console.log("Login.jsx says Admin true")
       dispatch(setIsAdminTrue());
     } else {
-      console.log("Login.jsx says Admin false")
+      // console.log("Login.jsx says Admin false")
       dispatch(setIsAdminFalse());
     }
   };

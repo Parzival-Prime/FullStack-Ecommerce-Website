@@ -3,12 +3,13 @@
     padding-top: 8rem;
     display: flex;
     flex-direction: column;
-    font-family: var(--mainFont);
+    font-family: var(--sansitaSwashed);
     position: relative;
 
     .forgot {
         text-align: end;
         margin: 1rem;
+        cursor:default;
     }
 
 }
@@ -27,7 +28,9 @@
 .registerPage-link{
     font-size: 1rem;
     font-weight: 600;
-    color: blue;
+    color: rgb(0, 195, 255);
+    cursor: pointer;
+    margin-left: .5rem;
 }
 
 .login-popup{

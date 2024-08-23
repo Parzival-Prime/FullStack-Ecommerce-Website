@@ -14,6 +14,7 @@ import { axiosInstance } from "../../baseurl.js";
 import { setShowPreviewFalse, setShowPreviewTrue } from "../../features/counter/counterSlice.js";
 import { useDispatch } from "react-redux";
 import { useTheme } from "../../theme/theme.js";
+import Loader from "../../components/Loader.jsx";
 
 
 function CreateProduct() {
@@ -26,6 +27,7 @@ function CreateProduct() {
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState("");
   const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(false)
 
   const getAllCategories = async () => {
     try {
@@ -44,6 +46,7 @@ function CreateProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true)
     try {
       const formData = new FormData();
       formData.append("file", uploadedImage);
@@ -79,6 +82,7 @@ function CreateProduct() {
         setUploadedImage(null);
         dispatch(setShowPreviewFalse())
       }
+      setIsLoading(false)
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong in handleSubmit");
@@ -90,7 +94,8 @@ function CreateProduct() {
   }, []);
 
   return (
-    <Box
+    <>
+    {!isLoading ? (<Box
       sx={{ minHeight: "100vh", background: theme.background, padding: "15px", paddingTop: '3rem' }}
     >
       <Typography
@@ -265,7 +270,10 @@ function CreateProduct() {
           </FormControl>
         </form>
       </Box>
-    </Box>
+    </Box>) 
+    :
+    (<Loader/>)}
+    </>
   );
 }
 

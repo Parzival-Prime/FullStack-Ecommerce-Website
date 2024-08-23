@@ -126,7 +126,7 @@ function Products() {
 
     return (
         <>
-            {!isLoading ? (<Box sx={{ paddingTop: '3rem', minHeight: '70svh', backgroundColor: theme.background }}>
+            <Box sx={{ paddingTop: '3rem', minHeight: '70svh', backgroundColor: theme.background }}>
                 <Typography variant="h1" sx={{ fontSize: '2.5rem', fontFamily: 'var(--sansitaSwashed)', paddingTop: '3rem', textAlign: 'center', marginBottom: '1rem', fontWeight: '500', color: theme.heading, '@media(min-width: 550px)': { fontSize: '3.2rem', marginBottom: '2rem' } }}>
                     All Products
                 </Typography>
@@ -135,7 +135,8 @@ function Products() {
                         {productItems}
                     </Grid>
                 </Box>
-            </Box>) : (<Loader />)}
+                {isLoading && <Loader/>}
+            </Box>
         </>
     );
 }

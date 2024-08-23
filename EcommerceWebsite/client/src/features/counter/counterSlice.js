@@ -19,22 +19,22 @@ export const counterSlice = createSlice({
 
         setIsLoggedInTrue: (state) => {
             state.isLoggedIn = true; // This is handled immutably by Immer
-            console.log('Counter says loggedIn true')
+            // console.log('Counter says loggedIn true')
         },
         
         setIsLoggedInFalse: (state) => {
             state.isLoggedIn = false; // This is handled immutably by Immer
-            console.log('Counter says loggedIn false')
+            // console.log('Counter says loggedIn false')
         },
 
         setIsAdminFalse: (state) => {
             state.isAdmin = false; // This is handled immutably by Immer
-            console.log('Counter says admin false')
+            // console.log('Counter says admin false')
         },
         
         setIsAdminTrue: (state) => {
             state.isAdmin = true; // This is handled immutably by Immer
-            console.log('Counter says admin true')
+            // console.log('Counter says admin true')
         },
 
         toggleTheme: (state) => {

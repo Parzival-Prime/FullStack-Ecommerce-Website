@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router';
 import '../styles/cart.css'
 import toast from 'react-hot-toast'
 import { axiosInstance } from '../baseurl.js';
-import { Typography, Checkbox, ButtonGroup} from '@mui/material'
+import { Typography, Checkbox, ButtonGroup } from '@mui/material'
 import { RiAddLine as AddIcon, RiSubtractLine as RemoveIcon, RiDeleteBin7Line as DeleteOutlineIcon } from '@remixicon/react'
 import FlexCenter from '../components/FlexCenter';
 import Loader from '../components/Loader'
@@ -175,42 +175,40 @@ function Cart() {
           {cartItems.length > 0 ? (<><h5 className='cart-list-title' style={{ color: theme.heading }}>My Cart List</h5>
 
             <div className="cart-list-container">
-              {!isLoading ? (
-                products.map((product) => (
-                  <div className="cart-list-item" key={product._id} >
-                    <Checkbox className='cart-list-item-checkbox' defaultChecked onChange={handleSelect} value={product._id} color="success" />
-                    <div className="cart-item-left" productid={product._id} onClick={openProductPage}>
-                      <img src={product.image} alt="Product Image" className='cart-item-image' />
-                      <ButtonGroup className="cart-quantity-box" variant="contained" aria-label="Basic button group">
-                        {displayQuantity(product._id) > 1 ? (
-                          <button className="cart-quantity-decrement" value={product._id} onClick={decrementProductQuantity}>
-                            <RemoveIcon />
-                          </button>
-                        ) : (
-                          <button className="cart-quantity-decrement" value={product._id} onClick={deleteItemFromCart} >
-                            <DeleteOutlineIcon />
-                          </button>
-                        )}
-                        <button className="cart-quantity-value"><span>{displayQuantity(product._id)}</span></button>
-                        <button className="cart-quantity-increment" value={product._id} onClick={incrementProductQuantity}>
-                          <AddIcon />
+              {products.map((product) => (
+                <div className="cart-list-item" key={product._id} >
+                  <Checkbox className='cart-list-item-checkbox' defaultChecked onChange={handleSelect} value={product._id} color="success" />
+                  <div className="cart-item-left" productid={product._id} onClick={openProductPage}>
+                    <img src={product.image} alt="Product Image" className='cart-item-image' />
+                    <ButtonGroup className="cart-quantity-box" variant="contained" aria-label="Basic button group">
+                      {displayQuantity(product._id) > 1 ? (
+                        <button className="cart-quantity-decrement" value={product._id} onClick={decrementProductQuantity}>
+                          <RemoveIcon />
                         </button>
-                      </ButtonGroup>
-                    </div>
+                      ) : (
+                        <button className="cart-quantity-decrement" value={product._id} onClick={deleteItemFromCart} >
+                          <DeleteOutlineIcon />
+                        </button>
+                      )}
+                      <button className="cart-quantity-value"><span>{displayQuantity(product._id)}</span></button>
+                      <button className="cart-quantity-increment" value={product._id} onClick={incrementProductQuantity}>
+                        <AddIcon />
+                      </button>
+                    </ButtonGroup>
+                  </div>
 
-                    <div className="cart-item-right" productid={product._id} onClick={openProductPage}>
-                      <Typography className='cart-item-title'>{product.name.substring(0, 18)}{product.name.length > 18 ? '...' : ''}</Typography>
-                      <Typography className='cart-item-description'>{product.description.substring(0, 90)}{product.description.length > 90 ? '...' : ''}</Typography>
-                      <Typography className='cart-item-price'>${product.price}</Typography>
-                      {(product.quantity > 0) ? (<Typography className='cart-item-in-stock'>In stock</Typography>) : (<Typography className='cart-item-out-of-stock'>Out of stock</Typography>)}
-                      <Typography className='cart-item-replacement'>7 Days Replacement</Typography>
-                      <div className="cart-item-right-buttons">
-                        <button className="cart-button-delete" value={product._id} onClick={deleteItemFromCart}>Delete</button>
-                      </div>
+                  <div className="cart-item-right" productid={product._id} onClick={openProductPage}>
+                    <Typography className='cart-item-title'>{product.name.substring(0, 18)}{product.name.length > 18 ? '...' : ''}</Typography>
+                    <Typography className='cart-item-description'>{product.description.substring(0, 90)}{product.description.length > 90 ? '...' : ''}</Typography>
+                    <Typography className='cart-item-price'>${product.price}</Typography>
+                    {(product.quantity > 0) ? (<Typography className='cart-item-in-stock'>In stock</Typography>) : (<Typography className='cart-item-out-of-stock'>Out of stock</Typography>)}
+                    <Typography className='cart-item-replacement'>7 Days Replacement</Typography>
+                    <div className="cart-item-right-buttons">
+                      <button className="cart-button-delete" value={product._id} onClick={deleteItemFromCart}>Delete</button>
                     </div>
                   </div>
-                ))
-              ) : (<Loader/>)}
+                </div>
+              ))}
             </div>
             <FlexCenter className="proceed-button-container">
               <div className="cart-Subtotal" style={{ color: theme.heading }}>Subtotal: &nbsp;<span>${subtotal}</span></div>
@@ -222,6 +220,7 @@ function Cart() {
               <button style={{ color: theme.background, backgroundColor: theme.heading }} onClick={() => navigate('/products')}>Fill Your Cart</button>
             </div>
           )}
+          {isLoading && <Loader />}
         </div>
       </div>
     </>

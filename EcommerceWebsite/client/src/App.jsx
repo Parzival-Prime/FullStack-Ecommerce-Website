@@ -68,10 +68,10 @@ function App() {
   const checkCookieAndSetState = () => {
     if (document.cookie) {
       if ((getCookie('isLoggedIn'))[0] !== undefined) {
-        console.log('App.jsx says loggedIn true')
+        // console.log('App.jsx says loggedIn true')
         dispatch(setIsLoggedInTrue())
       } else {
-        console.log('App.jsx says loggedIn false')
+        // console.log('App.jsx says loggedIn false')
         dispatch(setIsLoggedInFalse())
         if ((localStorage.getItem('user'))) {
           localStorage.removeItem('user')
@@ -79,10 +79,10 @@ function App() {
       }
 
       if ((getCookie('isAdmin'))[1] !== undefined) {
-        console.log("In App.jsx  admin is true")
+        // console.log("In App.jsx  admin is true")
         dispatch(setIsAdminTrue())
       } else {
-        console.log("In App.jsx  admin is false")
+        // console.log("In App.jsx  admin is false")
         dispatch(setIsAdminFalse())
       }
 
