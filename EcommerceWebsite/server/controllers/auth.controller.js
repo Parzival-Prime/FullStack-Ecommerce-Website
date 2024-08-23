@@ -69,7 +69,7 @@ export const registerController = async (req, res) => {
         console.log(error)
         return res.status(400).send({
             success: false,
-            message: 'Error occured in register Controller',
+            message: 'Error occured in registerController',
             error
         })
     }
