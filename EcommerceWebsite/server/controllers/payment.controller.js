@@ -54,8 +54,6 @@ export const paymentController = async (req, res) => {
 export const getPaymentDetails = async (req, res) => {
     try {
         const { sessionID } = req.body
-        console.log('inside getpayment details')
-        console.log("Session Id in getpayment details: ", sessionID)
         const session = await stripe.checkout.sessions.retrieve(sessionID)
         const lineItems = await stripe.checkout.sessions.listLineItems(sessionID)
 
@@ -83,8 +81,6 @@ export const getPaymentDetails = async (req, res) => {
         const resultOfDecrement = await decreaseQuantityOfProduct(productsNameAndQuantity)
         const resultOfRemoval = await removeItemsFromUserCart(user)
         const resultOfInsertion = await InsertTransactionInOrder(data)
-
-        console.log('payment success page last')
 
         return res.status(200).send({
             success: true,

@@ -138,12 +138,13 @@ function Cart() {
 
   const handleCheckout = async () => {
     try {
-      // console.log(selectedItems)
+      setIsLoading(true)
       const { data } = await axiosInstance.post(`/api/v1/payment/create-checkout-session`, { selectedItems, subtotal })
 
       if (data?.success) {
         console.log("data.sessionURL: ", data.sessionURL)
         window.location = data.sessionURL
+        setIsLoading(false)
       }
     } catch (error) {
       console.log(error)
