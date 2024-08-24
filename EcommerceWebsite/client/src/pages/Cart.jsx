@@ -185,16 +185,16 @@ function Cart() {
                     <ButtonGroup className="cart-quantity-box" variant="contained" aria-label="Basic button group">
                       {displayQuantity(product._id) > 1 ? (
                         <button className="cart-quantity-decrement" value={product._id} onClick={decrementProductQuantity}>
-                          <RemoveIcon />
+                          <RemoveIcon className='cart-remove-icon' />
                         </button>
                       ) : (
                         <button className="cart-quantity-decrement" value={product._id} onClick={deleteItemFromCart} >
-                          <DeleteOutlineIcon />
+                          <DeleteOutlineIcon className='cart-delete-icon'/>
                         </button>
                       )}
                       <button className="cart-quantity-value"><span>{displayQuantity(product._id)}</span></button>
                       <button className="cart-quantity-increment" value={product._id} onClick={incrementProductQuantity}>
-                        <AddIcon />
+                        <AddIcon className='cart-add-icon'/>
                       </button>
                     </ButtonGroup>
                   </div>
