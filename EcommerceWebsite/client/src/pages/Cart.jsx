@@ -149,6 +149,7 @@ function Cart() {
     } catch (error) {
       console.log(error)
       console.log('Something went wrong in handle Checkout')
+      setIsLoading(false)
     }
   }
 
