@@ -31,18 +31,20 @@ function PaymentSuccess() {
             const paymentDetails = await fetchPaymentDetails(sessionID);
             if (paymentDetails) {
                 setPaymentDetails(paymentDetails);
-                setIsLoading(false)
                 const { data } = await axiosInstance.get('/api/v1/auth/get-cart');
                 if (data?.success) {
                     const user = JSON.parse(localStorage.getItem('user'));
                     user.value.cart = data.cart;
                     localStorage.setItem('user', JSON.stringify(user));
+                    setIsLoading(false)
                 }
             } else {
                 console.error('No payment Details Found');
+                setIsLoading(false)
             }
         } else {
             console.error('No sessionID found');
+            setIsLoading(false)
         }
     }, [fetchPaymentDetails]);
 

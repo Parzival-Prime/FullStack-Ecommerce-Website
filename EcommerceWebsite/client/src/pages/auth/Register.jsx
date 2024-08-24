@@ -150,13 +150,14 @@ function Register() {
           answer: "",
           pincode: "",
         })
+        setIsLoading(false)
         navigate("/");
       }
     } catch (error) {
       console.log(error)
       toast.error('something went wrong');
+      setIsLoading(false)
     }
-    setIsLoading(false)
   };
 
   const commonTextFieldStyles = {
