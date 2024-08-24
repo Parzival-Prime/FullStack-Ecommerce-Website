@@ -35,13 +35,14 @@ function Cart() {
             setCartItems(data.cart)
             setSelectedItems(data.cart)
             setProducts(res.data.fetchedProducts)
-            setIsLoading(false)
           }
         }
       }
+      setIsLoading(false)
     } catch (error) {
       console.log(error)
       toast.error('something went wrong while getting cart items')
+      setIsLoading(false)
     }
   }
 
