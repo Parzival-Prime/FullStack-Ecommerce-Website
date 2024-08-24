@@ -36,7 +36,7 @@
     font-family: var(--expletusSans);
 
     button {
-        margin-left: 4rem;
+        margin-left: 1rem;
         padding: .5rem .7rem;
         border-radius: 9px;
         border: none;
@@ -61,6 +61,7 @@
     padding-left: .7rem;
     font-size: 1.6rem;
     font-weight: 500;
+    font-family: var(--sansitaSwashed);
 }
 
 .settings-popup-body {
