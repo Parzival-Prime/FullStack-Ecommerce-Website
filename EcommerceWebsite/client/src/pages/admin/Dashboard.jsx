@@ -156,7 +156,7 @@ function Dashboard() {
       height = 200;
     }
     else if (400 > screenWidth && screenWidth > 300) {
-      width = 285;
+      width = 350;
       height = 290;
     }
     else if (screenWidth >= 400 && screenWidth < 470) {
